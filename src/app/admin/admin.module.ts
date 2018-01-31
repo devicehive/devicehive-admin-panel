@@ -9,6 +9,8 @@ import { DeviceTypesComponent } from './device-types/device-types.component';
 import { DevicesComponent } from './devices/devices.component';
 import { JwtTokensComponent } from './jwt-tokens/jwt-tokens.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
+import {UserDetailsComponent} from "./users/user-details/user-details.component";
+import {NetworkDetailsComponent} from "./networks/network-details/network-details.component";
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
   declarations: [
     AdminComponent,
     UsersComponent,
+    UserDetailsComponent,
     NetworksComponent,
+    NetworkDetailsComponent,
     DeviceTypesComponent,
     DevicesComponent,
     JwtTokensComponent,

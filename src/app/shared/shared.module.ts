@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule} from "@angular/forms";
-import { UserDetailsComponent } from './user-details/user-details.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
@@ -10,13 +9,12 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     FormsModule,
     NgbModule
   ],
-  declarations: [UserDetailsComponent],
+  declarations: [
+  ],
   exports: [
     CommonModule,
     FormsModule,
-    NgbModule,
-
-    UserDetailsComponent
+    NgbModule
   ],
 })
 export class SharedModule { }
