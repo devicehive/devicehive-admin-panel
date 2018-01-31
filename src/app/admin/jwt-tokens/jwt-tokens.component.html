@@ -1,4 +1,18 @@
 <div class="container">
-  <button class="btn btn-primary">Set expiration date</button>
-  <button class="btn btn-primary">Create tokens</button>
+  <form class="form-inline">
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd"
+               name="dp" ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+            Set expiration date
+          </button>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary">Create tokens</button>
+  </form>
+
+
 </div>
