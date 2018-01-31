@@ -11,6 +11,7 @@ import { JwtTokensComponent } from './jwt-tokens/jwt-tokens.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import {UserDetailsComponent} from "./users/user-details/user-details.component";
 import {NetworkDetailsComponent} from "./networks/network-details/network-details.component";
+import { DeviceTypeDetailsComponent } from './device-types/device-type-details/device-type-details.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {NetworkDetailsComponent} from "./networks/network-details/network-detail
     DeviceTypesComponent,
     DevicesComponent,
     JwtTokensComponent,
-    EditUserComponent
+    EditUserComponent,
+    DeviceTypeDetailsComponent
   ]
 })
 export class AdminModule {

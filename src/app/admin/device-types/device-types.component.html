@@ -13,7 +13,7 @@
       <td>Thermostats</td>
       <td>Devices to control thermostat settings and to report current temperatures</td>
       <td>
-        <button class="btn btn-primary btn-sm">Edit</button>
+        <button class="btn btn-primary btn-sm" (click)="openEditDeviceTypeModal(editDeviceTypeModal)">Edit</button>
         <button class="btn btn-danger btn-sm">Delete</button>
       </td>
     </tr>
@@ -22,13 +22,48 @@
       <td>Thermostats</td>
       <td>Devices to control thermostat settings and to report current temperatures</td>
       <td>
-        <button class="btn btn-primary btn-sm">Edit</button>
+        <button class="btn btn-primary btn-sm" (click)="openEditDeviceTypeModal(editDeviceTypeModal)">Edit</button>
         <button class="btn btn-danger btn-sm">Delete</button>
       </td>
     </tr>
     </tbody>
   </table>
 
-  <button class="btn btn-success float-right">Add new device type</button>
+  <button class="btn btn-success float-right" (click)="openNewDeviceTypeModal(newDeviceTypeModal)">Add new device type</button>
 </div>
 
+<ng-template #newDeviceTypeModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Create new device type</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <dh-device-type-details></dh-device-type-details>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="c('Save')">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #editDeviceTypeModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Device type</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <dh-device-type-details></dh-device-type-details>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="c('Save')">Save</button>
+  </div>
+</ng-template>
