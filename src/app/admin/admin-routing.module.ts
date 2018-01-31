@@ -7,6 +7,7 @@ import {DeviceTypesComponent} from "./device-types/device-types.component";
 import {DevicesComponent} from "./devices/devices.component";
 import {JwtTokensComponent} from "./jwt-tokens/jwt-tokens.component";
 import {UserDetailsComponent} from "./users/user-details/user-details.component";
+import {DeviceDetailsComponent} from "./devices/device-details/device-details.component";
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
       {
         path: 'devices',
         component: DevicesComponent
+      },
+      {
+        path: 'device/:id',
+        component: DeviceDetailsComponent
       },
       {
         path: 'jwt-tokens',

@@ -1,0 +1,101 @@
+<div class="container">
+  <dh-device></dh-device>
+
+  <button class="btn btn-success">Save</button>
+
+  <ngb-tabset>
+    <ngb-tab title="Commands">
+      <ng-template ngbTabContent>
+        <button class="btn btn-secondary" (click)="openNewCommandModal(newCommandModal)">Send new command</button>
+
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Time</th>
+              <th scope="col">Parameters</th>
+              <th scope="col">Status</th>
+              <th scope="col">Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            No commands were sent in the specified time range.
+          </tbody>
+        </table>
+
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab title="Notifications">
+      <ng-template ngbTabContent>
+        <button class="btn btn-secondary" (click)="openNewNotificationModal(newNotificationModal)">Send new notification</button>
+
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Time</th>
+              <th scope="col">Parameters</th>
+            </tr>
+          </thead>
+          <tbody>
+          No notifications were sent in the specified time range.
+          </tbody>
+        </table>
+
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
+
+<ng-template #newCommandModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Send command</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="inputCommandName">Name</label>
+      <input type="text" class="form-control" id="inputCommandName" placeholder="Name">
+    </div>
+
+    <div class="form-group">
+      <label for="textAreaCommandParameters">Parameters</label>
+      <textarea class="form-control" id="textAreaCommandParameters" rows="3"></textarea>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="c('Save')">Send</button>
+  </div>
+</ng-template>
+
+<ng-template #newNotificationModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Send notification</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="inputNotificationName">Name</label>
+      <input type="text" class="form-control" id="inputNotificationName" placeholder="Name">
+    </div>
+
+    <div class="form-group">
+      <label for="textAreaNotificationParameters">Parameters</label>
+      <textarea class="form-control" id="textAreaNotificationParameters" rows="3"></textarea>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="c('Save')">Send</button>
+  </div>
+</ng-template>
