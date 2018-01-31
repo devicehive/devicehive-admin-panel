@@ -4,3 +4,8 @@
 body {
   padding-top: 5rem;
 }
+
+*:focus, *:active {
+  outline: none !important;
+  box-shadow: none !important;
+}

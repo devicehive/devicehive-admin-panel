@@ -1,16 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule} from "@angular/forms";
+import { UserDetailsComponent } from './user-details/user-details.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
+  declarations: [UserDetailsComponent],
   exports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    NgbModule,
+
+    UserDetailsComponent
   ],
-  declarations: []
 })
 export class SharedModule { }

@@ -6,6 +6,7 @@ import {NetworksComponent} from "./networks/networks.component";
 import {DeviceTypesComponent} from "./device-types/device-types.component";
 import {DevicesComponent} from "./devices/devices.component";
 import {JwtTokensComponent} from "./jwt-tokens/jwt-tokens.component";
+import {EditUserComponent} from "./users/edit-user/edit-user.component";
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersComponent
+      },
+      {
+        path: 'user/:id',
+        component: EditUserComponent
       },
       {
         path: 'networks',

@@ -8,13 +8,22 @@ import { NetworksComponent } from './networks/networks.component';
 import { DeviceTypesComponent } from './device-types/device-types.component';
 import { DevicesComponent } from './devices/devices.component';
 import { JwtTokensComponent } from './jwt-tokens/jwt-tokens.component';
+import { EditUserComponent } from './users/edit-user/edit-user.component';
 
 @NgModule({
   imports: [
     SharedModule,
     AdminRoutingModule
   ],
-  declarations: [AdminComponent, UsersComponent, NetworksComponent, DeviceTypesComponent, DevicesComponent, JwtTokensComponent]
+  declarations: [
+    AdminComponent,
+    UsersComponent,
+    NetworksComponent,
+    DeviceTypesComponent,
+    DevicesComponent,
+    JwtTokensComponent,
+    EditUserComponent
+  ]
 })
 export class AdminModule {
 }

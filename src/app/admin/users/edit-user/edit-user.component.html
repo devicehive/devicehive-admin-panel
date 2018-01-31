@@ -1,0 +1,74 @@
+<div class="container">
+  <dh-user-details></dh-user-details>
+
+  <ngb-tabset type="pills">
+    <ngb-tab title="Networks">
+      <ng-template ngbTabContent>
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Network</th>
+              <th scope="col">Description</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>alexa-network</td>
+              <td>Network for Alexa Demo</td>
+              <td>
+                <button class="btn btn-danger btn-sm">Revoke access</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <form class="form-inline">
+          <label class="mr-2" for="inputNetwork">Grant access to another network</label>
+          <select id="inputNetwork" class="form-control mb-2 mr-sm-2">
+            <option selected>alexa-network</option>
+            <option>some-other-network</option>
+          </select>
+
+          <button class="btn btn-primary mb-2">Grant access</button>
+        </form>
+
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab title="Device Types">
+      <ng-template ngbTabContent>
+        <table class="table">
+          <thead class="thead-light">
+          <tr>
+            <th scope="col">Device Type</th>
+            <th scope="col">Description</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr>
+            <td>Thermostats</td>
+            <td>Devices to control thermostat settings and to report current temperatures</td>
+            <td>
+              <button class="btn btn-danger btn-sm">Revoke access</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <form class="form-inline">
+          <label class="mr-2" for="inputDeviceType">Grant access to another device type</label>
+          <select id="inputDeviceType" class="form-control mb-2 mr-sm-2">
+            <option selected>Thermostats</option>
+            <option>Clocks</option>
+          </select>
+
+          <button class="btn btn-primary mb-2">Grant access</button>
+        </form>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
