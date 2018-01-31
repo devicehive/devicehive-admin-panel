@@ -3,15 +3,15 @@ import {NgModule} from '@angular/core';
 import {AdminRoutingModule} from './admin-routing.module';
 import {AdminComponent} from './admin.component';
 import {SharedModule} from "../shared/shared.module";
-import { UsersComponent } from './users/users.component';
-import { NetworksComponent } from './networks/networks.component';
-import { DeviceTypesComponent } from './device-types/device-types.component';
-import { DevicesComponent } from './devices/devices.component';
-import { JwtTokensComponent } from './jwt-tokens/jwt-tokens.component';
-import { EditUserComponent } from './users/edit-user/edit-user.component';
-import {UserDetailsComponent} from "./users/user-details/user-details.component";
-import {NetworkDetailsComponent} from "./networks/network-details/network-details.component";
-import { DeviceTypeDetailsComponent } from './device-types/device-type-details/device-type-details.component';
+import {UsersComponent} from './users/users.component';
+import {NetworksComponent} from './networks/networks.component';
+import {DeviceTypesComponent} from './device-types/device-types.component';
+import {DevicesComponent} from './devices/devices.component';
+import {JwtTokensComponent} from './jwt-tokens/jwt-tokens.component';
+import {UserDetailsComponent} from './users/user-details/user-details.component';
+import {UserComponent} from "./users/user/user.component";
+import {NetworkComponent} from "./networks/network/network.component";
+import {DeviceTypeComponent} from './device-types/device-type/device-type.component';
 
 @NgModule({
   imports: [
@@ -21,14 +21,14 @@ import { DeviceTypeDetailsComponent } from './device-types/device-type-details/d
   declarations: [
     AdminComponent,
     UsersComponent,
-    UserDetailsComponent,
+    UserComponent,
     NetworksComponent,
-    NetworkDetailsComponent,
+    NetworkComponent,
     DeviceTypesComponent,
     DevicesComponent,
     JwtTokensComponent,
-    EditUserComponent,
-    DeviceTypeDetailsComponent
+    UserDetailsComponent,
+    DeviceTypeComponent
   ]
 })
 export class AdminModule {

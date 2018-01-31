@@ -16,7 +16,7 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
   }
 
-  editUser(user) {
+  openUserDetails(user) {
     this.router.navigate(['/admin/user', 1]);
   }
 
