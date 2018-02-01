@@ -17,7 +17,7 @@
         <td>{{userRole[user.role]}}</td>
         <td>{{userStatus[user.status]}}</td>
         <td>{{user.lastLogin | date:'medium'}}</td>
-        <td>{{user.data | json}}</td>
+        <td>{{!!user.data ? (user.data | json) : null}}</td>
         <td>
           <button class="btn btn-info btn-sm" (click)="openUserDetails(null)">Details</button>
           <button class="btn btn-danger btn-sm">Delete</button>
