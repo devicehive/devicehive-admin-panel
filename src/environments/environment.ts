@@ -4,5 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  mainServiceURL: 'http://localhost:8080/dh/rest',
+  authServiceURL: 'http://localhost:8090/dh/rest',
+  pluginServiceURL: 'http://localhost:8110/dh/rest'
 };

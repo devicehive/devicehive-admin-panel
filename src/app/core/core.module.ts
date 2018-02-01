@@ -2,6 +2,8 @@ import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HttpClientModule} from "@angular/common/http";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {DevicehiveService} from "./devicehive.service";
+import {LoggedInGuard} from "./logged-in.guard";
 
 @NgModule({
   imports: [
@@ -10,7 +12,10 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     NgbModule.forRoot()
   ],
   declarations: [],
-  providers: []
+  providers: [
+    DevicehiveService,
+    LoggedInGuard
+  ]
 })
 export class CoreModule {
   /* make sure CoreModule is imported only by one NgModule the AppModule */

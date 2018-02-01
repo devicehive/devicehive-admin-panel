@@ -3,17 +3,26 @@
 </nav>
 
 <div class="container">
-  <div class="row align-items-center justify-content-center">
-    <form class="col-6">
+  <div class="row align-items-center justify-content-center"
+       [ngClass]="{'was-validated': hasErrors}">
+    <form class="col-6 needs-validation" (ngSubmit)="logIn()" novalidate>
       <div class="form-group">
-        <label for="exampleInputEmail1">Login</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter login">
+        <label for="inputLogin">Login</label>
+        <input type="text" class="form-control" id="inputLogin"
+               [(ngModel)]="login" name="login" #inputLogin placeholder="Enter login" required minlength="1">
+        <div class="invalid-feedback">
+          Please provide a valid login.
+        </div>
       </div>
       <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password">
+        <label for="inputPassword">Password</label>
+        <input type="password" class="form-control" id="inputPassword"
+               [(ngModel)]="password" name="password" #inputPassword placeholder="Enter password" required minlength="1">
+        <div class="invalid-feedback">
+          Please provide a valid password.
+        </div>
       </div>
-      <button class="btn btn-primary" (click)="login()">Log in</button>
+      <button class="btn btn-primary" type="submit" [disabled]="isSubmitting">Log in</button>
     </form>
   </div>
 </div>
