@@ -4,6 +4,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {DevicehiveService} from "./devicehive.service";
 import {LoggedInGuard} from "./logged-in.guard";
+import {UserService} from "./user.service";
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {LoggedInGuard} from "./logged-in.guard";
   declarations: [],
   providers: [
     DevicehiveService,
-    LoggedInGuard
+    LoggedInGuard,
+    UserService
   ]
 })
 export class CoreModule {

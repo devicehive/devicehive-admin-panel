@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-declare var DeviceHive;
 
 @Injectable()
 export class DevicehiveService {

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Router} from "@angular/router";
+import {UserService} from "../../core/user.service";
+import {User, UserRole, UserStatus} from "../../shared/models/user.model";
 
 @Component({
   selector: 'dh-users',
@@ -9,11 +11,17 @@ import {Router} from "@angular/router";
 })
 export class UsersComponent implements OnInit {
 
-  constructor(private modalService: NgbModal,
+  users: Array<User>;
+  userRole = UserRole;
+  userStatus = UserStatus;
+
+  constructor(private userService: UserService,
+              private modalService: NgbModal,
               private router: Router) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.users = await this.userService.getAllUsers();
   }
 
   openUserDetails(user) {
@@ -25,7 +33,7 @@ export class UsersComponent implements OnInit {
       const result = await this.modalService.open(content).result;
       console.log(`Closed with: ${result}`);
     } catch (dismissReason) {
-      // User dismissed modal, no need for any extra action
+      // User dismissed modal, no need for any extra actions
     }
   }
 
