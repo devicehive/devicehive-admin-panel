@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {DeviceTypeService} from "../../core/device-type.service";
+import {DeviceType} from "../../shared/models/device-type.model";
 
 @Component({
   selector: 'dh-device-types',
@@ -8,9 +10,13 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 })
 export class DeviceTypesComponent implements OnInit {
 
-  constructor(private modalService: NgbModal) { }
+  deviceTypes: Array<DeviceType>;
 
-  ngOnInit() {
+  constructor(private deviceTypeService: DeviceTypeService,
+              private modalService: NgbModal) { }
+
+  async ngOnInit() {
+    this.deviceTypes = await this.deviceTypeService.getAllDeviceTypes();
   }
 
   async openNewDeviceTypeModal(content) {

@@ -6,6 +6,7 @@ import {DevicehiveService} from "./devicehive.service";
 import {LoggedInGuard} from "./logged-in.guard";
 import {UserService} from "./user.service";
 import {NetworkService} from "./network.service";
+import {DeviceTypeService} from "./device-type.service";
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {NetworkService} from "./network.service";
     DevicehiveService,
     LoggedInGuard,
     UserService,
-    NetworkService
+    NetworkService,
+    DeviceTypeService
   ]
 })
 export class CoreModule {
