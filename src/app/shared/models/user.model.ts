@@ -11,21 +11,6 @@ export class User {
               public allDeviceTypesAvailable?: boolean) {
   }
 
-  toUserUpdate(): UserUpdate {
-    return new UserUpdate(this.login, this.role.valueOf(), this.status.valueOf(), this.data, this.password, this.introReviewed);
-  }
-}
-
-export class UserUpdate {
-  constructor(public login: string,
-              public role: number,
-              public status: number,
-              public data: Object,
-              public password: string,
-              public introReviewed: boolean) {
-
-  }
-
   toObject() {
     return Object.assign({}, this);
   }

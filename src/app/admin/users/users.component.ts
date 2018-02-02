@@ -66,4 +66,12 @@ export class UsersComponent implements OnInit {
     this.isCreatingUser = false;
   }
 
+  async deleteUser(user: User) {
+    await this.userService.deleteUser(user);
+
+    let index = this.users.indexOf(user);
+    if (index > -1) {
+      this.users.splice(index, 1);
+    }
+  }
 }

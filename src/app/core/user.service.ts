@@ -19,7 +19,12 @@ export class UserService {
   async createUser(user: User) {
     user.introReviewed = false;
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
-    return await httpDeviceHive.user.insert(user.toUserUpdate());
+    return await httpDeviceHive.user.insert(user);
+  }
+
+  async deleteUser(user: User) {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.delete(user.id);
   }
 
 }
