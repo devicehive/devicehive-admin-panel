@@ -1,5 +1,5 @@
 export class User {
-  constructor(public id?: string,
+  constructor(public id?: number,
               public login?: string,
               public role?: UserRole,
               public status?: UserStatus,
