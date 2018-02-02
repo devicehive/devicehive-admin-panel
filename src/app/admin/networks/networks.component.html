@@ -9,18 +9,9 @@
     </thead>
 
     <tbody>
-      <tr>
-        <td>alexa-network</td>
-        <td>Network for Alexa Demo</td>
-        <td>
-          <button class="btn btn-primary btn-sm" (click)="openEditNetworkModal(editNetworkModal)">Edit</button>
-          <button class="btn btn-danger btn-sm">Delete</button>
-        </td>
-      </tr>
-
-      <tr>
-        <td>alexa-network</td>
-        <td>Network for Alexa Demo</td>
+      <tr *ngFor="let network of networks">
+        <td>{{network.name}}</td>
+        <td>{{network.description}}</td>
         <td>
           <button class="btn btn-primary btn-sm" (click)="openEditNetworkModal(editNetworkModal)">Edit</button>
           <button class="btn btn-danger btn-sm">Delete</button>

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Network} from "../../shared/models/network.model";
+import {NetworkService} from "../../core/network.service";
 
 @Component({
   selector: 'dh-networks',
@@ -8,9 +10,14 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 })
 export class NetworksComponent implements OnInit {
 
-  constructor(private modalService: NgbModal) { }
+  networks: Array<Network>;
 
-  ngOnInit() {
+  constructor(private networkService: NetworkService,
+              private modalService: NgbModal) {
+  }
+
+  async ngOnInit() {
+    this.networks = await this.networkService.getAllNetworks();
   }
 
   async openNewNetworkModal(content) {

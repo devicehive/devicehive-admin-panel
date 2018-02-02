@@ -5,6 +5,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {DevicehiveService} from "./devicehive.service";
 import {LoggedInGuard} from "./logged-in.guard";
 import {UserService} from "./user.service";
+import {NetworkService} from "./network.service";
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import {UserService} from "./user.service";
   providers: [
     DevicehiveService,
     LoggedInGuard,
-    UserService
+    UserService,
+    NetworkService
   ]
 })
 export class CoreModule {
