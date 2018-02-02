@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {KeysPipe} from "./pipes/keys.pipe";
 
 @NgModule({
   imports: [
@@ -10,11 +11,14 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     NgbModule
   ],
   declarations: [
+    KeysPipe
   ],
   exports: [
     CommonModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+
+    KeysPipe
   ],
 })
 export class SharedModule { }

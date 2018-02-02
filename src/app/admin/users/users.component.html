@@ -51,12 +51,12 @@
     </button>
   </div>
 
-  <div class="modal-body">
-    <dh-user></dh-user>
+  <div class="modal-body" *ngIf="newUser">
+    <dh-user [user]="newUser"></dh-user>
   </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
-    <button type="button" class="btn btn-success" (click)="c('Save')">Save</button>
+    <button type="button" class="btn btn-success" [disabled]="isCreatingUser" (click)="createUser()">Save</button>
   </div>
 </ng-template>

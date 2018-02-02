@@ -1,22 +1,19 @@
 <div class="form-group">
-  <label for="inputLogin">Login</label>
-  <input type="text" class="form-control" id="inputLogin" placeholder="Login">
+  <label for="inputLogin" >Login</label>
+  <input type="text" class="form-control" id="inputLogin" placeholder="Login" [(ngModel)]="user.login">
 </div>
 
 <div class="form-row">
   <div class="form-group col-6">
     <label for="inputRole">Role</label>
-    <select id="inputRole" class="form-control">
-      <option selected>Administrator</option>
-      <option>Client</option>
+    <select id="inputRole" class="form-control" [(ngModel)]="user.role">
+      <option *ngFor="let item of userRole | keys" [value]="item.key">{{item.value}}</option>
     </select>
   </div>
   <div class="form-group col-6">
     <label for="inputStatus">Status</label>
-    <select id="inputStatus" class="form-control">
-      <option selected>Active</option>
-      <option>Locked Out</option>
-      <option>Disabled</option>
+    <select id="inputStatus" class="form-control" [(ngModel)]="user.status">
+      <option *ngFor="let item of userStatus | keys" [value]="item.key">{{item.value}}</option>
     </select>
   </div>
 </div>
@@ -24,15 +21,15 @@
 <div class="form-row">
   <div class="form-group col-6">
     <label for="inputPassword">Password</label>
-    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+    <input type="password" class="form-control" id="inputPassword" placeholder="Password" [(ngModel)]="user.password">
   </div>
   <div class="form-group col-6">
     <label for="inputConfirmPassword">Confirm password</label>
-    <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm password">
+    <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm password" [(ngModel)]="user.passwordConfirmation">
   </div>
 </div>
 
 <div class="form-group">
   <label for="textAreaData">Data (json)</label>
-  <textarea class="form-control" id="textAreaData" rows="3"></textarea>
+  <textarea class="form-control" id="textAreaData" rows="3" [(ngModel)]="user.data"></textarea>
 </div>
