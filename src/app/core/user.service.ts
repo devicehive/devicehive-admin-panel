@@ -11,7 +11,8 @@ export class UserService {
 
   async getAllUsers() {
     const query = new this.UserListQuery("");
-    return await this.dh.httpDeviceHive.user.list(query);
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.list(query);
   }
 
 }

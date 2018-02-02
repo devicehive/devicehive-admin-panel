@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
+import {error} from "util";
 
 @Injectable()
 export class DevicehiveService {
 
-  public httpDeviceHive = null;
+  private httpDeviceHive = null;
 
   private mainServiceURL: string = environment.mainServiceURL;
   private authServiceURL: string = environment.authServiceURL;
@@ -12,6 +13,28 @@ export class DevicehiveService {
   private loggedIn = false;
 
   constructor() {
+  }
+
+  async getHttpDeviceHive() {
+    if (!this.httpDeviceHive) {
+      const dh = JSON.parse(sessionStorage.getItem('dh'));
+      if (dh == null) {
+        throw error()
+      } else {
+        this.httpDeviceHive = new DeviceHive({
+          login: dh.login,
+          password: dh.password,
+          accessToken: dh.accessToken,
+          refreshToken: dh.refreshToken,
+          mainServiceURL: this.mainServiceURL,
+          authServiceURL: this.authServiceURL,
+          pluginServiceURL: this.pluginServiceURL
+        });
+        await this.httpDeviceHive.connect();
+      }
+    }
+
+    return this.httpDeviceHive;
   }
 
   async logIn(login: string, password: string) {
@@ -26,6 +49,7 @@ export class DevicehiveService {
 
     try {
       await this.httpDeviceHive.connect();
+      sessionStorage.setItem('dh', JSON.stringify(this.httpDeviceHive));
       this.loggedIn = true;
     } catch (error) {
       this.loggedIn = false;
@@ -34,6 +58,11 @@ export class DevicehiveService {
   }
 
   isLoggedIn() {
-    return this.httpDeviceHive && this.loggedIn;
+    if (this.httpDeviceHive && this.loggedIn) {
+      return true;
+    }
+
+    const dh = JSON.parse(sessionStorage.getItem('dh'));
+    return dh != null;
   }
 }
