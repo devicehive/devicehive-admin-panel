@@ -22,9 +22,53 @@ export class UserService {
     return await httpDeviceHive.user.insert(user);
   }
 
-  async deleteUser(user: User) {
+  async updateUser(user: User) {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
-    return await httpDeviceHive.user.delete(user.id);
+    return await httpDeviceHive.user.update(user);
   }
 
+  async deleteUser(userId: number) {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.delete(userId);
+  }
+
+  async getUser(id: number) {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.get(id);
+  }
+
+  async grantAccessToNetwork(userId: number, networkId: number) {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.assignNetwork(userId, networkId);
+  }
+
+  async revokeAccessToNetwork(userId: number, networkId: number) {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.unassignNetwork(userId, networkId);
+  }
+
+  async getDeviceTypes(userId: number) {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.getDeviceTypes(userId);
+  }
+
+  async allowAllDeviceTypesForUser(userId: number) {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.assignAllDeviceTypes(userId);
+  }
+
+  async disallowAllDeviceTypesForUser(userId: number) {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.unassignAllDeviceTypes(userId);
+  }
+
+  async grantAccessToDeviceType(userId: number, deviceTypeId: number) {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.assignDeviceType(userId, deviceTypeId);
+  }
+
+  async revokeAccessToDeviceType(userId: number, deviceTypeId: number) {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.unassignDeviceType(userId, deviceTypeId);
+  }
 }

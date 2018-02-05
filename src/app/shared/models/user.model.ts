@@ -1,3 +1,5 @@
+import {Network} from "./network.model";
+
 export class User {
   constructor(public id?: number,
               public login?: string,
@@ -8,7 +10,9 @@ export class User {
               public password?: string,
               public passwordConfirmation?: string,
               public introReviewed?: boolean,
-              public allDeviceTypesAvailable?: boolean) {
+              public allDeviceTypesAvailable?: boolean,
+              //TODO - can this be refactored to Set<Network> ?
+              public networks?: Array<Network>) {
   }
 
   toObject() {

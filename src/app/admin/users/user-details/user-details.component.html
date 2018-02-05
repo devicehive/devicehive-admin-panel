@@ -1,7 +1,7 @@
-<div class="container">
-  <dh-user></dh-user>
+<div class="container" *ngIf="user">
+  <dh-user [user]="user"></dh-user>
 
-  <button class="btn btn-success">Save</button>
+  <button class="btn btn-success" (click)="updateUser()">Save</button>
 
   <ngb-tabset>
     <ngb-tab title="Networks">
@@ -16,11 +16,11 @@
           </thead>
 
           <tbody>
-            <tr>
-              <td>alexa-network</td>
-              <td>Network for Alexa Demo</td>
+            <tr *ngFor="let network of user.networks">
+              <td>{{network.name}}</td>
+              <td>{{network.description}}</td>
               <td>
-                <button class="btn btn-danger btn-sm">Revoke access</button>
+                <button class="btn btn-danger btn-sm" (click)="revokeAccessToNetwork(network)">Revoke access</button>
               </td>
             </tr>
           </tbody>
@@ -28,12 +28,11 @@
 
         <form class="form-inline">
           <label class="mr-2" for="inputNetwork">Grant access to another network</label>
-          <select id="inputNetwork" class="form-control mb-2 mr-sm-2">
-            <option selected>alexa-network</option>
-            <option>some-other-network</option>
+          <select id="inputNetwork" class="form-control mb-2 mr-sm-2" name="network" [(ngModel)]="selectedNetwork">
+            <option *ngFor="let network of allNetworks" [ngValue]="network">{{network.name}}</option>
           </select>
 
-          <button class="btn btn-primary mb-2">Grant access</button>
+          <button class="btn btn-primary mb-2" (click)="grantAccessToNetwork()">Grant access</button>
         </form>
 
       </ng-template>
@@ -41,34 +40,39 @@
 
     <ngb-tab title="Device Types">
       <ng-template ngbTabContent>
-        <table class="table">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="allDeviceTypeCheck"
+                 [(ngModel)]="user.allDeviceTypesAvailable" (ngModelChange)="toggleAllowAllDeviceTypes()">
+          <label class="form-check-label" for="allDeviceTypeCheck">All device types are available to user</label>
+        </div>
+
+        <table class="table" *ngIf="!user.allDeviceTypesAvailable">
           <thead class="thead-light">
-          <tr>
-            <th scope="col">Device Type</th>
-            <th scope="col">Description</th>
-            <th scope="col"></th>
-          </tr>
+            <tr>
+              <th scope="col">Device Type</th>
+              <th scope="col">Description</th>
+              <th scope="col"></th>
+            </tr>
           </thead>
 
           <tbody>
-          <tr>
-            <td>Thermostats</td>
-            <td>Devices to control thermostat settings and to report current temperatures</td>
-            <td>
-              <button class="btn btn-danger btn-sm">Revoke access</button>
-            </td>
-          </tr>
+            <tr *ngFor="let deviceType of userDeviceTypes">
+              <td>{{deviceType.name}}</td>
+              <td>{{deviceType.description}}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="revokeAccessToDeviceType(deviceType)">Revoke access</button>
+              </td>
+            </tr>
           </tbody>
         </table>
 
-        <form class="form-inline">
+        <form class="form-inline" *ngIf="!user.allDeviceTypesAvailable">
           <label class="mr-2" for="inputDeviceType">Grant access to another device type</label>
-          <select id="inputDeviceType" class="form-control mb-2 mr-sm-2">
-            <option selected>Thermostats</option>
-            <option>Clocks</option>
+          <select id="inputDeviceType" class="form-control mb-2 mr-sm-2" name="deviceType" [(ngModel)]="selectedDeviceType">
+            <option *ngFor="let deviceType of allDeviceTypes" [ngValue]="deviceType">{{deviceType.name}}</option>
           </select>
 
-          <button class="btn btn-primary mb-2">Grant access</button>
+          <button class="btn btn-primary mb-2" (click)="grantAccessToDeviceType()">Grant access</button>
         </form>
       </ng-template>
     </ngb-tab>

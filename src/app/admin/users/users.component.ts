@@ -29,8 +29,8 @@ export class UsersComponent implements OnInit {
     this.users = await this.userService.getAllUsers();
   }
 
-  openUserDetails(user) {
-    this.router.navigate(['/admin/user', 1]);
+  openUserDetails(user: User) {
+    this.router.navigate(['/admin/user', user.id]);
   }
 
   async openNewUserModal(content) {
@@ -67,7 +67,7 @@ export class UsersComponent implements OnInit {
   }
 
   async deleteUser(user: User) {
-    await this.userService.deleteUser(user);
+    await this.userService.deleteUser(user.id);
 
     let index = this.users.indexOf(user);
     if (index > -1) {
