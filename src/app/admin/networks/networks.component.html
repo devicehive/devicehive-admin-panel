@@ -13,8 +13,8 @@
         <td>{{network.name}}</td>
         <td>{{network.description}}</td>
         <td>
-          <button class="btn btn-primary btn-sm" (click)="openEditNetworkModal(editNetworkModal)">Edit</button>
-          <button class="btn btn-danger btn-sm">Delete</button>
+          <button class="btn btn-primary btn-sm" (click)="openNetworkModal(editNetworkModal, network)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteNetwork(network)">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -34,7 +34,7 @@
     </ul>
   </nav>
 
-  <button class="btn btn-success float-right" (click)="openNewNetworkModal(newNetworkModal)">Add new network</button>
+  <button class="btn btn-success float-right" (click)="openNetworkModal(newNetworkModal)">Add new network</button>
 </div>
 
 <ng-template #newNetworkModal let-c="close" let-d="dismiss">
@@ -45,13 +45,13 @@
     </button>
   </div>
 
-  <div class="modal-body">
-    <dh-network></dh-network>
+  <div class="modal-body" *ngIf="newNetwork">
+    <dh-network [network]="newNetwork"></dh-network>
   </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
-    <button type="button" class="btn btn-success" (click)="c('Save')">Save</button>
+    <button type="button" class="btn btn-success" (click)="createNetwork()">Save</button>
   </div>
 </ng-template>
 
@@ -63,12 +63,12 @@
     </button>
   </div>
 
-  <div class="modal-body">
-    <dh-network></dh-network>
+  <div class="modal-body" *ngIf="selectedNetwork">
+    <dh-network [network]="selectedNetwork"></dh-network>
   </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
-    <button type="button" class="btn btn-success" (click)="c('Save')">Save</button>
+    <button type="button" class="btn btn-success" (click)="updateSelectedNetwork()">Save</button>
   </div>
 </ng-template>

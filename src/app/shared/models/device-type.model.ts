@@ -3,4 +3,8 @@ export class DeviceType {
               public name?: string,
               public description?: string) {
   }
+
+  toObject() {
+    return Object.assign({}, this);
+  }
 }

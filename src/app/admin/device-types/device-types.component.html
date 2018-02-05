@@ -13,8 +13,8 @@
         <td>{{deviceType.name}}</td>
         <td>{{deviceType.description}}</td>
         <td>
-          <button class="btn btn-primary btn-sm" (click)="openEditDeviceTypeModal(editDeviceTypeModal)">Edit</button>
-          <button class="btn btn-danger btn-sm">Delete</button>
+          <button class="btn btn-primary btn-sm" (click)="openDeviceTypeModal(editDeviceTypeModal, deviceType)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteDeviceType(deviceType)">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -34,7 +34,7 @@
     </ul>
   </nav>
 
-  <button class="btn btn-success float-right" (click)="openNewDeviceTypeModal(newDeviceTypeModal)">Add new device type</button>
+  <button class="btn btn-success float-right" (click)="openDeviceTypeModal(newDeviceTypeModal)">Add new device type</button>
 </div>
 
 <ng-template #newDeviceTypeModal let-c="close" let-d="dismiss">
@@ -45,13 +45,13 @@
     </button>
   </div>
 
-  <div class="modal-body">
-    <dh-device-type></dh-device-type>
+  <div class="modal-body" *ngIf="newDeviceType">
+    <dh-device-type [deviceType]="newDeviceType"></dh-device-type>
   </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
-    <button type="button" class="btn btn-success" (click)="c('Save')">Save</button>
+    <button type="button" class="btn btn-success" (click)="createDeviceType()">Save</button>
   </div>
 </ng-template>
 
@@ -63,12 +63,12 @@
     </button>
   </div>
 
-  <div class="modal-body">
-    <dh-device-type></dh-device-type>
+  <div class="modal-body" *ngIf="selectedDeviceType">
+    <dh-device-type [deviceType]="selectedDeviceType"></dh-device-type>
   </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
-    <button type="button" class="btn btn-success" (click)="c('Save')">Save</button>
+    <button type="button" class="btn btn-success" (click)="updateSelectedDeviceType()">Save</button>
   </div>
 </ng-template>

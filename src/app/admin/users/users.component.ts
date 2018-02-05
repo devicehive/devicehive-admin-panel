@@ -16,7 +16,7 @@ export class UsersComponent implements OnInit {
   userStatus = UserStatus;
 
   newUser: User;
-  isCreatingUser = false;
+  isSendingRequest = false;
 
   activeModal: NgbModalRef;
 
@@ -35,7 +35,7 @@ export class UsersComponent implements OnInit {
 
   async openNewUserModal(content) {
     this.newUser = new User();
-    this.isCreatingUser = false;
+    this.isSendingRequest = false;
     try {
       this.activeModal = this.modalService.open(content);
       await this.activeModal.result;
@@ -54,7 +54,7 @@ export class UsersComponent implements OnInit {
       return;
     }
 
-    this.isCreatingUser = true;
+    this.isSendingRequest = true;
     const createdUser = await this.userService.createUser(this.newUser);
 
     this.newUser.id = createdUser.id;
@@ -63,7 +63,7 @@ export class UsersComponent implements OnInit {
 
     this.newUser = null;
     this.activeModal.close();
-    this.isCreatingUser = false;
+    this.isSendingRequest = false;
   }
 
   async deleteUser(user: User) {

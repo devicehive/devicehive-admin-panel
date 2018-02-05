@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {DeviceType} from "../../../shared/models/device-type.model";
 
 @Component({
   selector: 'dh-device-type',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeviceTypeComponent implements OnInit {
 
-  constructor() { }
+  @Input() deviceType: DeviceType;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Network} from "../../../shared/models/network.model";
 
 @Component({
   selector: 'dh-network',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NetworkComponent implements OnInit {
 
-  constructor() { }
+  @Input() network: Network;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
