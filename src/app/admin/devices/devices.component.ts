@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Component, OnInit} from '@angular/core';
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {Router} from "@angular/router";
 import {DeviceService} from "../../core/device.service";
 import {Device} from "../../shared/models/device.model";
@@ -18,6 +18,10 @@ export class DevicesComponent implements OnInit {
   networks: Array<Network>;
   deviceTypes: Array<DeviceType>;
   devices: Array<Device>;
+
+  newDevice: Device;
+  isSendingRequest = false;
+  activeModal: NgbModalRef;
 
   constructor(private networkService: NetworkService,
               private deviceTypeService: DeviceTypeService,
@@ -47,12 +51,44 @@ export class DevicesComponent implements OnInit {
   }
 
   async openNewDeviceModal(content) {
+    this.newDevice = new Device();
+    this.isSendingRequest = false;
     try {
-      const result = await this.modalService.open(content).result;
-      console.log(`Closed with: ${result}`);
+      this.activeModal = this.modalService.open(content);
+      await this.activeModal.result;
     } catch (dismissReason) {
       // User dismissed modal, no need for any extra action
     }
   }
 
+  async createDevice() {
+    this.isSendingRequest = true;
+    this.newDevice.id = this.generateDeviceId();
+    await this.deviceService.createDevice(this.newDevice);
+
+    this.devices.push(this.newDevice);
+
+    this.newDevice = null;
+    this.activeModal.close();
+    this.isSendingRequest = false;
+  }
+
+  async deleteDevice(device: Device) {
+    await this.deviceService.deleteDevice(device.id);
+
+    let index = this.devices.indexOf(device);
+    if (index > -1) {
+      this.devices.splice(index, 1);
+    }
+  }
+
+  private generateDeviceId(): string {
+    let newId = "";
+    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let i = 0; i < 36; i++) {
+      newId += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return newId;
+  }
 }

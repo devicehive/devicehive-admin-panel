@@ -6,4 +6,8 @@ export class Device {
               public deviceTypeId?: number,
               public blocked?: boolean) {
   }
+
+  toObject() {
+    return Object.assign({}, this);
+  }
 }
