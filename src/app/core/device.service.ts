@@ -16,6 +16,11 @@ export class DeviceService {
     return await httpDeviceHive.device.list(query);
   }
 
+  async getDevice(deviceId: string) {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.device.get(deviceId);
+  }
+
   async createDevice(device: Device) {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.device.add(device);
@@ -23,7 +28,7 @@ export class DeviceService {
 
   async updateDevice(device: Device) {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
-    return await httpDeviceHive.device.update(device);
+    return await httpDeviceHive.device.add(device);
   }
 
   async deleteDevice(deviceId: string) {

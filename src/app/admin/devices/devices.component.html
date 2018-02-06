@@ -16,10 +16,10 @@
         <td>{{device.name}}</td>
         <td>{{findNetworkNameById(device.networkId)}}</td>
         <td>{{findDeviceTypeNameById(device.deviceTypeId)}}</td>
-        <td>{{device.blocked ? 'Blocked' : 'Normal'}}</td>
+        <td>{{device.isBlocked ? 'Blocked' : 'Normal'}}</td>
         <td>{{!!device.data ? (device.data | json) : null}}</td>
         <td>
-          <button class="btn btn-info btn-sm" (click)="openDeviceDetails(null)">Details</button>
+          <button class="btn btn-info btn-sm" (click)="openDeviceDetails(device)">Details</button>
           <button class="btn btn-danger btn-sm" (click)="deleteDevice(device)">Delete</button>
         </td>
       </tr>

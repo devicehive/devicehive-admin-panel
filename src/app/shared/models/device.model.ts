@@ -4,7 +4,7 @@ export class Device {
               public data?: Object,
               public networkId?: number,
               public deviceTypeId?: number,
-              public blocked?: boolean) {
+              public isBlocked?: boolean) {
   }
 
   toObject() {

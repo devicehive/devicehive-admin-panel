@@ -47,7 +47,7 @@ export class DevicesComponent implements OnInit {
   }
 
   openDeviceDetails(device) {
-    this.router.navigate(['/admin/device', 1]);
+    this.router.navigate(['/admin/device', device.id]);
   }
 
   async openNewDeviceModal(content) {

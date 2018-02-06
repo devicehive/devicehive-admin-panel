@@ -1,7 +1,7 @@
-<div class="container">
-  <dh-device></dh-device>
+<div class="container" *ngIf="device">
+  <dh-device [device]="device" [networks]="allNetworks" [deviceTypes]="allDeviceTypes"></dh-device>
 
-  <button class="btn btn-success">Save</button>
+  <button class="btn btn-success" (click)="updateDevice()">Save</button>
 
   <ngb-tabset>
     <ngb-tab title="Commands">
