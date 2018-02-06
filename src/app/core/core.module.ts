@@ -8,6 +8,7 @@ import {UserService} from "./user.service";
 import {NetworkService} from "./network.service";
 import {DeviceTypeService} from "./device-type.service";
 import {DeviceService} from "./device.service";
+import {CommandService} from "./command.service";
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import {DeviceService} from "./device.service";
     UserService,
     NetworkService,
     DeviceTypeService,
-    DeviceService
+    DeviceService,
+    CommandService
   ]
 })
 export class CoreModule {

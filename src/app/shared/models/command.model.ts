@@ -12,4 +12,8 @@ export class Command {
               public status?: string,
               public result?: string) {
   }
+
+  toObject() {
+    return Object.assign({}, this);
+  }
 }

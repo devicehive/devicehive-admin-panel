@@ -1,5 +1,5 @@
 <div class="container" *ngIf="device">
-  <dh-device [device]="device" [networks]="allNetworks" [deviceTypes]="allDeviceTypes"></dh-device>
+  <dh-device [device]="device" [networks]="networks" [deviceTypes]="deviceTypes"></dh-device>
 
   <button class="btn btn-success" (click)="updateDevice()">Save</button>
 
@@ -16,10 +16,20 @@
               <th scope="col">Parameters</th>
               <th scope="col">Status</th>
               <th scope="col">Result</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
-            No commands were sent in the specified time range.
+            <tr *ngFor="let command of commands">
+              <td>{{command.command}}</td>
+              <td>{{command.timestamp}}</td>
+              <td>{{!!command.parameters ? (command.parameters | json) : null}}</td>
+              <td>{{command.status}}</td>
+              <td>{{!!command.result ? (command.result | json) : null}}</td>
+              <td>
+                <button class="btn btn-secondary btn-sm" (click)="refreshCommand(command)">Refresh</button>
+              </td>
+            </tr>
           </tbody>
         </table>
 
@@ -56,21 +66,21 @@
     </button>
   </div>
 
-  <div class="modal-body">
+  <div class="modal-body" *ngIf="newCommand">
     <div class="form-group">
       <label for="inputCommandName">Name</label>
-      <input type="text" class="form-control" id="inputCommandName" placeholder="Name">
+      <input type="text" class="form-control" id="inputCommandName" placeholder="Name" [(ngModel)]="newCommand.command">
     </div>
 
     <div class="form-group">
       <label for="textAreaCommandParameters">Parameters</label>
-      <textarea class="form-control" id="textAreaCommandParameters" rows="3"></textarea>
+      <textarea class="form-control" id="textAreaCommandParameters" rows="3" [(ngModel)]="newCommand.parameters"></textarea>
     </div>
   </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
-    <button type="button" class="btn btn-success" (click)="c('Save')">Send</button>
+    <button type="button" class="btn btn-success" (click)="sendNewCommand()">Send</button>
   </div>
 </ng-template>
 
