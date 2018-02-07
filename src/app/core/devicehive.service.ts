@@ -57,6 +57,10 @@ export class DevicehiveService {
     }
   }
 
+  logOut() {
+    sessionStorage.removeItem('dh')
+  }
+
   isLoggedIn() {
     if (this.httpDeviceHive && this.loggedIn) {
       return true;

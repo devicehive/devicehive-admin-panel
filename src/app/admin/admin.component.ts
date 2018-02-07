@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
+import {DevicehiveService} from "../core/devicehive.service";
 
 @Component({
   selector: 'dh-admin',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dh: DevicehiveService,
+              private router: Router) {
+  }
 
   ngOnInit() {
   }
 
+  logOut() {
+    this.dh.logOut();
+    this.router.navigate(['/login']);
+  }
 }
