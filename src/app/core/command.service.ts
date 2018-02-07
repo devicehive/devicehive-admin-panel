@@ -23,6 +23,12 @@ export class CommandService {
     return await httpDeviceHive.command.poll(query);
   }
 
+  async pollUpdatedCommands(deviceId: string) {
+    const query = new this.CommandPollQuery({deviceId: deviceId, returnUpdatedCommands: true});
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.command.poll(query);
+  }
+
   async insertCommand(deviceId: string, command: Command) {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.command.insert(deviceId, command);

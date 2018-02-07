@@ -4,4 +4,8 @@ export class Notification {
               public timestamp?: string,
               public parameters?: Object) {
   }
+
+  toObject() {
+    return Object.assign({}, this);
+  }
 }
