@@ -1,9 +1,15 @@
 <div class="container">
+  <div *ngIf="accessToken && refreshToken">
+    <p>{{accessToken}}</p>
+    <p>{{refreshToken}}</p>
+  </div>
+
   <form class="form-inline">
     <div class="form-group">
       <div class="input-group">
+        <ngb-timepicker name="tp" [(ngModel)]="time" [spinners]="false"></ngb-timepicker>
         <input class="form-control" placeholder="yyyy-mm-dd"
-               name="dp" ngbDatepicker #d="ngbDatepicker">
+               name="dp" ngbDatepicker [(ngModel)]="date" #d="ngbDatepicker">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
             Set expiration date
@@ -11,8 +17,6 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-primary">Create tokens</button>
+    <button class="btn btn-primary" (click)="createTokens()">Create tokens</button>
   </form>
-
-
 </div>

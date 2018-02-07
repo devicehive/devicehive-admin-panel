@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NgbDateStruct, NgbTimeStruct} from "@ng-bootstrap/ng-bootstrap";
+import {JwtService} from "../../core/jwt.service";
 
 @Component({
   selector: 'dh-jwt-tokens',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JwtTokensComponent implements OnInit {
 
-  constructor() { }
+  date: NgbDateStruct;
+  time: NgbTimeStruct = {hour: 13, minute: 0, second: 0};
+
+  accessToken: string;
+  refreshToken: string;
+
+  constructor(private jwtService: JwtService) {
+  }
 
   ngOnInit() {
   }
 
+  async createTokens() {
+    this.accessToken = "test token";
+    this.refreshToken = "test token";
+  }
 }

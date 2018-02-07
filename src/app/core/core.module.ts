@@ -10,6 +10,7 @@ import {DeviceTypeService} from "./device-type.service";
 import {DeviceService} from "./device.service";
 import {CommandService} from "./command.service";
 import {NotificationService} from "./notification.service";
+import {JwtService} from "./jwt.service";
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {NotificationService} from "./notification.service";
     DeviceTypeService,
     DeviceService,
     CommandService,
-    NotificationService
+    NotificationService,
+    JwtService
   ]
 })
 export class CoreModule {
