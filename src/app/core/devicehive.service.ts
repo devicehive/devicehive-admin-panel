@@ -46,7 +46,6 @@ export class DevicehiveService {
       pluginServiceURL: this.pluginServiceURL
     });
 
-
     try {
       await this.httpDeviceHive.connect();
       sessionStorage.setItem('dh', JSON.stringify(this.httpDeviceHive));

@@ -11,14 +11,34 @@ import {DeviceService} from "./device.service";
 import {CommandService} from "./command.service";
 import {NotificationService} from "./notification.service";
 import {JwtService} from "./jwt.service";
+import {NotifierModule} from "angular-notifier";
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    NotifierModule.withConfig( {
+      position: {
+        horizontal: {
+          position: 'right',
+          distance: 12
+        },
+        vertical: {
+          position: 'top',
+          distance: 12,
+          gap: 10
+        }
+      },
+      behaviour: {
+        autoHide: 4000
+      },
+    })
   ],
   declarations: [],
+  exports: [
+    NotifierModule
+  ],
   providers: [
     DevicehiveService,
     LoggedInGuard,

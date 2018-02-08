@@ -1,12 +1,13 @@
 import {Network} from "./network.model";
+import {plainToClass} from "class-transformer";
 
 export class User {
   constructor(public id?: number,
               public login?: string,
-              public role?: UserRole,
-              public status?: UserStatus,
+              public role: UserRole = UserRole.CLIENT,
+              public status: UserStatus = UserStatus.ACTIVE,
               public lastLogin?: string,
-              public data?: Object,
+              public data?: string,
               public password?: string,
               public passwordConfirmation?: string,
               public introReviewed?: boolean,
@@ -16,7 +17,15 @@ export class User {
   }
 
   toObject() {
-    return Object.assign({}, this);
+    let obj = Object.assign({}, this);
+    obj.data = JSON.parse(this.data);
+    return obj;
+  }
+
+  static fromObject(plainObject: Object): User {
+    let user = plainToClass<User, Object>(User, plainObject);
+    user.data = JSON.stringify(user.data, null, 2);
+    return user;
   }
 }
 

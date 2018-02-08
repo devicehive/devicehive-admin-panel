@@ -3,6 +3,8 @@ import {NgbActiveModal, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap"
 import {Router} from "@angular/router";
 import {UserService} from "../../core/user.service";
 import {User, UserRole, UserStatus} from "../../shared/models/user.model";
+import {NotifierService} from "angular-notifier";
+import {UtilService} from "../../core/util.service";
 
 @Component({
   selector: 'dh-users',
@@ -22,7 +24,8 @@ export class UsersComponent implements OnInit {
 
   constructor(private userService: UserService,
               private modalService: NgbModal,
-              private router: Router) {
+              private router: Router,
+              private notifierService: NotifierService) {
   }
 
   async ngOnInit() {
@@ -45,33 +48,39 @@ export class UsersComponent implements OnInit {
   }
 
   async createUser() {
-    if (!this.newUser.password || this.newUser.password.length < 6
-      || this.newUser.password !== this.newUser.passwordConfirmation
-      || !this.newUser.login || this.newUser.password.length < 3
-      || !this.newUser.role
-      || !this.newUser.status) {
-      // TODO display error message
+    const inputError = UtilService.userContainsInputErrors(this.newUser);
+    if (inputError) {
+      this.notifierService.notify('error', inputError);
       return;
     }
 
     this.isSendingRequest = true;
-    const createdUser = await this.userService.createUser(this.newUser);
+    try {
+      const createdUser = await this.userService.createUser(this.newUser);
 
-    this.newUser.id = createdUser.id;
-    this.newUser.allDeviceTypesAvailable = createdUser.allDeviceTypesAvailable;
-    this.users.push(this.newUser);
+      this.newUser.id = createdUser.id;
+      this.newUser.allDeviceTypesAvailable = createdUser.allDeviceTypesAvailable;
+      this.users.push(this.newUser);
 
-    this.newUser = null;
-    this.activeModal.close();
-    this.isSendingRequest = false;
+      this.newUser = null;
+      this.activeModal.close();
+      this.isSendingRequest = false;
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.notifierService.notify('error', error.message);
+    }
   }
 
   async deleteUser(user: User) {
-    await this.userService.deleteUser(user.id);
+    try {
+      await this.userService.deleteUser(user.id);
 
-    let index = this.users.indexOf(user);
-    if (index > -1) {
-      this.users.splice(index, 1);
+      let index = this.users.indexOf(user);
+      if (index > -1) {
+        this.users.splice(index, 1);
+      }
+    } catch (error) {
+      this.notifierService.notify('error', error.message);
     }
   }
 }

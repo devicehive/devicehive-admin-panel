@@ -18,7 +18,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'users'
+        redirectTo: 'devices'
       },
       {
         path: 'users',

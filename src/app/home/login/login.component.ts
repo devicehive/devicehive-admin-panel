@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {DevicehiveService} from "../../core/devicehive.service";
+import {NotifierService} from "angular-notifier";
 
 @Component({
   selector: 'dh-login',
@@ -14,7 +15,9 @@ export class LoginComponent implements OnInit {
   login: string;
   password: string;
 
-  constructor(private dh: DevicehiveService, private router: Router) {
+  constructor(private dh: DevicehiveService,
+              private router: Router,
+              private notifierService: NotifierService) {
 
   }
 
@@ -35,6 +38,7 @@ export class LoginComponent implements OnInit {
       await this.dh.logIn(this.login, this.password);
       this.router.navigate(['/admin']);
     } catch (error) {
+      this.notifierService.notify('error', 'Could not log in. Incorrect login or password.');
       console.log(error);
     }
 

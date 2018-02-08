@@ -17,16 +17,4 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  get userDataValue() {
-    return JSON.stringify(this.user.data, null, 2);
-  }
-
-  set userDataValue(v) {
-    try {
-      this.user.data = JSON.parse(v)
-    } catch (error) {
-      // do nothing, error might occur while user is still typing, will validate json at save time
-    }
-  }
 }
