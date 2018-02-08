@@ -1,24 +1,26 @@
 <div class="container">
-  <table class="table">
-    <thead class="thead-light">
+  <div class="table-container">
+    <table class="table">
+      <thead class="thead-light">
       <tr>
         <th scope="col">Network</th>
         <th scope="col">Description</th>
-        <th scope="col">Actions</th>
+        <th scope="col" class="actions-column">Actions</th>
       </tr>
-    </thead>
+      </thead>
 
-    <tbody>
+      <tbody>
       <tr *ngFor="let network of networks">
-        <td>{{network.name}}</td>
+        <td >{{network.name}}</td>
         <td>{{network.description}}</td>
         <td>
           <button class="btn btn-primary btn-sm" (click)="openNetworkModal(editNetworkModal, network)">Edit</button>
           <button class="btn btn-danger btn-sm" (click)="deleteNetwork(network)">Delete</button>
         </td>
       </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 
   <!--<nav>-->
     <!--<ul class="pagination justify-content-center">-->
@@ -34,7 +36,7 @@
     <!--</ul>-->
   <!--</nav>-->
 
-  <button class="btn btn-success float-right" (click)="openNetworkModal(newNetworkModal)">Add new network</button>
+  <button class="btn btn-success float-right btn-add" (click)="openNetworkModal(newNetworkModal)">Add new network</button>
 </div>
 
 <ng-template #newNetworkModal let-c="close" let-d="dismiss">

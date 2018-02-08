@@ -1,11 +1,35 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
-@import "~font-awesome/css/font-awesome.css";
+@import "variables";
 
-body {
-  padding-top: 5rem;
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 *:focus, *:active {
   outline: none !important;
   box-shadow: none !important;
+}
+
+.container {
+  padding-top: $padding-base;
+}
+
+table {
+  table-layout: fixed;
+}
+
+.actions-column {
+  width: 165px;
+}
+
+.table-container {
+  max-height: calc(100vh - #{$navbar-height} - #{$padding-base * 2} - #{$bottom-spacing});
+  overflow-y: auto;
+}
+
+.btn-add {
+  margin-top: $margin-base;
+  margin-bottom: $margin-base;
 }

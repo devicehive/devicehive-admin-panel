@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  mainServiceURL: 'http://localhost:8080/dh/rest',
-  authServiceURL: 'http://localhost:8090/dh/rest',
-  pluginServiceURL: 'http://localhost:8110/dh/rest'
+  mainServiceURL: 'http://playground-dev.devicehive.com/api/rest',
+  authServiceURL: 'http://playground-dev.devicehive.com/auth/rest',
+  pluginServiceURL: 'http://playground-dev.devicehive.com/plugin/rest'
 };

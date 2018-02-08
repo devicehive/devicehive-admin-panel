@@ -1,14 +1,15 @@
 <div class="container">
-  <table class="table">
-    <thead class="thead-light">
-    <tr>
-      <th scope="col">Device Type</th>
-      <th scope="col">Description</th>
-      <th scope="col">Actions</th>
-    </tr>
-    </thead>
+  <div class="table-container">
+    <table class="table">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">Device Type</th>
+        <th scope="col">Description</th>
+        <th scope="col" class="actions-column">Actions</th>
+      </tr>
+      </thead>
 
-    <tbody>
+      <tbody>
       <tr *ngFor="let deviceType of deviceTypes">
         <td>{{deviceType.name}}</td>
         <td>{{deviceType.description}}</td>
@@ -17,8 +18,9 @@
           <button class="btn btn-danger btn-sm" (click)="deleteDeviceType(deviceType)">Delete</button>
         </td>
       </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 
   <!--<nav>-->
     <!--<ul class="pagination justify-content-center">-->
@@ -34,7 +36,7 @@
     <!--</ul>-->
   <!--</nav>-->
 
-  <button class="btn btn-success float-right" (click)="openDeviceTypeModal(newDeviceTypeModal)">Add new device type</button>
+  <button class="btn btn-success float-right btn-add" (click)="openDeviceTypeModal(newDeviceTypeModal)">Add new device type</button>
 </div>
 
 <ng-template #newDeviceTypeModal let-c="close" let-d="dismiss">
