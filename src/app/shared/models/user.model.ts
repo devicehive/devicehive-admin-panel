@@ -18,7 +18,11 @@ export class User {
 
   toObject() {
     let obj = Object.assign({}, this);
-    obj.data = JSON.parse(this.data);
+    if (this.data != null && this.data.length > 0) {
+      obj.data = JSON.parse(this.data);
+    } else {
+      obj.data = null;
+    }
     return obj;
   }
 

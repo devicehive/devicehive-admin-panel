@@ -20,7 +20,7 @@ export class UtilService {
       return 'Password must be the same as the password confirmation';
     }
 
-    if (user.data != null && !this.isValidJson(user.data)) {
+    if (user.data != null && user.data.length > 0 && !this.isValidJson(user.data)) {
       return 'Data must either be empty or contain valid json'
     }
 

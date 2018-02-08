@@ -60,7 +60,7 @@ export class UsersComponent implements OnInit {
 
       this.newUser.id = createdUser.id;
       this.newUser.allDeviceTypesAvailable = createdUser.allDeviceTypesAvailable;
-      this.users.push(this.newUser);
+      this.users.push(this.newUser.toObject());
 
       this.newUser = null;
       this.activeModal.close();
