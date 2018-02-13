@@ -106,23 +106,6 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     this.activeModal.close();
   }
 
-  async refreshCommand(command: Command) {
-    const refreshedCommands = await this.commandService.pollUpdatedCommands(this.device.id);
-    const index = this.commands.indexOf(command);
-
-    let refreshedCommand = null;
-    refreshedCommands.forEach(c => {
-      if (c.id === command.id) {
-        refreshedCommand = c;
-      }
-    });
-
-    if (refreshedCommand != null && index > -1) {
-      this.commands[index] = refreshedCommand;
-      console.log(refreshedCommand)
-    }
-  }
-
   async pollCommands() {
     const commands = await this.commandService.pollCommands(this.device.id);
     commands.forEach(c => {

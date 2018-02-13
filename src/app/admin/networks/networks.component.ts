@@ -3,6 +3,8 @@ import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {Network} from "../../shared/models/network.model";
 import {NetworkService} from "../../core/network.service";
 import {plainToClass} from "class-transformer";
+import {NotifierService} from "angular-notifier";
+import {UtilService} from "../../core/util.service";
 
 @Component({
   selector: 'dh-networks',
@@ -19,7 +21,8 @@ export class NetworksComponent implements OnInit {
   activeModal: NgbModalRef;
 
   constructor(private networkService: NetworkService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              private notifierService: NotifierService) {
   }
 
   async ngOnInit() {
@@ -43,28 +46,55 @@ export class NetworksComponent implements OnInit {
   }
 
   async createNetwork() {
+    const inputError = UtilService.getNetworkInputErrors(this.newNetwork);
+    if (inputError) {
+      this.notifierService.notify('error', inputError);
+      return;
+    }
+
     this.isSendingRequest = true;
-    const createdNetwork = await this.networkService.createNetwork(this.newNetwork);
+    try {
+      const createdNetwork = await this.networkService.createNetwork(this.newNetwork);
 
-    this.newNetwork.id = createdNetwork.id;
-    this.networks.push(this.newNetwork);
+      this.newNetwork.id = createdNetwork.id;
+      this.networks.push(this.newNetwork);
 
-    this.newNetwork = null;
-    this.activeModal.close();
-    this.isSendingRequest = false;
+      this.newNetwork = null;
+      this.activeModal.close();
+      this.isSendingRequest = false;
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.notifierService.notify('error', error.message);
+    }
   }
 
   async deleteNetwork(network: Network) {
-    await this.networkService.deleteNetwork(network.id);
+    try {
+      await this.networkService.deleteNetwork(network.id);
 
-    let index = this.networks.indexOf(network);
-    if (index > -1) {
-      this.networks.splice(index, 1);
+      let index = this.networks.indexOf(network);
+      if (index > -1) {
+        this.networks.splice(index, 1);
+      }
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.notifierService.notify('error', error.message);
     }
   }
 
   async updateSelectedNetwork() {
-    await this.networkService.updateNetwork(this.selectedNetwork);
-    this.activeModal.close();
+    const inputError = UtilService.getNetworkInputErrors(this.selectedNetwork);
+    if (inputError) {
+      this.notifierService.notify('error', inputError);
+      return;
+    }
+
+    try {
+      await this.networkService.updateNetwork(this.selectedNetwork);
+      this.activeModal.close();
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.notifierService.notify('error', error.message);
+    }
   }
 }

@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgbActiveModal, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {Component, OnInit} from '@angular/core';
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {Router} from "@angular/router";
 import {UserService} from "../../core/user.service";
 import {User, UserRole, UserStatus} from "../../shared/models/user.model";
@@ -48,7 +48,7 @@ export class UsersComponent implements OnInit {
   }
 
   async createUser() {
-    const inputError = UtilService.userContainsInputErrors(this.newUser);
+    const inputError = UtilService.getUserInputErrors(this.newUser);
     if (inputError) {
       this.notifierService.notify('error', inputError);
       return;
