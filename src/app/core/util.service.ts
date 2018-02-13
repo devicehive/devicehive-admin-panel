@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {User} from "../shared/models/user.model";
 import {Network} from "../shared/models/network.model";
+import {DeviceType} from "../shared/models/device-type.model";
 
 @Injectable()
 export class UtilService {
@@ -38,6 +39,22 @@ export class UtilService {
     }
 
     if (network.description && network.description.length > 128) {
+      return 'Description cannot be longer than 128 symbols';
+    }
+
+    return null;
+  }
+
+  static getDeviceTypeInputErrors(deviceType: DeviceType): string {
+    if (!deviceType.name || deviceType.name.length < 1) {
+      return 'Device type name cannot be empty';
+    }
+
+    if (deviceType.name.length > 128) {
+      return 'Device type name cannot be longer than 128 symbols';
+    }
+
+    if (deviceType.description && deviceType.description.length > 128) {
       return 'Description cannot be longer than 128 symbols';
     }
 

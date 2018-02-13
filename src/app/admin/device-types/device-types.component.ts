@@ -3,6 +3,8 @@ import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {DeviceTypeService} from "../../core/device-type.service";
 import {DeviceType} from "../../shared/models/device-type.model";
 import {plainToClass} from "class-transformer";
+import {NotifierService} from "angular-notifier";
+import {UtilService} from "../../core/util.service";
 
 @Component({
   selector: 'dh-device-types',
@@ -19,7 +21,8 @@ export class DeviceTypesComponent implements OnInit {
   activeModal: NgbModalRef;
 
   constructor(private deviceTypeService: DeviceTypeService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              private notifierService: NotifierService) {
   }
 
   async ngOnInit() {
@@ -43,28 +46,55 @@ export class DeviceTypesComponent implements OnInit {
   }
 
   async createDeviceType() {
+    const inputError = UtilService.getDeviceTypeInputErrors(this.newDeviceType);
+    if (inputError) {
+      this.notifierService.notify('error', inputError);
+      return;
+    }
+
     this.isSendingRequest = true;
-    const createdDeviceType = await this.deviceTypeService.createDeviceType(this.newDeviceType);
+    try {
+      const createdDeviceType = await this.deviceTypeService.createDeviceType(this.newDeviceType);
 
-    this.newDeviceType.id = createdDeviceType.id;
-    this.deviceTypes.push(this.newDeviceType);
+      this.newDeviceType.id = createdDeviceType.id;
+      this.deviceTypes.push(this.newDeviceType);
 
-    this.newDeviceType = null;
-    this.activeModal.close();
-    this.isSendingRequest = false;
+      this.newDeviceType = null;
+      this.activeModal.close();
+      this.isSendingRequest = false;
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.notifierService.notify('error', error.message);
+    }
   }
 
   async deleteDeviceType(deviceType: DeviceType) {
-    await this.deviceTypeService.deleteDeviceType(deviceType.id);
+    try {
+      await this.deviceTypeService.deleteDeviceType(deviceType.id);
 
-    let index = this.deviceTypes.indexOf(deviceType);
-    if (index > -1) {
-      this.deviceTypes.splice(index, 1);
+      let index = this.deviceTypes.indexOf(deviceType);
+      if (index > -1) {
+        this.deviceTypes.splice(index, 1);
+      }
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.notifierService.notify('error', error.message);
     }
   }
 
   async updateSelectedDeviceType() {
-    await this.deviceTypeService.updateDeviceType(this.selectedDeviceType);
-    this.activeModal.close();
+    const inputError = UtilService.getDeviceTypeInputErrors(this.selectedDeviceType);
+    if (inputError) {
+      this.notifierService.notify('error', inputError);
+      return;
+    }
+
+    try {
+      await this.deviceTypeService.updateDeviceType(this.selectedDeviceType);
+      this.activeModal.close();
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.notifierService.notify('error', error.message);
+    }
   }
 }
