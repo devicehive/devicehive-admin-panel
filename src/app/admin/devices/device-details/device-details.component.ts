@@ -13,6 +13,8 @@ import {Command} from "../../../shared/models/command.model";
 import {Notification} from "../../../shared/models/notification.model";
 import 'rxjs/add/observable/interval';
 import {NotificationService} from "../../../core/notification.service";
+import {NotifierService} from "angular-notifier";
+import {UtilService} from "../../../core/util.service";
 
 @Component({
   selector: 'dh-device-details',
@@ -43,7 +45,8 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
               private deviceTypeService: DeviceTypeService,
               private deviceService: DeviceService,
               private commandService: CommandService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private notifierService: NotifierService) {
   }
 
   ngOnInit(): void {
@@ -60,7 +63,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
 
   async initData(deviceId: string) {
     const devicePlain = await this.deviceService.getDevice(deviceId);
-    this.device = plainToClass<Device, Object>(Device, devicePlain);
+    this.device = Device.fromObject(devicePlain);
 
     this.networks = await this.networkService.getAllNetworks();
     this.deviceTypes = await this.deviceTypeService.getAllDeviceTypes();
@@ -74,7 +77,18 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
   }
 
   async updateDevice() {
-    await this.deviceService.updateDevice(this.device);
+    const inputError = UtilService.getDeviceInputErrors(this.device);
+    if (inputError) {
+      this.notifierService.notify('error', inputError);
+      return;
+    }
+
+    try {
+      await this.deviceService.updateDevice(this.device);
+      this.notifierService.notify('success', 'Device updated');
+    } catch (error) {
+      this.notifierService.notify('error', error.message);
+    }
   }
 
   async openNewCommandModal(content) {
@@ -101,9 +115,14 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
 
   async sendNewCommand() {
     this.isSendingRequest = true;
-    await this.commandService.insertCommand(this.device.id, this.newCommand);
-    this.isSendingRequest = false;
-    this.activeModal.close();
+    try {
+      await this.commandService.insertCommand(this.device.id, this.newCommand);
+      this.isSendingRequest = false;
+      this.activeModal.close();
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.notifierService.notify('error', error.message);
+    }
   }
 
   async pollCommands() {
@@ -129,9 +148,15 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
 
   async sendNewNotification() {
     this.isSendingRequest = true;
-    await this.notificationService.insertNotification(this.device.id, this.newNotification);
-    this.isSendingRequest = false;
-    this.activeModal.close();
+
+    try {
+      await this.notificationService.insertNotification(this.device.id, this.newNotification);
+      this.isSendingRequest = false;
+      this.activeModal.close();
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.notifierService.notify('error', error.message);
+    }
   }
 
   async pollNotifications() {

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {User} from "../shared/models/user.model";
 import {Network} from "../shared/models/network.model";
 import {DeviceType} from "../shared/models/device-type.model";
+import {Device} from "../shared/models/device.model";
 
 @Injectable()
 export class UtilService {
@@ -56,6 +57,22 @@ export class UtilService {
 
     if (deviceType.description && deviceType.description.length > 128) {
       return 'Description cannot be longer than 128 symbols';
+    }
+
+    return null;
+  }
+
+  static getDeviceInputErrors(device: Device): string {
+    if (!device.name || device.name.length < 1) {
+      return 'Device name cannot be empty';
+    }
+
+    if (device.name.length > 128) {
+      return 'Device name cannot be longer than 128 symbols';
+    }
+
+    if (device.data != null && device.data.length > 0 && !this.isValidJson(device.data)) {
+      return 'Data must either be empty or contain valid json'
     }
 
     return null;

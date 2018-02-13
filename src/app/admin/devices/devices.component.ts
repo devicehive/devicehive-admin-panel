@@ -7,6 +7,8 @@ import {NetworkService} from "../../core/network.service";
 import {DeviceTypeService} from "../../core/device-type.service";
 import {Network} from "../../shared/models/network.model";
 import {DeviceType} from "../../shared/models/device-type.model";
+import {NotifierService} from "angular-notifier";
+import {UtilService} from "../../core/util.service";
 
 @Component({
   selector: 'dh-devices',
@@ -27,7 +29,8 @@ export class DevicesComponent implements OnInit {
               private deviceTypeService: DeviceTypeService,
               private deviceService: DeviceService,
               private modalService: NgbModal,
-              private router: Router) {
+              private router: Router,
+              private notifierService: NotifierService) {
 
   }
 
@@ -52,6 +55,14 @@ export class DevicesComponent implements OnInit {
 
   async openNewDeviceModal(content) {
     this.newDevice = new Device();
+    if (this.networks) {
+      this.newDevice.networkId = this.networks[0].id;
+    }
+
+    if (this.deviceTypes) {
+      this.newDevice.deviceTypeId = this.deviceTypes[0].id;
+    }
+
     this.isSendingRequest = false;
     try {
       this.activeModal = this.modalService.open(content);
@@ -62,23 +73,40 @@ export class DevicesComponent implements OnInit {
   }
 
   async createDevice() {
+    const inputError = UtilService.getDeviceInputErrors(this.newDevice);
+    if (inputError) {
+      this.notifierService.notify('error', inputError);
+      return;
+    }
+
     this.isSendingRequest = true;
-    this.newDevice.id = this.generateDeviceId();
-    await this.deviceService.createDevice(this.newDevice);
 
-    this.devices.push(this.newDevice);
+    try {
+      this.newDevice.id = this.generateDeviceId();
+      await this.deviceService.createDevice(this.newDevice);
 
-    this.newDevice = null;
-    this.activeModal.close();
-    this.isSendingRequest = false;
+      this.devices.push(this.newDevice.toObject());
+
+      this.newDevice = null;
+      this.activeModal.close();
+      this.isSendingRequest = false;
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.notifierService.notify('error', error.message);
+    }
   }
 
   async deleteDevice(device: Device) {
-    await this.deviceService.deleteDevice(device.id);
+    try {
+      await this.deviceService.deleteDevice(device.id);
 
-    let index = this.devices.indexOf(device);
-    if (index > -1) {
-      this.devices.splice(index, 1);
+      let index = this.devices.indexOf(device);
+      if (index > -1) {
+        this.devices.splice(index, 1);
+      }
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.notifierService.notify('error', error.message);
     }
   }
 

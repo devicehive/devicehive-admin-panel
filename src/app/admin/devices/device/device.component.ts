@@ -19,16 +19,4 @@ export class DeviceComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  get deviceDataValue() {
-    return JSON.stringify(this.device.data, null, 2);
-  }
-
-  set deviceDataValue(v) {
-    try {
-      this.device.data = JSON.parse(v)
-    } catch (error) {
-      // do nothing, error might occur while user is still typing, will validate json at save time
-    }
-  }
 }
