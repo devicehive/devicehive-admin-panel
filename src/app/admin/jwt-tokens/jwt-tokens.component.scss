@@ -1,4 +1,17 @@
+@import "../../../variables";
+
 ngb-timepicker {
-  margin-right: 8px;
+  margin-right: $margin-base;
 }
 
+.btn-create-tokens {
+  margin-left: $margin-base;
+}
+
+.list-group {
+  margin-bottom: $margin-base;
+}
+
+p {
+  word-wrap: break-word;
+}

@@ -1,7 +1,20 @@
 <div class="container">
   <div *ngIf="accessToken && refreshToken">
-    <p>{{accessToken}}</p>
-    <p>{{refreshToken}}</p>
+    <div class="list-group">
+      <a class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5>Access Token</h5>
+        </div>
+        <p>{{accessToken}}</p>
+      </a>
+
+      <a class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5>Refresh Token</h5>
+        </div>
+        <p>{{refreshToken}}</p>
+      </a>
+    </div>
   </div>
 
   <form class="form-inline">
@@ -17,6 +30,6 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-primary" (click)="createTokens()">Create tokens</button>
+    <button class="btn btn-primary btn-create-tokens" (click)="createTokens()">Create tokens</button>
   </form>
 </div>

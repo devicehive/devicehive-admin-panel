@@ -12,6 +12,8 @@ export class DevicehiveService {
   private pluginServiceURL: string = environment.pluginServiceURL;
   private loggedIn = false;
 
+  private refreshToken: string;
+
   constructor() {
   }
 
@@ -49,6 +51,7 @@ export class DevicehiveService {
     try {
       await this.httpDeviceHive.connect();
       sessionStorage.setItem('dh', JSON.stringify(this.httpDeviceHive));
+
       this.loggedIn = true;
     } catch (error) {
       this.loggedIn = false;
@@ -67,5 +70,17 @@ export class DevicehiveService {
 
     const dh = JSON.parse(sessionStorage.getItem('dh'));
     return dh != null;
+  }
+
+  async getRefreshToken() {
+    if (this.refreshToken) {
+      return this.refreshToken;
+    } else if (this.httpDeviceHive.refreshToken) {
+      return this.httpDeviceHive.refreshToken;
+    } else {
+      const tokens = await this.httpDeviceHive.token.login(this.httpDeviceHive.login, this.httpDeviceHive.password);
+      this.refreshToken = tokens.refreshToken;
+      return this.refreshToken;
+    }
   }
 }
