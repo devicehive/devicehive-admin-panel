@@ -5,7 +5,7 @@
       <tr>
         <th scope="col">Device Type</th>
         <th scope="col">Description</th>
-        <th scope="col" class="actions-column">Actions</th>
+        <th scope="col" class="actions-column" *ngIf="isAdmin">Actions</th>
       </tr>
       </thead>
 
@@ -13,7 +13,7 @@
       <tr *ngFor="let deviceType of deviceTypes">
         <td>{{deviceType.name}}</td>
         <td>{{deviceType.description}}</td>
-        <td>
+        <td *ngIf="isAdmin">
           <button class="btn btn-primary btn-sm" (click)="openDeviceTypeModal(editDeviceTypeModal, deviceType)">Edit</button>
           <button class="btn btn-danger btn-sm" (click)="deleteDeviceType(deviceType)">Delete</button>
         </td>
@@ -22,21 +22,7 @@
     </table>
   </div>
 
-  <!--<nav>-->
-    <!--<ul class="pagination justify-content-center">-->
-      <!--<li class="page-item disabled">-->
-        <!--<a class="page-link" href="#" tabindex="-1">Previous</a>-->
-      <!--</li>-->
-      <!--<li class="page-item active"><a class="page-link" href="#">1</a></li>-->
-      <!--<li class="page-item"><a class="page-link" href="#">2</a></li>-->
-      <!--<li class="page-item"><a class="page-link" href="#">3</a></li>-->
-      <!--<li class="page-item">-->
-        <!--<a class="page-link" href="#">Next</a>-->
-      <!--</li>-->
-    <!--</ul>-->
-  <!--</nav>-->
-
-  <button class="btn btn-success float-right btn-add" (click)="openDeviceTypeModal(newDeviceTypeModal)">Add new device type</button>
+  <button class="btn btn-success float-right btn-add" *ngIf="isAdmin" (click)="openDeviceTypeModal(newDeviceTypeModal)">Add new device type</button>
 </div>
 
 <ng-template #newDeviceTypeModal let-c="close" let-d="dismiss">

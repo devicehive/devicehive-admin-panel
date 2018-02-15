@@ -5,9 +5,29 @@ import {User} from "../shared/models/user.model";
 @Injectable()
 export class UserService {
 
-  UserListQuery = DeviceHive.models.query.UserListQuery;
+  private UserListQuery = DeviceHive.models.query.UserListQuery;
+  private currentUser: User;
 
   constructor(private dh: DevicehiveService) {
+  }
+
+  async getCurrentUser() {
+    if (!this.currentUser) {
+      const httpDeviceHive = await this.dh.getHttpDeviceHive();
+      this.currentUser = await httpDeviceHive.user.getCurrent();
+    }
+
+    return this.currentUser;
+  }
+
+  async forceGetCurrentUser() {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    this.currentUser = await httpDeviceHive.user.getCurrent();
+    return this.currentUser;
+  }
+
+  clearCurrentUser() {
+    this.currentUser = null;
   }
 
   async getAllUsers() {

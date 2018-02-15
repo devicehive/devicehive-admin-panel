@@ -5,6 +5,8 @@ import {DeviceType} from "../../shared/models/device-type.model";
 import {plainToClass} from "class-transformer";
 import {NotifierService} from "angular-notifier";
 import {UtilService} from "../../core/util.service";
+import {UserService} from "../../core/user.service";
+import {UserRole} from "../../shared/models/user.model";
 
 @Component({
   selector: 'dh-device-types',
@@ -13,6 +15,7 @@ import {UtilService} from "../../core/util.service";
 })
 export class DeviceTypesComponent implements OnInit {
 
+  isAdmin = false;
   deviceTypes: Array<DeviceType>;
 
   newDeviceType: DeviceType;
@@ -21,11 +24,15 @@ export class DeviceTypesComponent implements OnInit {
   activeModal: NgbModalRef;
 
   constructor(private deviceTypeService: DeviceTypeService,
+              private userService: UserService,
               private modalService: NgbModal,
               private notifierService: NotifierService) {
   }
 
   async ngOnInit() {
+    const currentUser = await this.userService.getCurrentUser();
+    this.isAdmin = currentUser.role === UserRole.ADMIN;
+
     const deviceTypesPlain = await this.deviceTypeService.getAllDeviceTypes();
     this.deviceTypes = plainToClass(DeviceType, deviceTypesPlain);
   }
