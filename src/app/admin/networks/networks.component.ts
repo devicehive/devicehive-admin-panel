@@ -39,7 +39,7 @@ export class NetworksComponent implements OnInit {
 
   async openNetworkModal(content, selectedNetwork?: Network) {
     if (selectedNetwork) {
-      this.selectedNetwork = selectedNetwork;
+      this.selectedNetwork = new Network(selectedNetwork.id, selectedNetwork.name, selectedNetwork.description);
     }
 
     this.newNetwork = new Network();
@@ -98,6 +98,13 @@ export class NetworksComponent implements OnInit {
 
     try {
       await this.networkService.updateNetwork(this.selectedNetwork);
+
+      let oldNetwork = this.networks.find(i => i.id === this.selectedNetwork.id);
+      let index = this.networks.indexOf(oldNetwork);
+      if (index > -1) {
+        this.networks[index] = this.selectedNetwork;
+      }
+
       this.activeModal.close();
     } catch (error) {
       this.isSendingRequest = false;

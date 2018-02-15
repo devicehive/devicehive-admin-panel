@@ -39,7 +39,7 @@ export class DeviceTypesComponent implements OnInit {
 
   async openDeviceTypeModal(content, selectedDeviceType?: DeviceType) {
     if (selectedDeviceType) {
-      this.selectedDeviceType = selectedDeviceType;
+      this.selectedDeviceType = new DeviceType(selectedDeviceType.id, selectedDeviceType.name, selectedDeviceType.description);
     }
 
     this.newDeviceType = new DeviceType();
@@ -98,6 +98,13 @@ export class DeviceTypesComponent implements OnInit {
 
     try {
       await this.deviceTypeService.updateDeviceType(this.selectedDeviceType);
+
+      let oldDeviceType = this.deviceTypes.find(i => i.id === this.selectedDeviceType.id);
+      let index = this.deviceTypes.indexOf(oldDeviceType);
+      if (index > -1) {
+        this.deviceTypes[index] = this.selectedDeviceType;
+      }
+
       this.activeModal.close();
     } catch (error) {
       this.isSendingRequest = false;
