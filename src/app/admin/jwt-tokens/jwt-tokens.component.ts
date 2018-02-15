@@ -31,4 +31,9 @@ export class JwtTokensComponent implements OnInit {
     this.accessToken = tokens.accessToken;
     this.refreshToken = tokens.refreshToken;
   }
+
+  clearExpirationDate() {
+    this.date = null;
+    this.time = {hour: 0, minute: 0, second: 0};
+  }
 }
