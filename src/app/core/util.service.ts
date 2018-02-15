@@ -3,6 +3,8 @@ import {User} from "../shared/models/user.model";
 import {Network} from "../shared/models/network.model";
 import {DeviceType} from "../shared/models/device-type.model";
 import {Device} from "../shared/models/device.model";
+import {Command} from "../shared/models/command.model";
+import {Notification} from "../shared/models/notification.model";
 
 @Injectable()
 export class UtilService {
@@ -73,6 +75,30 @@ export class UtilService {
 
     if (device.data != null && device.data.length > 0 && !this.isValidJson(device.data)) {
       return 'Data must either be empty or contain valid json'
+    }
+
+    return null;
+  }
+
+  static getCommandInputErrors(command: Command) {
+    if (!command.command || command.command.length < 1) {
+      return 'Command cannot be empty';
+    }
+
+    if (command.parameters != null && command.parameters.length > 0 && !this.isValidJson(command.parameters)) {
+      return 'Parameters must either be empty or contain valid json'
+    }
+
+    return null;
+  }
+
+  static getNotificationInputErrors(notification: Notification) {
+    if (!notification.notification || notification.notification.length < 1) {
+      return 'Notification cannot be empty';
+    }
+
+    if (notification.parameters != null && notification.parameters.length > 0 && !this.isValidJson(notification.parameters)) {
+      return 'Parameters must either be empty or contain valid json'
     }
 
     return null;

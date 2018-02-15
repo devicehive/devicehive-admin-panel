@@ -16,23 +16,20 @@
               <th scope="col">Parameters</th>
               <th scope="col">Status</th>
               <th scope="col">Result</th>
-              <!--<th scope="col">Actions</th>-->
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let command of commands">
               <td>{{command.command}}</td>
-              <td>{{command.timestamp}}</td>
+              <td>{{command.timestamp | date:'medium'}}</td>
               <td>{{!!command.parameters ? (command.parameters | json) : null}}</td>
               <td>{{command.status}}</td>
               <td>{{!!command.result ? (command.result | json) : null}}</td>
-              <!--<td>-->
-                <!--<button class="btn btn-secondary btn-sm" (click)="refreshCommand(command)">Refresh</button>-->
-              <!--</td>-->
             </tr>
           </tbody>
         </table>
 
+        <p *ngIf="commands?.length === 0" class="text-center">This device does not have any commands</p>
       </ng-template>
     </ngb-tab>
 
@@ -51,12 +48,13 @@
           <tbody>
             <tr *ngFor="let notification of notifications">
               <td>{{notification.notification}}</td>
-              <td>{{notification.timestamp}}</td>
+              <td>{{notification.timestamp | date:'medium'}}</td>
               <td>{{!!notification.parameters ? (notification.parameters | json) : null}}</td>
             </tr>
           </tbody>
         </table>
 
+        <p *ngIf="notifications?.length === 0" class="text-center">This device does not have any notifications</p>
       </ng-template>
     </ngb-tab>
   </ngb-tabset>

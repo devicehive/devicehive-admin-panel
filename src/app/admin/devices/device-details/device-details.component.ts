@@ -114,6 +114,12 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
   }
 
   async sendNewCommand() {
+    const inputError = UtilService.getCommandInputErrors(this.newCommand);
+    if (inputError) {
+      this.notifierService.notify('error', inputError);
+      return;
+    }
+
     this.isSendingRequest = true;
     try {
       await this.commandService.insertCommand(this.device.id, this.newCommand);
@@ -147,6 +153,12 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
   }
 
   async sendNewNotification() {
+    const inputError = UtilService.getNotificationInputErrors(this.newNotification);
+    if (inputError) {
+      this.notifierService.notify('error', inputError);
+      return;
+    }
+
     this.isSendingRequest = true;
 
     try {
