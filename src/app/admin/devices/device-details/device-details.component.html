@@ -1,3 +1,10 @@
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/admin/devices">Devices</a></li>
+    <li class="breadcrumb-item active">{{device?.id}}</li>
+  </ol>
+</nav>
+
 <div class="container" *ngIf="device">
   <dh-device [device]="device" [networks]="networks" [deviceTypes]="deviceTypes"></dh-device>
 

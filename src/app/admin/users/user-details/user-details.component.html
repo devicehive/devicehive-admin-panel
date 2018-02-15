@@ -1,3 +1,10 @@
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/admin/users">Users</a></li>
+    <li class="breadcrumb-item active">{{user?.id}}</li>
+  </ol>
+</nav>
+
 <div class="container" *ngIf="user">
   <dh-user [user]="user"></dh-user>
 
