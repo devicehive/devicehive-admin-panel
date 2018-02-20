@@ -5,6 +5,7 @@ import {DeviceType} from "../shared/models/device-type.model";
 import {Device} from "../shared/models/device.model";
 import {Command} from "../shared/models/command.model";
 import {Notification} from "../shared/models/notification.model";
+import {isNumeric} from "rxjs/util/isNumeric";
 
 @Injectable()
 export class UtilService {
@@ -125,6 +126,10 @@ export class UtilService {
   }
 
   static isValidJson(str: string) {
+    if (isNumeric(str)) {
+      return false;
+    }
+
     try {
       JSON.parse(str);
     } catch (e) {
