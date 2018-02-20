@@ -83,4 +83,13 @@ export class UsersComponent implements OnInit {
       this.notifierService.notify('error', error.message);
     }
   }
+
+  // Method to only display tooltip if value overflows. Seems to have negative impact on performance so we decided not to apply
+
+  // getTooltip(element, user) {
+  //   if (element.offsetWidth < element.scrollWidth) {
+  //     return user.login;
+  //   }
+  //   return null;
+  // }
 }
