@@ -1,13 +1,8 @@
 @import "../../../../variables";
 
-.btn-save {
+.btn-edit {
   margin-bottom: 8px;
   margin-top: 8px;
-}
-
-.form-check {
-  margin-top: $margin-base;
-  margin-bottom: $margin-base;
 }
 
 .form-inline label {
@@ -16,6 +11,14 @@
 
 .form-inline .form-control {
   max-width: 50%;
+}
+
+.card {
+  margin-bottom: $margin-base;
+}
+
+.card-header {
+  cursor: pointer;
 }
 
 .breadcrumb {

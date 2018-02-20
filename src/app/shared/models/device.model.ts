@@ -21,7 +21,17 @@ export class Device {
 
   static fromObject(plainObject: Object): Device {
     let device = plainToClass<Device, Object>(Device, plainObject);
-    device.data = JSON.stringify(device.data, null, 2);
+    if (device.data) {
+      device.data = JSON.stringify(device.data, null, 2);
+    } else {
+      device.data = '';
+    }
     return device;
+  }
+
+  static fromDevice(device: Device) {
+    return new this(
+      device.id, device.name, device.data, device.networkId, device.deviceTypeId, device.isBlocked
+    )
   }
 }

@@ -6,9 +6,35 @@
 </nav>
 
 <div class="container" *ngIf="user">
-  <dh-user [user]="user"></dh-user>
+  <div>
+    <div class="card">
+      <div class="card-header" (click)="isCollapsed = !isCollapsed">
+        User
+      </div>
 
-  <button class="btn btn-success btn-save" (click)="updateUser()">Save</button>
+      <div id="collapse" class="collapse show" [ngbCollapse]="isCollapsed">
+        <div class="card-body">
+          <p>Login: {{user.login}}</p>
+
+          <div class="row">
+            <div class="col-6">
+              <p>Role: {{userRole[user.role]}}</p>
+            </div>
+            <div class="col-6">
+              <p>Status: {{userStatus[user.status]}}</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="textAreaData">Data (json):</label>
+            <textarea readonly class="form-control-plaintext" id="textAreaData" rows="3" [(ngModel)]="user.data"></textarea>
+          </div>
+
+          <button class="btn btn-primary float-right btn-edit" (click)="openEditUserModal(editUserModal)">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <ngb-tabset>
     <ngb-tab title="Networks">
@@ -87,3 +113,21 @@
     </ngb-tab>
   </ngb-tabset>
 </div>
+
+<ng-template #editUserModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Edit user</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="editUser">
+    <dh-user [user]="editUser"></dh-user>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="updateUser()">Save</button>
+  </div>
+</ng-template>

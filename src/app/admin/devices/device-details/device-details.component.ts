@@ -15,6 +15,7 @@ import 'rxjs/add/observable/interval';
 import {NotificationService} from "../../../core/notification.service";
 import {NotifierService} from "angular-notifier";
 import {UtilService} from "../../../core/util.service";
+import {User} from "../../../shared/models/user.model";
 
 @Component({
   selector: 'dh-device-details',
@@ -35,6 +36,9 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
 
   isSendingRequest = false;
   activeModal: NgbModalRef;
+
+  isCollapsed = false;
+  editDevice: Device;
 
   private shouldPollCommands = true;
   private shouldPollNotifications = true;
@@ -76,16 +80,37 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     this.pollNotifications();
   }
 
+  findNetworkNameById(id: number) {
+    return this.networks.find(n => n.id === id).name;
+  }
+
+  findDeviceTypeNameById(id: number) {
+    return this.deviceTypes.find(n => n.id === id).name;
+  }
+
+  async openEditDeviceModal(content) {
+    this.editDevice = Device.fromDevice(this.device);
+
+    try {
+      this.activeModal = this.modalService.open(content);
+      await this.activeModal.result;
+    } catch (dismissReason) {
+      // User dismissed modal, no need for any extra actions
+    }
+  }
+
   async updateDevice() {
-    const inputError = UtilService.getDeviceInputErrors(this.device);
+    const inputError = UtilService.getDeviceInputErrors(this.editDevice);
     if (inputError) {
       this.notifierService.notify('error', inputError);
       return;
     }
 
     try {
-      await this.deviceService.updateDevice(this.device);
-      this.notifierService.notify('success', 'Device updated');
+      await this.deviceService.updateDevice(this.editDevice);
+      this.device = this.editDevice;
+      this.editDevice = null;
+      this.activeModal.close();
     } catch (error) {
       this.notifierService.notify('error', error.message);
     }

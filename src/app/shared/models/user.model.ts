@@ -35,6 +35,13 @@ export class User {
     }
     return user;
   }
+
+  static fromUser(user: User) {
+    return new this(
+      user.id, user.login, user.role, user.status, user.lastLogin, user.data, user.password, user.passwordConfirmation,
+      user.introReviewed, user.allDeviceTypesAvailable, user.networks
+    )
+  }
 }
 
 export enum UserRole {

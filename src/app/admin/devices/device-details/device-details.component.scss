@@ -1,6 +1,16 @@
+@import "../../../../variables";
+
 .btn {
   margin-bottom: 8px;
   margin-top: 8px;
+}
+
+.card {
+  margin-bottom: $margin-base;
+}
+
+.card-header {
+  cursor: pointer;
 }
 
 .breadcrumb {

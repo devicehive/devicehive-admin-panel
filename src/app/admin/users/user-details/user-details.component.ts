@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from "../../../shared/models/user.model";
+import {User, UserRole, UserStatus} from "../../../shared/models/user.model";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../core/user.service";
 import {NetworkService} from "../../../core/network.service";
@@ -8,6 +8,7 @@ import {DeviceType} from "../../../shared/models/device-type.model";
 import {DeviceTypeService} from "../../../core/device-type.service";
 import {NotifierService} from "angular-notifier";
 import {UtilService} from "../../../core/util.service";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'dh-user-details',
@@ -24,7 +25,16 @@ export class UserDetailsComponent implements OnInit {
   selectedNetwork: Network;
   selectedDeviceType: DeviceType;
 
+  userRole = UserRole;
+  userStatus = UserStatus;
+
+  isCollapsed = false;
+
+  editUser: User;
+  activeModal: NgbModalRef;
+
   constructor(private route: ActivatedRoute,
+              private modalService: NgbModal,
               private userService: UserService,
               private networkService: NetworkService,
               private deviceTypeService: DeviceTypeService,
@@ -51,16 +61,29 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
+  async openEditUserModal(content) {
+    this.editUser = User.fromUser(this.user);
+
+    try {
+      this.activeModal = this.modalService.open(content);
+      await this.activeModal.result;
+    } catch (dismissReason) {
+      // User dismissed modal, no need for any extra actions
+    }
+  }
+
   async updateUser() {
-    const inputError = UtilService.getUserDetailsInputErrors(this.user);
+    const inputError = UtilService.getUserDetailsInputErrors(this.editUser);
     if (inputError) {
       this.notifierService.notify('error', inputError);
       return;
     }
 
     try {
-      await this.userService.updateUser(this.user);
-      this.notifierService.notify('success', 'User updated');
+      await this.userService.updateUser(this.editUser);
+      this.user = this.editUser;
+      this.editUser = null;
+      this.activeModal.close();
     } catch (error) {
       this.notifierService.notify('error', error.message);
     }
