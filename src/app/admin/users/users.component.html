@@ -14,7 +14,7 @@
 
       <tbody>
       <tr *ngFor="let user of users">
-        <td class="text-truncate" placement="left" data-container="body" [ngbTooltip]="user.login">{{user.login}}</td>
+        <td class="text-truncate" placement="bottom" data-container="body" [ngbTooltip]="user.login">{{user.login}}</td>
         <td>{{userRole[user.role]}}</td>
         <td>{{userStatus[user.status]}}</td>
         <td>{{user.lastLogin | date:'medium'}}</td>
