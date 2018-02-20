@@ -4,7 +4,10 @@ Run `npm install` to install all project dependencies.
 
 ## Development server
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` for a dev server. The [configuration](src/environments/environment.ts) should contain paths a running
+instance of the DH Java Server.
+
+Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Build
 
