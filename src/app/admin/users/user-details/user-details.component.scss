@@ -1,10 +1,21 @@
+@import "../../../../variables";
+
 .btn-save {
   margin-bottom: 8px;
   margin-top: 8px;
 }
 
+.form-check {
+  margin-top: $margin-base;
+  margin-bottom: $margin-base;
+}
+
 .form-inline label {
   margin-bottom: 0.5rem;
+}
+
+.form-inline .form-control {
+  max-width: 50%;
 }
 
 .breadcrumb {

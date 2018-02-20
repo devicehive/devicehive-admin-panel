@@ -7,6 +7,7 @@ import {Network} from "../../../shared/models/network.model";
 import {DeviceType} from "../../../shared/models/device-type.model";
 import {DeviceTypeService} from "../../../core/device-type.service";
 import {NotifierService} from "angular-notifier";
+import {UtilService} from "../../../core/util.service";
 
 @Component({
   selector: 'dh-user-details',
@@ -51,6 +52,12 @@ export class UserDetailsComponent implements OnInit {
   }
 
   async updateUser() {
+    const inputError = UtilService.getUserDetailsInputErrors(this.user);
+    if (inputError) {
+      this.notifierService.notify('error', inputError);
+      return;
+    }
+
     try {
       await this.userService.updateUser(this.user);
       this.notifierService.notify('success', 'User updated');

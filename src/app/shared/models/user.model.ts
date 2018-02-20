@@ -28,7 +28,11 @@ export class User {
 
   static fromObject(plainObject: Object): User {
     let user = plainToClass<User, Object>(User, plainObject);
-    user.data = JSON.stringify(user.data, null, 2);
+    if (user.data) {
+      user.data = JSON.stringify(user.data, null, 2);
+    } else {
+      user.data = '';
+    }
     return user;
   }
 }

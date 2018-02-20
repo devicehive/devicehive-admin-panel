@@ -32,9 +32,10 @@
             </tr>
           </tbody>
         </table>
+        <p *ngIf="user.networks.length === 0" class="text-center">This user does not belong to any networks</p>
 
         <form class="form-inline">
-          <label class="mr-2" for="inputNetwork">Grant access to another network</label>
+          <label class="mr-2" for="inputNetwork">Grant access to network</label>
           <select id="inputNetwork" class="form-control mb-2 mr-sm-2" name="network" [(ngModel)]="selectedNetwork">
             <option *ngFor="let network of allNetworks" [ngValue]="network">{{network.name}}</option>
           </select>
@@ -72,9 +73,10 @@
             </tr>
           </tbody>
         </table>
+        <p *ngIf="userDeviceTypes.length === 0" class="text-center">This user does not have access to any device types</p>
 
         <form class="form-inline" *ngIf="!user.allDeviceTypesAvailable">
-          <label class="mr-2" for="inputDeviceType">Grant access to another device type</label>
+          <label class="mr-2" for="inputDeviceType">Grant access to device type</label>
           <select id="inputDeviceType" class="form-control mb-2 mr-sm-2" name="deviceType" [(ngModel)]="selectedDeviceType">
             <option *ngFor="let deviceType of allDeviceTypes" [ngValue]="deviceType">{{deviceType.name}}</option>
           </select>
