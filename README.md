@@ -12,6 +12,7 @@ Navigate to `http://localhost:4200/`. The app will automatically reload if you c
 ## Build
 
 Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Running `npm run build-dev` will build the project for the dev environment.
 
 ## Running unit tests
 
