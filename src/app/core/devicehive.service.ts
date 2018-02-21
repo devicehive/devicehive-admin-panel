@@ -59,6 +59,25 @@ export class DevicehiveService {
     }
   }
 
+  async logInWithToken(token: string) {
+    this.httpDeviceHive = new DeviceHive({
+      accessToken: token,
+      mainServiceURL: this.mainServiceURL,
+      authServiceURL: this.authServiceURL,
+      pluginServiceURL: this.pluginServiceURL
+    });
+
+    try {
+      await this.httpDeviceHive.connect();
+      sessionStorage.setItem('dh', JSON.stringify(this.httpDeviceHive));
+
+      this.loggedIn = true;
+    } catch (error) {
+      this.loggedIn = false;
+      throw error;
+    }
+  }
+
   logOut() {
     sessionStorage.removeItem('dh')
   }
