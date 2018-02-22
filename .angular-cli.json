@@ -20,9 +20,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "dh",
       "styles": [
+        "../node_modules/hopscotch/dist/css/hopscotch.min.css",
         "styles.scss"
       ],
       "scripts": [
+        "../node_modules/hopscotch/dist/js/hopscotch.min.js",
         "./assets/js/devicehive.min.js"
       ],
       "environmentSource": "environments/environment.ts",

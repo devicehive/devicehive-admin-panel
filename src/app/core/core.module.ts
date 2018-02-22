@@ -12,6 +12,7 @@ import {CommandService} from "./command.service";
 import {NotificationService} from "./notification.service";
 import {JwtService} from "./jwt.service";
 import {NotifierModule} from "angular-notifier";
+import {AppTourService} from "./app-tour.service";
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import {NotifierModule} from "angular-notifier";
     DeviceService,
     CommandService,
     NotificationService,
-    JwtService
+    JwtService,
+    AppTourService
   ]
 })
 export class CoreModule {

@@ -15,6 +15,7 @@ export class UserService {
     if (!this.currentUser) {
       const httpDeviceHive = await this.dh.getHttpDeviceHive();
       this.currentUser = await httpDeviceHive.user.getCurrent();
+      this.currentUser = User.fromObject(this.currentUser);
     }
 
     return this.currentUser;
@@ -23,11 +24,21 @@ export class UserService {
   async forceGetCurrentUser() {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     this.currentUser = await httpDeviceHive.user.getCurrent();
+    this.currentUser = User.fromObject(this.currentUser);
     return this.currentUser;
   }
 
   clearCurrentUser() {
     this.currentUser = null;
+  }
+
+  async finishTourForCurrentUser() {
+    const updatedUser = new User(this.currentUser.id);
+    updatedUser.role = null;
+    updatedUser.status = null;
+    updatedUser.introReviewed = true;
+    this.currentUser.introReviewed = true;
+    await this.updateCurrentUser(updatedUser);
   }
 
   async getAllUsers() {
@@ -45,6 +56,11 @@ export class UserService {
   async updateUser(user: User) {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.update(user);
+  }
+
+  async updateCurrentUser(user: User) {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.updateCurrent(user);
   }
 
   async deleteUser(userId: number) {

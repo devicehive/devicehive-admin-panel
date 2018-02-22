@@ -5,3 +5,5 @@ interface NodeModule {
 }
 
 declare var DeviceHive;
+
+declare var hopscotch;

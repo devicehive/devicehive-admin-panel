@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {DevicehiveService} from "../core/devicehive.service";
 import {UserService} from "../core/user.service";
 import {User, UserRole} from "../shared/models/user.model";
+import {AppTourService} from "../core/app-tour.service";
 
 @Component({
   selector: 'dh-admin',
@@ -16,11 +17,15 @@ export class AdminComponent implements OnInit {
 
   constructor(private dh: DevicehiveService,
               private userService: UserService,
-              private router: Router) {
+              private router: Router,
+              public appTourService: AppTourService) {
   }
 
   async ngOnInit() {
     this.currentUser = await this.userService.forceGetCurrentUser();
+    if (!this.currentUser.introReviewed) {
+      this.appTourService.startTour(this.currentUser.role === UserRole.ADMIN);
+    }
   }
 
   logOut() {
