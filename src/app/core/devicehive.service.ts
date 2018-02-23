@@ -7,14 +7,32 @@ export class DevicehiveService {
 
   private httpDeviceHive = null;
 
-  private mainServiceURL: string = environment.mainServiceURL;
-  private authServiceURL: string = environment.authServiceURL;
-  private pluginServiceURL: string = environment.pluginServiceURL;
+  private mainServiceURL: string;
+  private authServiceURL: string;
+  private pluginServiceURL: string;
   private loggedIn = false;
 
   private refreshToken: string;
 
   constructor() {
+    const root = document.location.origin;
+    if (environment.mainServiceURL.startsWith('http')) {
+      this.mainServiceURL = environment.mainServiceURL;
+    } else {
+      this.mainServiceURL = root + environment.mainServiceURL;
+    }
+
+    if (environment.authServiceURL.startsWith('http')) {
+      this.authServiceURL = environment.authServiceURL
+    } else {
+      this.authServiceURL = root + environment.authServiceURL;
+    }
+
+    if (environment.pluginServiceURL.startsWith('http')) {
+      this.pluginServiceURL = environment.pluginServiceURL;
+    } else {
+      this.pluginServiceURL = environment.pluginServiceURL;
+    }
   }
 
   async getHttpDeviceHive() {

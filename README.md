@@ -21,3 +21,11 @@ Run `npm run test` to execute the unit tests via [Karma](https://karma-runner.gi
 ## Running end-to-end tests
 
 Run `npm run e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Configuration
+* mainServiceURL - URL of DeviceHive Frontend service
+* authServiceURL - URL of DeviceHive Auth service
+* pluginServiceURL - URL of DeviceHive Plugin management service
+
+If the configured URL starts with 'http', it will be treated as an absolute url, otherwise it should start
+with '/' and will be considered relative.
