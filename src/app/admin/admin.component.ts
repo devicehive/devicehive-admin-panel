@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
 import {DevicehiveService} from "../core/devicehive.service";
 import {UserService} from "../core/user.service";
 import {User, UserRole} from "../shared/models/user.model";
@@ -17,7 +16,6 @@ export class AdminComponent implements OnInit {
 
   constructor(private dh: DevicehiveService,
               private userService: UserService,
-              private router: Router,
               public appTourService: AppTourService) {
   }
 
@@ -31,6 +29,6 @@ export class AdminComponent implements OnInit {
   logOut() {
     this.dh.logOut();
     this.userService.clearCurrentUser();
-    this.router.navigate(['/login']);
+    window.location.href = document.location.origin;
   }
 }
