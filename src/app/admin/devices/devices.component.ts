@@ -44,11 +44,19 @@ export class DevicesComponent implements OnInit {
   }
 
   findNetworkNameById(id: number) {
-    return this.networks.find(n => n.id === id).name;
+    try {
+      return this.networks.find(n => n.id === id).name;
+    } catch (error) {
+      return '[Error while accessing network]'
+    }
   }
 
   findDeviceTypeNameById(id: number) {
-    return this.deviceTypes.find(n => n.id === id).name;
+    try {
+      return this.deviceTypes.find(n => n.id === id).name;
+    } catch (error) {
+      return '[Error while accessing device type]'
+    }
   }
 
   openDeviceDetails(device) {
@@ -57,11 +65,11 @@ export class DevicesComponent implements OnInit {
 
   async openNewDeviceModal(content) {
     this.newDevice = new Device();
-    if (this.networks) {
+    if (this.networks && this.networks.length > 0) {
       this.newDevice.networkId = this.networks[0].id;
     }
 
-    if (this.deviceTypes) {
+    if (this.deviceTypes && this.deviceTypes.length > 0) {
       this.newDevice.deviceTypeId = this.deviceTypes[0].id;
     }
 

@@ -7,7 +7,6 @@ import {DeviceService} from "../../../core/device.service";
 import {DeviceType} from "../../../shared/models/device-type.model";
 import {Network} from "../../../shared/models/network.model";
 import {Device} from "../../../shared/models/device.model";
-import {plainToClass} from "class-transformer";
 import {CommandService} from "../../../core/command.service";
 import {Command} from "../../../shared/models/command.model";
 import {Notification} from "../../../shared/models/notification.model";
@@ -15,7 +14,6 @@ import 'rxjs/add/observable/interval';
 import {NotificationService} from "../../../core/notification.service";
 import {NotifierService} from "angular-notifier";
 import {UtilService} from "../../../core/util.service";
-import {User} from "../../../shared/models/user.model";
 
 @Component({
   selector: 'dh-device-details',
@@ -81,11 +79,19 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
   }
 
   findNetworkNameById(id: number) {
-    return this.networks.find(n => n.id === id).name;
+    try {
+      return this.networks.find(n => n.id === id).name;
+    } catch (error) {
+      return '[Error while accessing network]'
+    }
   }
 
   findDeviceTypeNameById(id: number) {
-    return this.deviceTypes.find(n => n.id === id).name;
+    try {
+      return this.deviceTypes.find(n => n.id === id).name;
+    } catch (error) {
+      return '[Error while accessing device type]'
+    }
   }
 
   async openEditDeviceModal(content) {
