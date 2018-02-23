@@ -107,16 +107,18 @@ export class DevicesComponent implements OnInit {
   }
 
   async deleteDevice(device: Device) {
-    try {
-      await this.deviceService.deleteDevice(device.id);
+    if(confirm("Are you sure you want to delete this device?")) {
+      try {
+        await this.deviceService.deleteDevice(device.id);
 
-      let index = this.devices.indexOf(device);
-      if (index > -1) {
-        this.devices.splice(index, 1);
+        let index = this.devices.indexOf(device);
+        if (index > -1) {
+          this.devices.splice(index, 1);
+        }
+      } catch (error) {
+        this.isSendingRequest = false;
+        this.notifierService.notify('error', error.message);
       }
-    } catch (error) {
-      this.isSendingRequest = false;
-      this.notifierService.notify('error', error.message);
     }
   }
 

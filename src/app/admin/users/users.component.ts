@@ -74,15 +74,17 @@ export class UsersComponent implements OnInit {
   }
 
   async deleteUser(user: User) {
-    try {
-      await this.userService.deleteUser(user.id);
+    if (confirm("Are you sure you want to delete this user?")) {
+      try {
+        await this.userService.deleteUser(user.id);
 
-      let index = this.users.indexOf(user);
-      if (index > -1) {
-        this.users.splice(index, 1);
+        let index = this.users.indexOf(user);
+        if (index > -1) {
+          this.users.splice(index, 1);
+        }
+      } catch (error) {
+        this.notifierService.notify('error', error.message);
       }
-    } catch (error) {
-      this.notifierService.notify('error', error.message);
     }
   }
 

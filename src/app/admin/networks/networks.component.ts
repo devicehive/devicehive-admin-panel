@@ -78,16 +78,18 @@ export class NetworksComponent implements OnInit {
   }
 
   async deleteNetwork(network: Network) {
-    try {
-      await this.networkService.deleteNetwork(network.id);
+    if (confirm("Are you sure you want to delete this network?")) {
+      try {
+        await this.networkService.deleteNetwork(network.id);
 
-      let index = this.networks.indexOf(network);
-      if (index > -1) {
-        this.networks.splice(index, 1);
+        let index = this.networks.indexOf(network);
+        if (index > -1) {
+          this.networks.splice(index, 1);
+        }
+      } catch (error) {
+        this.isSendingRequest = false;
+        this.notifierService.notify('error', error.message);
       }
-    } catch (error) {
-      this.isSendingRequest = false;
-      this.notifierService.notify('error', error.message);
     }
   }
 

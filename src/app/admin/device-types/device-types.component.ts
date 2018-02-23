@@ -78,16 +78,18 @@ export class DeviceTypesComponent implements OnInit {
   }
 
   async deleteDeviceType(deviceType: DeviceType) {
-    try {
-      await this.deviceTypeService.deleteDeviceType(deviceType.id);
+    if (confirm("Are you sure you want to delete this device type?")) {
+      try {
+        await this.deviceTypeService.deleteDeviceType(deviceType.id);
 
-      let index = this.deviceTypes.indexOf(deviceType);
-      if (index > -1) {
-        this.deviceTypes.splice(index, 1);
+        let index = this.deviceTypes.indexOf(deviceType);
+        if (index > -1) {
+          this.deviceTypes.splice(index, 1);
+        }
+      } catch (error) {
+        this.isSendingRequest = false;
+        this.notifierService.notify('error', error.message);
       }
-    } catch (error) {
-      this.isSendingRequest = false;
-      this.notifierService.notify('error', error.message);
     }
   }
 
