@@ -9,6 +9,7 @@ import {Network} from "../../shared/models/network.model";
 import {DeviceType} from "../../shared/models/device-type.model";
 import {NotifierService} from "angular-notifier";
 import {UtilService} from "../../core/util.service";
+import {HelpService} from "../../core/help.service";
 
 @Component({
   selector: 'dh-devices',
@@ -25,7 +26,8 @@ export class DevicesComponent implements OnInit {
   isSendingRequest = false;
   activeModal: NgbModalRef;
 
-  constructor(private networkService: NetworkService,
+  constructor(public helpService: HelpService,
+              private networkService: NetworkService,
               private deviceTypeService: DeviceTypeService,
               private deviceService: DeviceService,
               private modalService: NgbModal,

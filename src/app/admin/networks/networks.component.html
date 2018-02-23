@@ -3,8 +3,8 @@
     <table class="table">
       <thead class="thead-light">
       <tr>
-        <th scope="col">Network</th>
-        <th scope="col">Description</th>
+        <th scope="col">Network <dh-tip [text]="helpService.getNetworkNameTip()"></dh-tip></th>
+        <th scope="col">Description <dh-tip [text]="helpService.getNetworkDescriptionTip()"></dh-tip></th>
         <th scope="col" class="actions-column" *ngIf="isAdmin">Actions</th>
       </tr>
       </thead>

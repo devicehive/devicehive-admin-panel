@@ -21,6 +21,7 @@
       "prefix": "dh",
       "styles": [
         "../node_modules/hopscotch/dist/css/hopscotch.min.css",
+        "../node_modules/font-awesome/css/font-awesome.css",
         "styles.scss"
       ],
       "scripts": [

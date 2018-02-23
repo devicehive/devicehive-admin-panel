@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User, UserRole, UserStatus} from "../../../shared/models/user.model";
+import {HelpService} from "../../../core/help.service";
 
 @Component({
   selector: 'dh-user',
@@ -13,7 +14,8 @@ export class UserComponent implements OnInit {
   userRole = UserRole;
   userStatus = UserStatus;
 
-  constructor() { }
+  constructor(public helpService: HelpService) {
+  }
 
   ngOnInit() {
   }

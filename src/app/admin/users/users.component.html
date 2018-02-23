@@ -3,11 +3,11 @@
     <table class="table">
       <thead class="thead-light">
       <tr>
-        <th scope="col">Login</th>
-        <th scope="col">Role</th>
-        <th scope="col">Status</th>
-        <th scope="col">Last Login</th>
-        <th scope="col">Data</th>
+        <th scope="col">Login <dh-tip [text]="helpService.getUserLoginTip()"></dh-tip></th>
+        <th scope="col">Role <dh-tip [text]="helpService.getUserRoleTip()"></dh-tip></th>
+        <th scope="col">Status <dh-tip [text]="helpService.getUserStatusTip()"></dh-tip></th>
+        <th scope="col">Last Login <dh-tip [text]="helpService.getUserLastLoginTip()"></dh-tip></th>
+        <th scope="col">Data <dh-tip [text]="helpService.getUserDataTip()"></dh-tip></th>
         <th scope="col" class="actions-column">Actions</th>
       </tr>
       </thead>

@@ -3,11 +3,11 @@
     <table class="table">
       <thead class="thead-light">
       <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Network</th>
-        <th scope="col">Device Type</th>
-        <th scope="col">Operation</th>
-        <th scope="col">Data</th>
+        <th scope="col">Name <dh-tip [text]="helpService.getDeviceNameTip()"></dh-tip></th>
+        <th scope="col">Network <dh-tip [text]="helpService.getDeviceNetworkTip()"></dh-tip></th>
+        <th scope="col">Device Type <dh-tip [text]="helpService.getDeviceDeviceTypeTip()"></dh-tip></th>
+        <th scope="col">Operation <dh-tip [text]="helpService.getDeviceOperationTip()"></dh-tip></th>
+        <th scope="col">Data <dh-tip [text]="helpService.getDeviceDataTip()"></dh-tip></th>
         <th scope="col" class="actions-column">Actions</th>
       </tr>
       </thead>

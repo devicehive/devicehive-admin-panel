@@ -1,9 +1,9 @@
 <div class="form-group">
-  <label for="inputName">Name</label>
+  <label for="inputName">Name <dh-tip [text]="helpService.getNetworkNameTip()"></dh-tip></label>
   <input type="text" class="form-control" id="inputName" placeholder="Network name" [(ngModel)]="network.name">
 </div>
 
 <div class="form-group">
-  <label for="textAreaDescription">Description</label>
+  <label for="textAreaDescription">Description <dh-tip [text]="helpService.getNetworkDescriptionTip()"></dh-tip></label>
   <textarea class="form-control" id="textAreaDescription" rows="3" [(ngModel)]="network.description"></textarea>
 </div>

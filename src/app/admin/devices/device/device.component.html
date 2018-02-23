@@ -1,24 +1,24 @@
 <div class="form-group">
-  <label for="inputName">Name</label>
+  <label for="inputName">Name <dh-tip [text]="helpService.getDeviceNameTip()"></dh-tip></label>
   <input type="text" class="form-control" id="inputName" placeholder="Name" [(ngModel)]="device.name">
 </div>
 
 <div class="form-group">
-  <label for="inputNetwork">Network</label>
+  <label for="inputNetwork">Network <dh-tip [text]="helpService.getDeviceNetworkTip()"></dh-tip></label>
   <select id="inputNetwork" class="form-control" [(ngModel)]="device.networkId">
     <option *ngFor="let network of networks" [ngValue]="network.id">{{network.name}}</option>
   </select>
 </div>
 
 <div class="form-group">
-  <label for="inputDeviceType">Device type</label>
+  <label for="inputDeviceType">Device type <dh-tip [text]="helpService.getDeviceDeviceTypeTip()"></dh-tip></label>
   <select id="inputDeviceType" class="form-control" [(ngModel)]="device.deviceTypeId">
     <option *ngFor="let deviceType of deviceTypes" [ngValue]="deviceType.id">{{deviceType.name}}</option>
   </select>
 </div>
 
 <div class="form-group">
-  <label for="inputOperation">Operation</label>
+  <label for="inputOperation">Operation <dh-tip [text]="helpService.getDeviceOperationTip()"></dh-tip></label>
   <select id="inputOperation" class="form-control" [(ngModel)]="device.isBlocked">
     <option [ngValue]="false">Normal</option>
     <option [ngValue]="true">Blocked</option>
@@ -26,6 +26,6 @@
 </div>
 
 <div class="form-group">
-  <label for="textAreaData">Data (json)</label>
+  <label for="textAreaData">Data <dh-tip [text]="helpService.getDeviceDataTip()"></dh-tip></label>
   <textarea class="form-control" id="textAreaData" rows="3" [(ngModel)]="device.data"></textarea>
 </div>

@@ -5,6 +5,7 @@ import {UserService} from "../../core/user.service";
 import {User, UserRole, UserStatus} from "../../shared/models/user.model";
 import {NotifierService} from "angular-notifier";
 import {UtilService} from "../../core/util.service";
+import {HelpService} from "../../core/help.service";
 
 @Component({
   selector: 'dh-users',
@@ -22,7 +23,8 @@ export class UsersComponent implements OnInit {
 
   activeModal: NgbModalRef;
 
-  constructor(private userService: UserService,
+  constructor(public helpService: HelpService,
+              private userService: UserService,
               private modalService: NgbModal,
               private router: Router,
               private notifierService: NotifierService) {

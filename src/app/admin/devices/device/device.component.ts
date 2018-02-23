@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Device} from "../../../shared/models/device.model";
 import {Network} from "../../../shared/models/network.model";
 import {DeviceType} from "../../../shared/models/device-type.model";
+import {HelpService} from "../../../core/help.service";
 
 @Component({
   selector: 'dh-device',
@@ -14,7 +15,7 @@ export class DeviceComponent implements OnInit {
   @Input() networks: Array<Network>;
   @Input() deviceTypes: Array<DeviceType>;
 
-  constructor() {
+  constructor(public helpService: HelpService) {
   }
 
   ngOnInit() {

@@ -7,6 +7,7 @@ import {NotifierService} from "angular-notifier";
 import {UtilService} from "../../core/util.service";
 import {UserService} from "../../core/user.service";
 import {UserRole} from "../../shared/models/user.model";
+import {HelpService} from "../../core/help.service";
 
 @Component({
   selector: 'dh-networks',
@@ -23,7 +24,8 @@ export class NetworksComponent implements OnInit {
   isSendingRequest = false;
   activeModal: NgbModalRef;
 
-  constructor(private networkService: NetworkService,
+  constructor(public helpService: HelpService,
+              private networkService: NetworkService,
               private userService: UserService,
               private modalService: NgbModal,
               private notifierService: NotifierService) {
