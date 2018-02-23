@@ -11,8 +11,8 @@ export class JwtService {
 
   async createTokens(expiration) {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
-    const refreshToken = await this.dh.getRefreshToken();
-    const decoded = decode(refreshToken);
+    const token = await this.dh.getToken();
+    const decoded = decode(token);
     const tokenRequest = new TokenRequest(decoded.payload.u, expiration, decoded.payload.a, decoded.payload.n, decoded.payload.dt);
     return await httpDeviceHive.token.createUserToken(tokenRequest);
   }

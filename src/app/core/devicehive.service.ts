@@ -91,11 +91,13 @@ export class DevicehiveService {
     return dh != null;
   }
 
-  async getRefreshToken() {
+  async getToken() {
     if (this.refreshToken) {
       return this.refreshToken;
     } else if (this.httpDeviceHive.refreshToken) {
       return this.httpDeviceHive.refreshToken;
+    } else if (this.httpDeviceHive.accessToken) {
+      return this.httpDeviceHive.accessToken;
     } else {
       const tokens = await this.httpDeviceHive.token.login(this.httpDeviceHive.login, this.httpDeviceHive.password);
       this.refreshToken = tokens.refreshToken;
