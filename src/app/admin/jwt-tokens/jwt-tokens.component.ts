@@ -15,6 +15,9 @@ export class JwtTokensComponent implements OnInit {
   accessToken: string;
   refreshToken: string;
 
+  isAccessTokenCopied: boolean;
+  isRefreshTokenCopied: boolean;
+
   constructor(private jwtService: JwtService) {
   }
 
@@ -22,7 +25,10 @@ export class JwtTokensComponent implements OnInit {
   }
 
   async createTokens() {
+    this.isAccessTokenCopied = false;
+    this.isRefreshTokenCopied = false;
     let expiration: Date = null;
+
     if (this.date) {
       // we have to do this.date.month - 1 because NgbDateStruct starts counting months from 1 and Date starts counting from 0
       expiration = new Date(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute);

@@ -5,13 +5,15 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {KeysPipe} from "./pipes/keys.pipe";
 import {AngularFontAwesomeModule} from "angular-font-awesome";
 import { TipComponent } from './tip/tip.component';
+import {ClipboardModule} from "ngx-clipboard";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     NgbModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    ClipboardModule
   ],
   declarations: [
     KeysPipe,
@@ -22,6 +24,7 @@ import { TipComponent } from './tip/tip.component';
     FormsModule,
     NgbModule,
     AngularFontAwesomeModule,
+    ClipboardModule,
 
     KeysPipe,
     TipComponent
