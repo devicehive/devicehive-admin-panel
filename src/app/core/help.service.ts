@@ -80,4 +80,38 @@ export class HelpService {
   getUserDataTip() {
     return 'Arbitrary data about the user in JSON format.'
   }
+
+  /*
+  Plugin
+   */
+  getPluginNameTip() {
+    return 'Plugin name. Must be unique.'
+  }
+
+  getPluginDescriptionTip() {
+    return 'An arbitrary description of the plugin.'
+  }
+
+  getPluginFilterTip() {
+    return 'Information regarding which data the plugin will receive. Format is: [commands, updated commands, ' +
+      'notifications or everything]/comma-separated list of network ids/comma-separated list of device type ids/' +
+      'device id/comma-separated list of names'
+  }
+
+  getPluginStatusTip() {
+    return 'Current status of the plugin. CREATED is reserved for newly-created plugins and cannot be set manually.'
+  }
+
+  getPluginParametersTip() {
+    return 'Arbitrary data about the plugin in JSON format.'
+  }
+
+  getPluginFiltersTip() {
+    return 'Select which filters to apply to determine which commands/notifications the plugin will receive. Leaving a field' +
+      'empty is equivalent to "any".'
+  }
+
+  getPluginNamesTip() {
+    return 'Comma-separated list of command/notification names the plugin should accept.'
+  }
 }

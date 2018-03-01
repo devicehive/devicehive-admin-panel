@@ -3,11 +3,11 @@
     <table class="table">
       <thead class="thead-light">
         <tr>
-          <th scope="col">Name <dh-tip [text]="helpService.getNetworkNameTip()"></dh-tip></th>
-          <th scope="col">Description <dh-tip [text]="helpService.getNetworkDescriptionTip()"></dh-tip></th>
-          <th scope="col">Filter <dh-tip [text]="helpService.getNetworkNameTip()"></dh-tip></th>
-          <th scope="col">Status <dh-tip [text]="helpService.getNetworkNameTip()"></dh-tip></th>
-          <th scope="col">Parameters <dh-tip [text]="helpService.getNetworkNameTip()"></dh-tip></th>
+          <th scope="col">Name <dh-tip [text]="helpService.getPluginNameTip()"></dh-tip></th>
+          <th scope="col">Description <dh-tip [text]="helpService.getPluginDescriptionTip()"></dh-tip></th>
+          <th scope="col">Filter <dh-tip [text]="helpService.getPluginFilterTip()"></dh-tip></th>
+          <th scope="col">Status <dh-tip [text]="helpService.getPluginStatusTip()"></dh-tip></th>
+          <th scope="col">Parameters <dh-tip [text]="helpService.getPluginParametersTip()"></dh-tip></th>
           <th scope="col" class="actions-column" *ngIf="isAdmin">Actions</th>
         </tr>
       </thead>
@@ -67,7 +67,7 @@
   </div>
 
   <div class="modal-body" *ngIf="selectedPlugin && !selectedPluginCredentials">
-    <h5>Plugin Status</h5>
+    <h5>Plugin Status <dh-tip [text]="helpService.getPluginStatusTip()"></dh-tip></h5>
     <div class="form-check">
       <input class="form-check-input" type="radio" name="exampleRadios" id="radioActive" value="ACTIVE" [(ngModel)]="selectedPlugin.status">
       <label class="form-check-label" for="radioActive">
