@@ -60,6 +60,25 @@ export class PluginComponent implements OnInit {
         }
       })
     }
+
+    if (this.plugin.deviceTypeIds.length > 0) {
+      this.plugin.deviceTypeIds.map(id => {
+        try {
+          const deviceType = this.deviceTypes.find(n => n.id === id);
+          this.selectedDeviceTypes.push(deviceType);
+        } catch (error) {
+          console.log(error);
+        }
+      })
+    }
+
+    if (this.plugin.deviceId) {
+      try {
+        this.plugin.device = this.devices.find(n => n.id === this.plugin.deviceId);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   searchDevice = (text$: Observable<string>) =>
