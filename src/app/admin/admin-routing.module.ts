@@ -9,6 +9,7 @@ import {JwtTokensComponent} from "./jwt-tokens/jwt-tokens.component";
 import {UserDetailsComponent} from "./users/user-details/user-details.component";
 import {DeviceDetailsComponent} from "./devices/device-details/device-details.component";
 import {LoggedInGuard} from "../core/logged-in.guard";
+import {PluginsComponent} from "./plugins/plugins.component";
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
       {
         path: 'jwt-tokens',
         component: JwtTokensComponent
+      },
+      {
+        path: 'plugins',
+        component: PluginsComponent
       }
     ]}
 ];

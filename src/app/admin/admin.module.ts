@@ -14,6 +14,8 @@ import {NetworkComponent} from "./networks/network/network.component";
 import {DeviceTypeComponent} from './device-types/device-type/device-type.component';
 import { DeviceComponent } from './devices/device/device.component';
 import { DeviceDetailsComponent } from './devices/device-details/device-details.component';
+import { PluginsComponent } from './plugins/plugins.component';
+import { PluginComponent } from './plugins/plugin/plugin.component';
 
 @NgModule({
   imports: [
@@ -32,7 +34,9 @@ import { DeviceDetailsComponent } from './devices/device-details/device-details.
     UserDetailsComponent,
     DeviceTypeComponent,
     DeviceComponent,
-    DeviceDetailsComponent
+    DeviceDetailsComponent,
+    PluginsComponent,
+    PluginComponent
   ]
 })
 export class AdminModule {

@@ -35,6 +35,11 @@ table {
   margin-bottom: $margin-base;
 }
 
+.dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
 /*
 App tour
  */
