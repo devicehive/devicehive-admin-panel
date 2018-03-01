@@ -6,6 +6,7 @@ import {Device} from "../shared/models/device.model";
 import {Command} from "../shared/models/command.model";
 import {Notification} from "../shared/models/notification.model";
 import {isNumeric} from "rxjs/util/isNumeric";
+import {Plugin} from "../shared/models/plugin.model";
 
 @Injectable()
 export class UtilService {
@@ -101,7 +102,7 @@ export class UtilService {
     return null;
   }
 
-  static getCommandInputErrors(command: Command) {
+  static getCommandInputErrors(command: Command): string {
     if (!command.command || command.command.length < 1) {
       return 'Command cannot be empty';
     }
@@ -113,7 +114,7 @@ export class UtilService {
     return null;
   }
 
-  static getNotificationInputErrors(notification: Notification) {
+  static getNotificationInputErrors(notification: Notification): string {
     if (!notification.notification || notification.notification.length < 1) {
       return 'Notification cannot be empty';
     }
@@ -123,6 +124,20 @@ export class UtilService {
     }
 
     return null;
+  }
+
+  static getPluginInputErrors(plugin: Plugin): string {
+    if (!plugin.name || plugin.name.length < 1) {
+      return 'Plugin name cannot be empty';
+    }
+
+    if (plugin.parameters != null && plugin.parameters.length > 0 && !this.isValidJson(plugin.parameters)) {
+      return 'Parameters must either be empty or contain valid json'
+    }
+
+    if (!plugin.returnCommands && !plugin.returnUpdatedCommands && !plugin.returnNotifications) {
+      return 'Commands, updated commands and notifications cannnot all be false. Pick at least one.'
+    }
   }
 
   static isValidJson(str: string) {

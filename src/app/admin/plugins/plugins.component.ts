@@ -14,6 +14,7 @@ import {DeviceType} from "../../shared/models/device-type.model";
 import {Network} from "../../shared/models/network.model";
 import {Device} from "../../shared/models/device.model";
 import {PluginCredentials} from "../../shared/models/plugin-credentials.model";
+import {UtilService} from "../../core/util.service";
 
 @Component({
   selector: 'dh-plugins',
@@ -79,6 +80,12 @@ export class PluginsComponent implements OnInit {
   }
 
   async createPlugin() {
+    const inputError = UtilService.getPluginInputErrors(this.newPlugin);
+    if (inputError) {
+      this.notifierService.notify('error', inputError);
+      return;
+    }
+
     this.isSendingRequest = true;
 
     try {
@@ -96,6 +103,12 @@ export class PluginsComponent implements OnInit {
   }
 
   async updateSelectedPlugin() {
+    const inputError = UtilService.getPluginInputErrors(this.selectedPlugin);
+    if (inputError) {
+      this.notifierService.notify('error', inputError);
+      return;
+    }
+
     try {
       await this.pluginService.updatePlugin(this.selectedPlugin, this.selectedPluginOriginal);
       const pluginsPlain = await this.pluginService.getAllPlugins();
