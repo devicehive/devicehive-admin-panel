@@ -44,6 +44,12 @@ export class AppTourService {
       title: 'JWT Tokens'
     },
     {
+      target: 'menu.plugins',
+      content: 'This section allows you to manage plugins. Plugins allow you to extend the functionality of DeviceHive.',
+      placement: 'bottom',
+      title: 'Plugins'
+    },
+    {
       target: 'tour.start',
       content: 'For more information, feel free to take a look at our documentation or the contextual help within this console.',
       placement: 'bottom',
@@ -81,6 +87,12 @@ export class AppTourService {
       content: 'This section allows you to generate JWT security tokens. Devices need a JWT token to access DeviceHive.',
       placement: 'bottom',
       title: 'JWT Tokens'
+    },
+    {
+      target: 'menu.plugins',
+      content: 'This section allows you to manage plugins. Plugins allow you to extend the functionality of DeviceHive.',
+      placement: 'bottom',
+      title: 'Plugins'
     },
     {
       target: 'tour.start',
