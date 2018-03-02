@@ -85,7 +85,7 @@ export class HelpService {
   JWT Tokens
    */
   getJwtTip() {
-    return 'Two tokens date will be generated. If no expiration date is specified, access token will be valid for 30 minutes and refresh token will be valid for 6 months.'
+    return 'Two tokens will be generated. If no expiration date is specified, access token will be valid for 30 minutes and refresh token will be valid for 6 months.'
   }
 
   /*
