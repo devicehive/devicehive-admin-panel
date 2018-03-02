@@ -14,6 +14,7 @@ import 'rxjs/add/observable/interval';
 import {NotificationService} from "../../../core/notification.service";
 import {NotifierService} from "angular-notifier";
 import {UtilService} from "../../../core/util.service";
+import {HelpService} from "../../../core/help.service";
 
 @Component({
   selector: 'dh-device-details',
@@ -41,7 +42,8 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
   private shouldPollCommands = true;
   private shouldPollNotifications = true;
 
-  constructor(private route: ActivatedRoute,
+  constructor(public helpService: HelpService,
+              private route: ActivatedRoute,
               private modalService: NgbModal,
               private networkService: NetworkService,
               private deviceTypeService: DeviceTypeService,

@@ -37,11 +37,11 @@
         <table class="table">
           <thead class="thead-light">
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Time (UTC)</th>
-              <th scope="col">Parameters</th>
-              <th scope="col">Status</th>
-              <th scope="col">Result</th>
+              <th scope="col">Name <dh-tip [text]="helpService.getCommandNameTip()"></dh-tip></th>
+              <th scope="col">Time (UTC) <dh-tip [text]="helpService.getCommandTimeTip()"></dh-tip></th>
+              <th scope="col">Parameters <dh-tip [text]="helpService.getCommandParametersTip()"></dh-tip></th>
+              <th scope="col">Status <dh-tip [text]="helpService.getCommandStatusTip()"></dh-tip></th>
+              <th scope="col">Result <dh-tip [text]="helpService.getCommandResultTip()"></dh-tip></th>
             </tr>
           </thead>
           <tbody>
@@ -66,9 +66,9 @@
         <table class="table">
           <thead class="thead-light">
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Time (UTC)</th>
-              <th scope="col">Parameters</th>
+              <th scope="col">Name <dh-tip [text]="helpService.getNotificationNameTip()"></dh-tip></th>
+              <th scope="col">Time (UTC) <dh-tip [text]="helpService.getNotificationTimeTip()"></dh-tip></th>
+              <th scope="col">Parameters <dh-tip [text]="helpService.getNotificationParametersTip()"></dh-tip></th>
             </tr>
           </thead>
           <tbody>
@@ -96,12 +96,12 @@
 
   <div class="modal-body" *ngIf="newCommand">
     <div class="form-group">
-      <label for="inputCommandName">Name</label>
+      <label for="inputCommandName">Name <dh-tip [text]="helpService.getCommandNameTip()"></dh-tip></label>
       <input type="text" class="form-control" id="inputCommandName" placeholder="Name" [(ngModel)]="newCommand.command">
     </div>
 
     <div class="form-group">
-      <label for="textAreaCommandParameters">Parameters</label>
+      <label for="textAreaCommandParameters">Parameters <dh-tip [text]="helpService.getCommandParametersTip()"></dh-tip></label>
       <textarea class="form-control" id="textAreaCommandParameters" rows="3" [(ngModel)]="newCommand.parameters"></textarea>
     </div>
   </div>
@@ -122,12 +122,12 @@
 
   <div class="modal-body">
     <div class="form-group">
-      <label for="inputNotificationName">Name</label>
+      <label for="inputNotificationName">Name <dh-tip [text]="helpService.getNotificationNameTip()"></dh-tip></label>
       <input type="text" class="form-control" id="inputNotificationName" placeholder="Name" [(ngModel)]="newNotification.notification">
     </div>
 
     <div class="form-group">
-      <label for="textAreaNotificationParameters">Parameters</label>
+      <label for="textAreaNotificationParameters">Parameters <dh-tip [text]="helpService.getNotificationParametersTip()"></dh-tip></label>
       <textarea class="form-control" id="textAreaNotificationParameters" rows="3" [(ngModel)]="newNotification.parameters"></textarea>
     </div>
   </div>

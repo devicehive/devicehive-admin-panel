@@ -35,37 +35,37 @@ export class HelpService {
    */
 
   getNetworkNameTip() {
-    return 'Network name. The name must be unique.'
+    return 'The network name must be unique.'
   }
 
   getNetworkDescriptionTip() {
-    return 'A description for the network.'
+    return 'Arbitrary network description in text format.'
   }
 
   /*
   Device Type
    */
   getDeviceTypeNameTip() {
-    return 'Device type name. The name must be unique.'
+    return 'The device type name must be unique.'
   }
 
   getDeviceTypeDescriptionTip() {
-    return 'A description for the device type.'
+    return 'Arbitrary device type description in text format.'
   }
 
   /*
   User
    */
   getUserLoginTip() {
-    return 'User login. The login must be unique.'
+    return 'The login must be unique.'
   }
 
   getUserRoleTip() {
-    return 'Role of the user. Admins have the right to add/edit/delete any entity. Clients can only control their own devices.'
+    return 'Admins have the right to add/edit/delete any entity. Clients can only control their own devices.'
   }
 
   getUserStatusTip() {
-    return 'User status. Only active users are able to log in. Disabled users have been banned from the system by an admin. ' +
+    return 'Only active users are able to log in. Disabled users have been banned from the system by an admin. ' +
       'Locked out users entered an incorrect password 5 times in a row.'
   }
 
@@ -79,6 +79,13 @@ export class HelpService {
 
   getUserDataTip() {
     return 'Arbitrary data about the user in JSON format.'
+  }
+
+  /*
+  JWT Tokens
+   */
+  getJwtTip() {
+    return 'Two tokens date will be generated. If no expiration date is specified, access token will be valid for 30 minutes and refresh token will be valid for 6 months.'
   }
 
   /*
@@ -113,5 +120,43 @@ export class HelpService {
 
   getPluginNamesTip() {
     return 'Comma-separated list of command/notification names the plugin should accept.'
+  }
+
+  /*
+  Command
+   */
+  getCommandNameTip() {
+    return 'Arbitrary name. Does not have to be unique.'
+  }
+
+  getCommandTimeTip() {
+    return 'UTC time is saved in the database.'
+  }
+
+  getCommandParametersTip() {
+    return 'Should be sent as valid JSON.'
+  }
+
+  getCommandStatusTip() {
+    return 'Reported by device or infrastructure.'
+  }
+
+  getCommandResultTip() {
+    return 'Execution outcome which may be sent by device.'
+  }
+
+  /*
+  Notification
+   */
+  getNotificationNameTip() {
+    return 'Arbitrary name. Does not have to be unique.'
+  }
+
+  getNotificationTimeTip() {
+    return 'UTC time is saved in the database.'
+  }
+
+  getNotificationParametersTip() {
+    return 'Should be sent as valid JSON.'
   }
 }

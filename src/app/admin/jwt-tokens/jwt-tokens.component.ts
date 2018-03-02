@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbDateStruct, NgbTimeStruct} from "@ng-bootstrap/ng-bootstrap";
 import {JwtService} from "../../core/jwt.service";
+import {HelpService} from "../../core/help.service";
 
 @Component({
   selector: 'dh-jwt-tokens',
@@ -18,7 +19,8 @@ export class JwtTokensComponent implements OnInit {
   isAccessTokenCopied: boolean;
   isRefreshTokenCopied: boolean;
 
-  constructor(private jwtService: JwtService) {
+  constructor(public helpService: HelpService,
+              private jwtService: JwtService) {
   }
 
   ngOnInit() {
