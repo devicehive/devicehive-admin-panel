@@ -62,7 +62,7 @@ export class PluginsComponent implements OnInit {
     this.devices = await this.deviceService.getAllDevices();
   }
 
-  async openPluginModal(content, selectedPlugin: Plugin) {
+  async openPluginModal(content, selectedPlugin?: Plugin) {
     if (selectedPlugin) {
       this.selectedPluginOriginal = Plugin.fromObject(Plugin.fromPluginApiResponse(selectedPlugin));
       this.selectedPlugin = Plugin.fromObject(Plugin.fromPluginApiResponse(selectedPlugin));

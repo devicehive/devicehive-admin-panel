@@ -86,7 +86,7 @@
         (click)="networksClick.next($event.target.value)"
         [inputFormatter]="formatter"
         [resultTemplate]="rt"
-        (ngModelChange)="addNetwork($event)"
+        (ngModelChange)="addNetwork()"
         #networksTypeahead="ngbTypeahead"
       />
     </div>
@@ -108,7 +108,7 @@
         (click)="deviceTypesClick.next($event.target.value)"
         [inputFormatter]="formatter"
         [resultTemplate]="rt"
-        (ngModelChange)="addDeviceType($event)"
+        (ngModelChange)="addDeviceType()"
         #deviceTypesTypeahead="ngbTypeahead"
       />
     </div>
