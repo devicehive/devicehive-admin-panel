@@ -35,9 +35,14 @@ table {
   margin-bottom: $margin-base;
 }
 
-.dropdown-menu {
+// Dropdown menu styled here instead of in respective components to avoid removing view encapsulation
+.plugin .dropdown-menu {
   max-height: 200px;
   overflow-y: auto;
+}
+
+.jwt-tokens .dropdown-menu {
+  margin-top: 40px;
 }
 
 /*
