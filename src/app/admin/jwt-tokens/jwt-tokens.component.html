@@ -6,7 +6,7 @@
         <div class="d-flex w-100 justify-content-between">
           <button class="btn btn-sm btn-clipboard" [class.btn-success]= "isAccessTokenCopied" type="button"
                   placement="bottom" data-container="body" [ngbTooltip]="'Copy to clipboard'"
-                  ngxClipboard [cbContent]="accessToken" (cbOnSuccess)="isAccessTokenCopied = true">
+                  ngxClipboard [cbContent]="accessToken" (cbOnSuccess)="isAccessTokenCopied = true; isRefreshTokenCopied = false">
             <fa name="copy"></fa>
           </button>
           <h5>Access Token</h5>
@@ -17,7 +17,7 @@
       <a class="list-group-item  flex-column align-items-start">
         <button class="btn btn-sm btn-clipboard" [class.btn-success]= "isRefreshTokenCopied" type="button"
                 placement="bottom" data-container="body" [ngbTooltip]="'Copy to clipboard'"
-                ngxClipboard [cbContent]="refreshToken" (cbOnSuccess)="isRefreshTokenCopied = true">
+                ngxClipboard [cbContent]="refreshToken" (cbOnSuccess)="isRefreshTokenCopied = true; isAccessTokenCopied = false">
           <fa name="copy"></fa>
         </button>
         <div class="d-flex w-100 justify-content-between">
