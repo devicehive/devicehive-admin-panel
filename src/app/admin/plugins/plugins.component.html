@@ -8,18 +8,18 @@
           <th scope="col">Filter <dh-tip [text]="helpService.getPluginFilterTip()"></dh-tip></th>
           <th scope="col">Status <dh-tip [text]="helpService.getPluginStatusTip()"></dh-tip></th>
           <th scope="col">Parameters <dh-tip [text]="helpService.getPluginParametersTip()"></dh-tip></th>
-          <th scope="col" class="actions-column" *ngIf="isAdmin">Actions</th>
+          <th scope="col" class="actions-column">Actions</th>
         </tr>
       </thead>
 
       <tbody>
         <tr *ngFor="let plugin of plugins">
-          <td >{{plugin.name}}</td>
+          <td class="text-truncate" placement="bottom" data-container="body" [ngbTooltip]="plugin.name">{{plugin.name}}</td>
           <td>{{plugin.description}}</td>
-          <td>{{plugin.filter}}</td>
+          <td class="text-truncate" placement="bottom" data-container="body" [ngbTooltip]="plugin.filter">{{plugin.filter}}</td>
           <td>{{plugin.status}}</td>
           <td>{{!!plugin.parameters ? (plugin.parameters | json) : null}}</td>
-          <td *ngIf="isAdmin">
+          <td>
             <button class="btn btn-info btn-sm" (click)="openPluginModal(editPluginModal, plugin)">Details</button>
             <button class="btn btn-danger btn-sm" (click)="deletePlugin(plugin)">Delete</button>
           </td>

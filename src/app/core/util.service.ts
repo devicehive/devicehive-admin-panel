@@ -128,11 +128,11 @@ export class UtilService {
 
   static getPluginInputErrors(plugin: Plugin): string {
     if (!plugin.name || plugin.name.length < 3) {
-      return 'Plugin name should be at least 3 characters long';
+      return 'Plugin name should be at least 3 characters long'
     }
 
     if (!plugin.description || plugin.description.length < 3) {
-      return 'Plugin description should be at least 3 characters long';
+      return 'Plugin description should be at least 3 characters long'
     }
 
     if (plugin.parameters != null && plugin.parameters.length > 0 && !this.isValidJson(plugin.parameters)) {
