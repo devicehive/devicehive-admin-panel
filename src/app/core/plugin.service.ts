@@ -50,10 +50,9 @@ export class PluginService {
     if (plugin.returnUpdatedCommands !== originalPlugin.returnUpdatedCommands) queryObject.returnUpdatedCommands = plugin.returnUpdatedCommands;
     if (plugin.returnNotifications !== originalPlugin.returnNotifications) queryObject.returnNotifications = plugin.returnNotifications;
     if (plugin.name !== originalPlugin.name) queryObject.name = plugin.name;
-
-    queryObject.status = plugin.status;
-    queryObject.description = plugin.description;
-    queryObject.parameters = (!plugin.parameters || plugin.parameters.length === 0) ? '' : plugin.parameters;
+    if (plugin.status !== originalPlugin.status) queryObject.status = plugin.status;
+    if (plugin.description !== originalPlugin.description) queryObject.description = plugin.description;
+    if (plugin.parameters !== originalPlugin.parameters) queryObject.parameters = (!plugin.parameters || plugin.parameters.length === 0) ? '' : plugin.parameters;
 
     const query = new this.PluginUpdateQuery(queryObject);
 

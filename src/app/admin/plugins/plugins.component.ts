@@ -76,6 +76,9 @@ export class PluginsComponent implements OnInit {
     } catch (dismissReason) {
       this.newPlugin = null;
       this.newPluginCredentials = null;
+
+      this.selectedPlugin = null;
+      this.selectedPluginCredentials = null;
     }
   }
 
