@@ -10,6 +10,7 @@ export class DevicehiveService {
   private mainServiceURL: string;
   private authServiceURL: string;
   private pluginServiceURL: string;
+  private autoUpdateSession: boolean;
   private loggedIn = false;
 
   private refreshToken: string;
@@ -33,6 +34,8 @@ export class DevicehiveService {
     } else {
       this.pluginServiceURL = environment.pluginServiceURL;
     }
+
+    this.autoUpdateSession = environment.autoUpdateSession;
   }
 
   async getHttpDeviceHive() {
@@ -48,7 +51,8 @@ export class DevicehiveService {
           refreshToken: dh.refreshToken,
           mainServiceURL: this.mainServiceURL,
           authServiceURL: this.authServiceURL,
-          pluginServiceURL: this.pluginServiceURL
+          pluginServiceURL: this.pluginServiceURL,
+          autoUpdateSession: this.autoUpdateSession
         });
         await this.httpDeviceHive.connect();
       }
@@ -63,7 +67,8 @@ export class DevicehiveService {
       password: password,
       mainServiceURL: this.mainServiceURL,
       authServiceURL: this.authServiceURL,
-      pluginServiceURL: this.pluginServiceURL
+      pluginServiceURL: this.pluginServiceURL,
+      autoUpdateSession: this.autoUpdateSession
     });
 
     try {
@@ -82,7 +87,8 @@ export class DevicehiveService {
       accessToken: token,
       mainServiceURL: this.mainServiceURL,
       authServiceURL: this.authServiceURL,
-      pluginServiceURL: this.pluginServiceURL
+      pluginServiceURL: this.pluginServiceURL,
+      autoUpdateSession: this.autoUpdateSession
     });
 
     try {
