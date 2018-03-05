@@ -67,6 +67,8 @@
   </div>
 
   <div class="modal-body" *ngIf="selectedPlugin && !selectedPluginCredentials">
+    <dh-plugin [plugin]="selectedPlugin" [devices]="devices" [deviceTypes]="deviceTypes" [networks]="networks"></dh-plugin>
+
     <h5>Plugin Status <dh-tip [text]="helpService.getPluginStatusTip()"></dh-tip></h5>
     <div class="form-check">
       <input class="form-check-input" type="radio" name="exampleRadios" id="radioActive" value="ACTIVE" [(ngModel)]="selectedPlugin.status">
@@ -86,8 +88,6 @@
         Created
       </label>
     </div>
-
-    <dh-plugin [plugin]="selectedPlugin" [devices]="devices" [deviceTypes]="deviceTypes" [networks]="networks"></dh-plugin>
   </div>
 
   <div class="modal-body" *ngIf="selectedPluginCredentials">
