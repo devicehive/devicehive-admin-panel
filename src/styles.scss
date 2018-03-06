@@ -36,13 +36,15 @@ table {
 }
 
 // Dropdown menu styled here instead of in respective components to avoid removing view encapsulation
-.plugin .dropdown-menu {
+.dropdown-menu {
   max-height: 200px;
+  max-width: 520px;
   overflow-y: auto;
 }
 
 .jwt-tokens .dropdown-menu {
   margin-top: 40px;
+  max-height: 270px;
 }
 
 /*

@@ -65,13 +65,6 @@ export class DevicesComponent implements OnInit {
 
   async openNewDeviceModal(content) {
     this.newDevice = new Device();
-    if (this.networks && this.networks.length > 0) {
-      this.newDevice.networkId = this.networks[0].id;
-    }
-
-    if (this.deviceTypes && this.deviceTypes.length > 0) {
-      this.newDevice.deviceTypeId = this.deviceTypes[0].id;
-    }
 
     this.isSendingRequest = false;
     try {

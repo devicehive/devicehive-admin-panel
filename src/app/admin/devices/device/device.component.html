@@ -3,18 +3,52 @@
   <input type="text" class="form-control" id="inputName" placeholder="Name" [(ngModel)]="device.name">
 </div>
 
+<ng-template #rt let-r="result" let-t="term">{{r.name}}</ng-template>
+
 <div class="form-group">
   <label for="inputNetwork">Network <dh-tip [text]="helpService.getDeviceNetworkTip()"></dh-tip></label>
-  <select id="inputNetwork" class="form-control" [(ngModel)]="device.networkId">
-    <option *ngFor="let network of networks" [ngValue]="network.id">{{network.name}}</option>
-  </select>
+  <div class="input-group mb-3">
+    <input
+      id="inputNetwork"
+      type="text"
+      class="form-control"
+      placeholder="Select a network"
+      [(ngModel)]="tempNetwork"
+      [ngbTypeahead]="searchNetwork"
+      (focus)="networksFocus.next($event.target.value)"
+      (click)="networksClick.next($event.target.value)"
+      [inputFormatter]="formatter"
+      [resultTemplate]="rt"
+      (ngModelChange)="selectNetwork()"
+      #networksTypeahead="ngbTypeahead"
+    />
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button" (click)="clearSelectedNetwork()">Clear</button>
+    </div>
+  </div>
 </div>
 
 <div class="form-group">
   <label for="inputDeviceType">Device type <dh-tip [text]="helpService.getDeviceDeviceTypeTip()"></dh-tip></label>
-  <select id="inputDeviceType" class="form-control" [(ngModel)]="device.deviceTypeId">
-    <option *ngFor="let deviceType of deviceTypes" [ngValue]="deviceType.id">{{deviceType.name}}</option>
-  </select>
+  <div class="input-group mb-3">
+    <input
+      id="inputDeviceType"
+      type="text"
+      class="form-control"
+      placeholder="Select a device type"
+      [(ngModel)]="tempDeviceType"
+      [ngbTypeahead]="searchDeviceType"
+      (focus)="deviceTypesFocus.next($event.target.value)"
+      (click)="deviceTypesClick.next($event.target.value)"
+      [inputFormatter]="formatter"
+      [resultTemplate]="rt"
+      (ngModelChange)="selectDeviceType()"
+      #deviceTypesTypeahead="ngbTypeahead"
+    />
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button" (click)="clearSelectedDeviceType()">Clear</button>
+    </div>
+  </div>
 </div>
 
 <div class="form-group">

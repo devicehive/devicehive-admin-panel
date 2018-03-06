@@ -95,8 +95,16 @@ export class UtilService {
       return 'Device name cannot be longer than 128 symbols';
     }
 
+    if (!device.networkId) {
+      return 'Please select a network';
+    }
+
+    if (!device.deviceTypeId) {
+      return 'Please select a device type';
+    }
+
     if (device.data != null && device.data.length > 0 && !this.isValidJson(device.data)) {
-      return 'Data must either be empty or contain valid json'
+      return 'Data must either be empty or contain valid json';
     }
 
     return null;

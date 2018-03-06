@@ -62,11 +62,26 @@
 
         <form class="form-inline">
           <label class="mr-2" for="inputNetwork">Grant access to network</label>
-          <select id="inputNetwork" class="form-control mb-2 mr-sm-2" name="network" [(ngModel)]="selectedNetwork">
-            <option *ngFor="let network of allNetworks" [ngValue]="network">{{network.name}}</option>
-          </select>
-
-          <button class="btn btn-primary mb-2" (click)="grantAccessToNetwork()">Grant access</button>
+          <div class="input-group mb-3">
+            <input
+              id="inputNetwork"
+              type="text"
+              class="form-control"
+              placeholder="Select a network"
+              [(ngModel)]="selectedNetwork"
+              [ngModelOptions]="{standalone: true}"
+              [ngbTypeahead]="searchNetwork"
+              (focus)="networksFocus.next($event.target.value)"
+              (click)="networksClick.next($event.target.value)"
+              [inputFormatter]="formatter"
+              [resultTemplate]="rt"
+              #networksTypeahead="ngbTypeahead"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" (click)="clearSelectedNetwork()">Clear</button>
+              <button class="btn btn-primary" (click)="grantAccessToNetwork()">Grant access</button>
+            </div>
+          </div>
         </form>
 
       </ng-template>
@@ -103,11 +118,27 @@
 
         <form class="form-inline" *ngIf="!user.allDeviceTypesAvailable">
           <label class="mr-2" for="inputDeviceType">Grant access to device type</label>
-          <select id="inputDeviceType" class="form-control mb-2 mr-sm-2" name="deviceType" [(ngModel)]="selectedDeviceType">
-            <option *ngFor="let deviceType of allDeviceTypes" [ngValue]="deviceType">{{deviceType.name}}</option>
-          </select>
+          <div class="input-group mb-3">
+            <input
+              id="inputDeviceType"
+              type="text"
+              class="form-control"
+              placeholder="Select a device type"
+              [(ngModel)]="selectedDeviceType"
+              [ngModelOptions]="{standalone: true}"
+              [ngbTypeahead]="searchDeviceType"
+              (focus)="deviceTypesFocus.next($event.target.value)"
+              (click)="deviceTypesClick.next($event.target.value)"
+              [inputFormatter]="formatter"
+              [resultTemplate]="rt"
+              #deviceTypesTypeahead="ngbTypeahead"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" (click)="clearSelectedDeviceType()">Clear</button>
+              <button class="btn btn-primary" (click)="grantAccessToDeviceType()">Grant access</button>
+            </div>
+          </div>
 
-          <button class="btn btn-primary mb-2" (click)="grantAccessToDeviceType()">Grant access</button>
         </form>
       </ng-template>
     </ngb-tab>
@@ -131,3 +162,4 @@
     <button type="button" class="btn btn-success" (click)="updateUser()">Save</button>
   </div>
 </ng-template>
+<ng-template #rt let-r="result" let-t="term">{{r.name}}</ng-template>

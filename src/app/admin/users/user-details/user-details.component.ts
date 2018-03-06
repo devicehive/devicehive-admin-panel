@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {User, UserRole, UserStatus} from "../../../shared/models/user.model";
 import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../../core/user.service";
@@ -8,7 +8,9 @@ import {DeviceType} from "../../../shared/models/device-type.model";
 import {DeviceTypeService} from "../../../core/device-type.service";
 import {NotifierService} from "angular-notifier";
 import {UtilService} from "../../../core/util.service";
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalRef, NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
+import {Subject} from "rxjs/Subject";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'dh-user-details',
@@ -22,8 +24,31 @@ export class UserDetailsComponent implements OnInit {
   allDeviceTypes: Array<DeviceType>;
   userDeviceTypes: Array<DeviceType>;
 
+  formatter = (x: {name: string}) => x.name;
+
+  @ViewChild('networksTypeahead') networksTypeahead: NgbTypeahead;
+  networksFocus = new Subject<string>();
+  networksClick = new Subject<string>();
   selectedNetwork: Network;
+
+  searchNetwork = (text$: Observable<string>) =>
+    text$
+      .debounceTime(200).distinctUntilChanged()
+      .merge(this.networksFocus)
+      .merge(this.networksClick.filter(() => !this.networksTypeahead.isPopupOpen()))
+      .map(term => (term === '' ? this.allNetworks : this.allNetworks.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)));
+
+  @ViewChild('deviceTypesTypeahead') deviceTypesTypeahead: NgbTypeahead;
+  deviceTypesFocus = new Subject<string>();
+  deviceTypesClick = new Subject<string>();
   selectedDeviceType: DeviceType;
+
+  searchDeviceType = (text$: Observable<string>) =>
+    text$
+      .debounceTime(200).distinctUntilChanged()
+      .merge(this.deviceTypesFocus)
+      .merge(this.deviceTypesClick.filter(() => !this.deviceTypesTypeahead.isPopupOpen()))
+      .map(term => (term === '' ? this.allDeviceTypes : this.allDeviceTypes.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)));
 
   userRole = UserRole;
   userStatus = UserStatus;
@@ -156,5 +181,13 @@ export class UserDetailsComponent implements OnInit {
     } catch (error) {
       this.notifierService.notify('error', error.message);
     }
+  }
+
+  clearSelectedNetwork() {
+    this.selectedNetwork = null;
+  }
+
+  clearSelectedDeviceType() {
+    this.selectedDeviceType = null;
   }
 }
