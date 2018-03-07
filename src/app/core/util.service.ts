@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {User} from "../shared/models/user.model";
-import {Network} from "../shared/models/network.model";
-import {DeviceType} from "../shared/models/device-type.model";
-import {Device} from "../shared/models/device.model";
-import {Command} from "../shared/models/command.model";
-import {Notification} from "../shared/models/notification.model";
-import {isNumeric} from "rxjs/util/isNumeric";
-import {Plugin} from "../shared/models/plugin.model";
+import {User} from '../shared/models/user.model';
+import {Network} from '../shared/models/network.model';
+import {DeviceType} from '../shared/models/device-type.model';
+import {Device} from '../shared/models/device.model';
+import {Command} from '../shared/models/command.model';
+import {Notification} from '../shared/models/notification.model';
+import {isNumeric} from 'rxjs/util/isNumeric';
+import {Plugin} from '../shared/models/plugin.model';
 
 @Injectable()
 export class UtilService {
@@ -28,7 +28,7 @@ export class UtilService {
     }
 
     if (user.data != null && user.data.length > 0 && !this.isValidJson(user.data)) {
-      return 'Data must either be empty or contain valid json'
+      return 'Data must either be empty or contain valid json';
     }
 
     return null;
@@ -48,7 +48,7 @@ export class UtilService {
     }
 
     if (user.data != null && user.data.length > 0 && !this.isValidJson(user.data)) {
-      return 'Data must either be empty or contain valid json'
+      return 'Data must either be empty or contain valid json';
     }
 
     return null;
@@ -116,7 +116,7 @@ export class UtilService {
     }
 
     if (command.parameters != null && command.parameters.length > 0 && !this.isValidJson(command.parameters)) {
-      return 'Parameters must either be empty or contain valid json'
+      return 'Parameters must either be empty or contain valid json';
     }
 
     return null;
@@ -128,7 +128,7 @@ export class UtilService {
     }
 
     if (notification.parameters != null && notification.parameters.length > 0 && !this.isValidJson(notification.parameters)) {
-      return 'Parameters must either be empty or contain valid json'
+      return 'Parameters must either be empty or contain valid json';
     }
 
     return null;
@@ -136,19 +136,19 @@ export class UtilService {
 
   static getPluginInputErrors(plugin: Plugin): string {
     if (!plugin.name || plugin.name.length < 3) {
-      return 'Plugin name should be at least 3 characters long'
+      return 'Plugin name should be at least 3 characters long';
     }
 
     if (!plugin.description || plugin.description.length < 3) {
-      return 'Plugin description should be at least 3 characters long'
+      return 'Plugin description should be at least 3 characters long';
     }
 
     if (plugin.parameters != null && plugin.parameters.length > 0 && !this.isValidJson(plugin.parameters)) {
-      return 'Parameters must either be empty or contain valid json'
+      return 'Parameters must either be empty or contain valid json';
     }
 
     if (!plugin.returnCommands && !plugin.returnUpdatedCommands && !plugin.returnNotifications) {
-      return 'Commands, updated commands and notifications cannnot all be false. Pick at least one.'
+      return 'Commands, updated commands and notifications cannnot all be false. Pick at least one.';
     }
   }
 

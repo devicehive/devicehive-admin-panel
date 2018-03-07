@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {NgbDateStruct, NgbTimeStruct} from "@ng-bootstrap/ng-bootstrap";
-import {JwtService} from "../../core/jwt.service";
-import {HelpService} from "../../core/help.service";
+import {NgbDateStruct, NgbTimeStruct} from '@ng-bootstrap/ng-bootstrap';
+import {JwtService} from '../../core/jwt.service';
+import {HelpService} from '../../core/help.service';
 
 @Component({
   selector: 'dh-jwt-tokens',

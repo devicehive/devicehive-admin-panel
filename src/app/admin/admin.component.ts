@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {DevicehiveService} from "../core/devicehive.service";
-import {UserService} from "../core/user.service";
-import {User, UserRole} from "../shared/models/user.model";
-import {AppTourService} from "../core/app-tour.service";
+import {DevicehiveService} from '../core/devicehive.service';
+import {UserService} from '../core/user.service';
+import {User, UserRole} from '../shared/models/user.model';
+import {AppTourService} from '../core/app-tour.service';
 
 @Component({
   selector: 'dh-admin',

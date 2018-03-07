@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {UserService} from "./user.service";
+import {UserService} from './user.service';
 
 @Injectable()
 export class AppTourService {
@@ -109,7 +109,7 @@ export class AppTourService {
   startTour(isAdmin: boolean) {
     const that = this;
     const tour = {
-      id: "devicehive-tour",
+      id: 'devicehive-tour',
       onClose: function () {
         that.setTourFinished();
       },

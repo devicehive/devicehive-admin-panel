@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DeviceType} from "../../../shared/models/device-type.model";
-import {HelpService} from "../../../core/help.service";
+import {DeviceType} from '../../../shared/models/device-type.model';
+import {HelpService} from '../../../core/help.service';
 
 @Component({
   selector: 'dh-device-type',

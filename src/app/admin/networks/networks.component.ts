@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {Network} from "../../shared/models/network.model";
-import {NetworkService} from "../../core/network.service";
-import {plainToClass} from "class-transformer";
-import {NotifierService} from "angular-notifier";
-import {UtilService} from "../../core/util.service";
-import {UserService} from "../../core/user.service";
-import {UserRole} from "../../shared/models/user.model";
-import {HelpService} from "../../core/help.service";
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {Network} from '../../shared/models/network.model';
+import {NetworkService} from '../../core/network.service';
+import {plainToClass} from 'class-transformer';
+import {NotifierService} from 'angular-notifier';
+import {UtilService} from '../../core/util.service';
+import {UserService} from '../../core/user.service';
+import {UserRole} from '../../shared/models/user.model';
+import {HelpService} from '../../core/help.service';
 
 @Component({
   selector: 'dh-networks',
@@ -78,11 +78,11 @@ export class NetworksComponent implements OnInit {
   }
 
   async deleteNetwork(network: Network) {
-    if (confirm("Are you sure you want to delete this network?")) {
+    if (confirm('Are you sure you want to delete this network?')) {
       try {
         await this.networkService.deleteNetwork(network.id);
 
-        let index = this.networks.indexOf(network);
+        const index = this.networks.indexOf(network);
         if (index > -1) {
           this.networks.splice(index, 1);
         }
@@ -103,8 +103,8 @@ export class NetworksComponent implements OnInit {
     try {
       await this.networkService.updateNetwork(this.selectedNetwork);
 
-      let oldNetwork = this.networks.find(i => i.id === this.selectedNetwork.id);
-      let index = this.networks.indexOf(oldNetwork);
+      const oldNetwork = this.networks.find(i => i.id === this.selectedNetwork.id);
+      const index = this.networks.indexOf(oldNetwork);
       if (index > -1) {
         this.networks[index] = this.selectedNetwork;
       }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {environment} from "../../environments/environment";
-import {error} from "util";
+import {environment} from '../../environments/environment';
+import {error} from 'util';
 
 @Injectable()
 export class DevicehiveService {
@@ -24,7 +24,7 @@ export class DevicehiveService {
     }
 
     if (environment.authServiceURL.startsWith('http')) {
-      this.authServiceURL = environment.authServiceURL
+      this.authServiceURL = environment.authServiceURL;
     } else {
       this.authServiceURL = root + environment.authServiceURL;
     }
@@ -42,7 +42,7 @@ export class DevicehiveService {
     if (!this.httpDeviceHive) {
       const token = sessionStorage.getItem('refresh_token');
       if (token == null) {
-        throw error()
+        throw error();
       } else {
         this.httpDeviceHive = new DeviceHive({
           refreshToken: token,
@@ -100,7 +100,7 @@ export class DevicehiveService {
   }
 
   logOut() {
-    sessionStorage.removeItem('refresh_token')
+    sessionStorage.removeItem('refresh_token');
   }
 
   isLoggedIn() {

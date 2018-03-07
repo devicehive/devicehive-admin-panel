@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {DeviceTypeService} from "../../core/device-type.service";
-import {DeviceType} from "../../shared/models/device-type.model";
-import {plainToClass} from "class-transformer";
-import {NotifierService} from "angular-notifier";
-import {UtilService} from "../../core/util.service";
-import {UserService} from "../../core/user.service";
-import {UserRole} from "../../shared/models/user.model";
-import {HelpService} from "../../core/help.service";
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {DeviceTypeService} from '../../core/device-type.service';
+import {DeviceType} from '../../shared/models/device-type.model';
+import {plainToClass} from 'class-transformer';
+import {NotifierService} from 'angular-notifier';
+import {UtilService} from '../../core/util.service';
+import {UserService} from '../../core/user.service';
+import {UserRole} from '../../shared/models/user.model';
+import {HelpService} from '../../core/help.service';
 
 @Component({
   selector: 'dh-device-types',
@@ -78,11 +78,11 @@ export class DeviceTypesComponent implements OnInit {
   }
 
   async deleteDeviceType(deviceType: DeviceType) {
-    if (confirm("Are you sure you want to delete this device type?")) {
+    if (confirm('Are you sure you want to delete this device type?')) {
       try {
         await this.deviceTypeService.deleteDeviceType(deviceType.id);
 
-        let index = this.deviceTypes.indexOf(deviceType);
+        const index = this.deviceTypes.indexOf(deviceType);
         if (index > -1) {
           this.deviceTypes.splice(index, 1);
         }
@@ -103,8 +103,8 @@ export class DeviceTypesComponent implements OnInit {
     try {
       await this.deviceTypeService.updateDeviceType(this.selectedDeviceType);
 
-      let oldDeviceType = this.deviceTypes.find(i => i.id === this.selectedDeviceType.id);
-      let index = this.deviceTypes.indexOf(oldDeviceType);
+      const oldDeviceType = this.deviceTypes.find(i => i.id === this.selectedDeviceType.id);
+      const index = this.deviceTypes.indexOf(oldDeviceType);
       if (index > -1) {
         this.deviceTypes[index] = this.selectedDeviceType;
       }

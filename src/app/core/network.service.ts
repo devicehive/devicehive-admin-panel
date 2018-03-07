@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {DevicehiveService} from "./devicehive.service";
-import {Network} from "../shared/models/network.model";
+import {DevicehiveService} from './devicehive.service';
+import {Network} from '../shared/models/network.model';
 
 @Injectable()
 export class NetworkService {
@@ -11,7 +11,7 @@ export class NetworkService {
   }
 
   async getAllNetworks() {
-    const query = new this.NetworkListQuery("");
+    const query = new this.NetworkListQuery('');
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.network.list(query);
   }

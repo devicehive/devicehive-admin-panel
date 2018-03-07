@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {AdminComponent} from "./admin.component";
-import {UsersComponent} from "./users/users.component";
-import {NetworksComponent} from "./networks/networks.component";
-import {DeviceTypesComponent} from "./device-types/device-types.component";
-import {DevicesComponent} from "./devices/devices.component";
-import {JwtTokensComponent} from "./jwt-tokens/jwt-tokens.component";
-import {UserDetailsComponent} from "./users/user-details/user-details.component";
-import {DeviceDetailsComponent} from "./devices/device-details/device-details.component";
-import {LoggedInGuard} from "../core/logged-in.guard";
-import {PluginsComponent} from "./plugins/plugins.component";
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {AdminComponent} from './admin.component';
+import {UsersComponent} from './users/users.component';
+import {NetworksComponent} from './networks/networks.component';
+import {DeviceTypesComponent} from './device-types/device-types.component';
+import {DevicesComponent} from './devices/devices.component';
+import {JwtTokensComponent} from './jwt-tokens/jwt-tokens.component';
+import {UserDetailsComponent} from './users/user-details/user-details.component';
+import {DeviceDetailsComponent} from './devices/device-details/device-details.component';
+import {LoggedInGuard} from '../core/logged-in.guard';
+import {PluginsComponent} from './plugins/plugins.component';
 
 const routes: Routes = [
   {
@@ -53,11 +53,13 @@ const routes: Routes = [
         path: 'plugins',
         component: PluginsComponent
       }
-    ]}
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {
+}

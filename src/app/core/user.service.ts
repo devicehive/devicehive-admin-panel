@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {DevicehiveService} from "./devicehive.service";
-import {User} from "../shared/models/user.model";
+import {DevicehiveService} from './devicehive.service';
+import {User} from '../shared/models/user.model';
 
 @Injectable()
 export class UserService {
@@ -42,7 +42,7 @@ export class UserService {
   }
 
   async getAllUsers() {
-    const query = new this.UserListQuery("");
+    const query = new this.UserListQuery('');
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.list(query);
   }

@@ -1,16 +1,16 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {User, UserRole, UserStatus} from "../../../shared/models/user.model";
-import {ActivatedRoute} from "@angular/router";
-import {UserService} from "../../../core/user.service";
-import {NetworkService} from "../../../core/network.service";
-import {Network} from "../../../shared/models/network.model";
-import {DeviceType} from "../../../shared/models/device-type.model";
-import {DeviceTypeService} from "../../../core/device-type.service";
-import {NotifierService} from "angular-notifier";
-import {UtilService} from "../../../core/util.service";
-import {NgbModal, NgbModalRef, NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
-import {Subject} from "rxjs/Subject";
-import {Observable} from "rxjs/Observable";
+import {User, UserRole, UserStatus} from '../../../shared/models/user.model';
+import {ActivatedRoute} from '@angular/router';
+import {UserService} from '../../../core/user.service';
+import {NetworkService} from '../../../core/network.service';
+import {Network} from '../../../shared/models/network.model';
+import {DeviceType} from '../../../shared/models/device-type.model';
+import {DeviceTypeService} from '../../../core/device-type.service';
+import {NotifierService} from 'angular-notifier';
+import {UtilService} from '../../../core/util.service';
+import {NgbModal, NgbModalRef, NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
+import {Subject} from 'rxjs/Subject';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'dh-user-details',
@@ -24,31 +24,15 @@ export class UserDetailsComponent implements OnInit {
   allDeviceTypes: Array<DeviceType>;
   userDeviceTypes: Array<DeviceType>;
 
-  formatter = (x: {name: string}) => x.name;
-
   @ViewChild('networksTypeahead') networksTypeahead: NgbTypeahead;
   networksFocus = new Subject<string>();
   networksClick = new Subject<string>();
   selectedNetwork: Network;
 
-  searchNetwork = (text$: Observable<string>) =>
-    text$
-      .debounceTime(200).distinctUntilChanged()
-      .merge(this.networksFocus)
-      .merge(this.networksClick.filter(() => !this.networksTypeahead.isPopupOpen()))
-      .map(term => (term === '' ? this.allNetworks : this.allNetworks.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)));
-
   @ViewChild('deviceTypesTypeahead') deviceTypesTypeahead: NgbTypeahead;
   deviceTypesFocus = new Subject<string>();
   deviceTypesClick = new Subject<string>();
   selectedDeviceType: DeviceType;
-
-  searchDeviceType = (text$: Observable<string>) =>
-    text$
-      .debounceTime(200).distinctUntilChanged()
-      .merge(this.deviceTypesFocus)
-      .merge(this.deviceTypesClick.filter(() => !this.deviceTypesTypeahead.isPopupOpen()))
-      .map(term => (term === '' ? this.allDeviceTypes : this.allDeviceTypes.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)));
 
   userRole = UserRole;
   userStatus = UserStatus;
@@ -72,6 +56,23 @@ export class UserDetailsComponent implements OnInit {
       this.initData(id);
     });
   }
+
+  searchNetwork = (text$: Observable<string>) =>
+    text$
+      .debounceTime(200).distinctUntilChanged()
+      .merge(this.networksFocus)
+      .merge(this.networksClick.filter(() => !this.networksTypeahead.isPopupOpen()))
+      .map(term => (term === '' ? this.allNetworks : this.allNetworks.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)))
+
+  searchDeviceType = (text$: Observable<string>) =>
+    text$
+      .debounceTime(200).distinctUntilChanged()
+      .merge(this.deviceTypesFocus)
+      .merge(this.deviceTypesClick.filter(() => !this.deviceTypesTypeahead.isPopupOpen()))
+      .map(term => (term === '' ? this.allDeviceTypes : this.allDeviceTypes
+        .filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)))
+
+  formatter = (x: { name: string }) => x.name;
 
   async initData(userId: number) {
     try {
@@ -131,7 +132,7 @@ export class UserDetailsComponent implements OnInit {
     try {
       await this.userService.revokeAccessToNetwork(this.user.id, network.id);
 
-      let index = this.user.networks.indexOf(network);
+      const index = this.user.networks.indexOf(network);
       if (index > -1) {
         this.user.networks.splice(index, 1);
       }
@@ -174,7 +175,7 @@ export class UserDetailsComponent implements OnInit {
     try {
       await this.userService.revokeAccessToDeviceType(this.user.id, deviceType.id);
 
-      let index = this.userDeviceTypes.indexOf(deviceType);
+      const index = this.userDeviceTypes.indexOf(deviceType);
       if (index > -1) {
         this.userDeviceTypes.splice(index, 1);
       }

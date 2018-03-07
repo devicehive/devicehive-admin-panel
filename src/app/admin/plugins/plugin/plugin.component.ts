@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {Plugin} from "../../../shared/models/plugin.model";
-import {DeviceType} from "../../../shared/models/device-type.model";
-import {Network} from "../../../shared/models/network.model";
-import {Device} from "../../../shared/models/device.model";
-import {HelpService} from "../../../core/help.service";
-import {Subject} from "rxjs/Subject";
-import {NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
-import {Observable} from "rxjs/Observable";
+import {Plugin} from '../../../shared/models/plugin.model';
+import {DeviceType} from '../../../shared/models/device-type.model';
+import {Network} from '../../../shared/models/network.model';
+import {Device} from '../../../shared/models/device.model';
+import {HelpService} from '../../../core/help.service';
+import {Subject} from 'rxjs/Subject';
+import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/filter';
@@ -24,8 +24,6 @@ export class PluginComponent implements OnInit {
   @Input() devices: Array<Device>;
   @Input() networks: Array<Network>;
   @Input() deviceTypes: Array<DeviceType>;
-
-  formatter = (x: {name: string}) => x.name;
 
   @ViewChild('deviceTypeahead') deviceTypeahead: NgbTypeahead;
   deviceFocus = new Subject<string>();
@@ -58,7 +56,7 @@ export class PluginComponent implements OnInit {
         } catch (error) {
           console.log(error);
         }
-      })
+      });
     }
 
     if (this.plugin.deviceTypeIds.length > 0) {
@@ -69,7 +67,7 @@ export class PluginComponent implements OnInit {
         } catch (error) {
           console.log(error);
         }
-      })
+      });
     }
 
     if (this.plugin.deviceId) {
@@ -81,19 +79,21 @@ export class PluginComponent implements OnInit {
     }
   }
 
+  formatter = (x: { name: string }) => x.name;
+
   searchDevice = (text$: Observable<string>) =>
     text$
       .debounceTime(200).distinctUntilChanged()
       .merge(this.deviceFocus)
       .merge(this.deviceClick.filter(() => !this.deviceTypeahead.isPopupOpen()))
-      .map(term => (term === '' ? this.devices : this.devices.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)));
+      .map(term => (term === '' ? this.devices : this.devices.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)))
 
   searchNetwork = (text$: Observable<string>) =>
     text$
       .debounceTime(200).distinctUntilChanged()
       .merge(this.networksFocus)
       .merge(this.networksClick.filter(() => !this.networksTypeahead.isPopupOpen()))
-      .map(term => (term === '' ? this.networks : this.networks.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)));
+      .map(term => (term === '' ? this.networks : this.networks.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)))
 
   addNetwork() {
     if (this.tempNetwork.id) {
@@ -104,12 +104,12 @@ export class PluginComponent implements OnInit {
   }
 
   removeNetwork(network: Network) {
-    let index = this.selectedNetworks.indexOf(network);
+    const index = this.selectedNetworks.indexOf(network);
     if (index > -1) {
       this.selectedNetworks.splice(index, 1);
     }
 
-    let idIndex = this.plugin.networkIds.indexOf(network.id);
+    const idIndex = this.plugin.networkIds.indexOf(network.id);
     if (idIndex > -1) {
       this.plugin.networkIds.splice(idIndex, 1);
     }
@@ -120,7 +120,7 @@ export class PluginComponent implements OnInit {
       .debounceTime(200).distinctUntilChanged()
       .merge(this.deviceTypesFocus)
       .merge(this.deviceTypesClick.filter(() => !this.deviceTypesTypeahead.isPopupOpen()))
-      .map(term => (term === '' ? this.deviceTypes : this.deviceTypes.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)));
+      .map(term => (term === '' ? this.deviceTypes : this.deviceTypes.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)))
 
   addDeviceType() {
     if (this.tempDeviceType.id) {
@@ -131,12 +131,12 @@ export class PluginComponent implements OnInit {
   }
 
   removeDeviceType(deviceType: DeviceType) {
-    let index = this.selectedDeviceTypes.indexOf(deviceType);
+    const index = this.selectedDeviceTypes.indexOf(deviceType);
     if (index > -1) {
       this.selectedDeviceTypes.splice(index, 1);
     }
 
-    let idIndex = this.plugin.deviceTypeIds.indexOf(deviceType.id);
+    const idIndex = this.plugin.deviceTypeIds.indexOf(deviceType.id);
     if (idIndex > -1) {
       this.plugin.deviceTypeIds.splice(idIndex, 1);
     }

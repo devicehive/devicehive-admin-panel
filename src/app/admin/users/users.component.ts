@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {Router} from "@angular/router";
-import {UserService} from "../../core/user.service";
-import {User, UserRole, UserStatus} from "../../shared/models/user.model";
-import {NotifierService} from "angular-notifier";
-import {UtilService} from "../../core/util.service";
-import {HelpService} from "../../core/help.service";
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
+import {UserService} from '../../core/user.service';
+import {User, UserRole, UserStatus} from '../../shared/models/user.model';
+import {NotifierService} from 'angular-notifier';
+import {UtilService} from '../../core/util.service';
+import {HelpService} from '../../core/help.service';
 
 @Component({
   selector: 'dh-users',
@@ -74,11 +74,11 @@ export class UsersComponent implements OnInit {
   }
 
   async deleteUser(user: User) {
-    if (confirm("Are you sure you want to delete this user?")) {
+    if (confirm('Are you sure you want to delete this user?')) {
       try {
         await this.userService.deleteUser(user.id);
 
-        let index = this.users.indexOf(user);
+        const index = this.users.indexOf(user);
         if (index > -1) {
           this.users.splice(index, 1);
         }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {DevicehiveService} from "./devicehive.service";
-import {Notification} from "../shared/models/notification.model";
+import {DevicehiveService} from './devicehive.service';
+import {Notification} from '../shared/models/notification.model';
 
 @Injectable()
 export class NotificationService {

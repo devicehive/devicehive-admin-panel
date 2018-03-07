@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User, UserRole, UserStatus} from "../../../shared/models/user.model";
-import {HelpService} from "../../../core/help.service";
+import {User, UserRole, UserStatus} from '../../../shared/models/user.model';
+import {HelpService} from '../../../core/help.service';
 
 @Component({
   selector: 'dh-user',

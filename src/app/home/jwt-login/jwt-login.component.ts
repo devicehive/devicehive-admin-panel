@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {DevicehiveService} from "../../core/devicehive.service";
-import {NotifierService} from "angular-notifier";
+import {ActivatedRoute, Router} from '@angular/router';
+import {DevicehiveService} from '../../core/devicehive.service';
+import {NotifierService} from 'angular-notifier';
 
 @Component({
   selector: 'dh-jwt-login',

@@ -1,20 +1,20 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {ActivatedRoute} from "@angular/router";
-import {NetworkService} from "../../../core/network.service";
-import {DeviceTypeService} from "../../../core/device-type.service";
-import {DeviceService} from "../../../core/device.service";
-import {DeviceType} from "../../../shared/models/device-type.model";
-import {Network} from "../../../shared/models/network.model";
-import {Device} from "../../../shared/models/device.model";
-import {CommandService} from "../../../core/command.service";
-import {Command} from "../../../shared/models/command.model";
-import {Notification} from "../../../shared/models/notification.model";
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {ActivatedRoute} from '@angular/router';
+import {NetworkService} from '../../../core/network.service';
+import {DeviceTypeService} from '../../../core/device-type.service';
+import {DeviceService} from '../../../core/device.service';
+import {DeviceType} from '../../../shared/models/device-type.model';
+import {Network} from '../../../shared/models/network.model';
+import {Device} from '../../../shared/models/device.model';
+import {CommandService} from '../../../core/command.service';
+import {Command} from '../../../shared/models/command.model';
+import {Notification} from '../../../shared/models/notification.model';
 import 'rxjs/add/observable/interval';
-import {NotificationService} from "../../../core/notification.service";
-import {NotifierService} from "angular-notifier";
-import {UtilService} from "../../../core/util.service";
-import {HelpService} from "../../../core/help.service";
+import {NotificationService} from '../../../core/notification.service';
+import {NotifierService} from 'angular-notifier';
+import {UtilService} from '../../../core/util.service';
+import {HelpService} from '../../../core/help.service';
 
 @Component({
   selector: 'dh-device-details',
@@ -84,7 +84,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     try {
       return this.networks.find(n => n.id === id).name;
     } catch (error) {
-      return '[Error while accessing network]'
+      return '[Error while accessing network]';
     }
   }
 
@@ -92,7 +92,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     try {
       return this.deviceTypes.find(n => n.id === id).name;
     } catch (error) {
-      return '[Error while accessing device type]'
+      return '[Error while accessing device type]';
     }
   }
 
@@ -169,7 +169,10 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     commands.forEach(c => {
       this.commands.unshift(c);
     });
-    if (this.shouldPollCommands) this.pollCommands();
+
+    if (this.shouldPollCommands) {
+      this.pollCommands();
+    }
   }
 
   async pollUpdatedCommands() {
@@ -182,7 +185,9 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.shouldPollCommands) this.pollUpdatedCommands();
+    if (this.shouldPollCommands) {
+      this.pollUpdatedCommands();
+    }
   }
 
   async sendNewNotification() {
@@ -209,6 +214,9 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     notifications.forEach(c => {
       this.notifications.unshift(c);
     });
-    if (this.shouldPollNotifications) this.pollNotifications();
+
+    if (this.shouldPollNotifications) {
+      this.pollNotifications();
+    }
   }
 }

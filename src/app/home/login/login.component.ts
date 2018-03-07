@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
-import {DevicehiveService} from "../../core/devicehive.service";
-import {NotifierService} from "angular-notifier";
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {DevicehiveService} from '../../core/devicehive.service';
+import {NotifierService} from 'angular-notifier';
 
 @Component({
   selector: 'dh-login',
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     this.isSubmitting = true;
     this.hasErrors = false;
 
-    if (!this.login ||  this.login.length < 1 || !this.password ||this.password.length < 1) {
+    if (!this.login || this.login.length < 1 || !this.password || this.password.length < 1) {
       this.hasErrors = true;
       this.isSubmitting = false;
       return;

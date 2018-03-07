@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {LoginComponent} from "./login/login.component";
-import {JwtLoginComponent} from "./jwt-login/jwt-login.component";
+import {LoginComponent} from './login/login.component';
+import {JwtLoginComponent} from './jwt-login/jwt-login.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},

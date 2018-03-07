@@ -1,5 +1,5 @@
-import {Device} from "./device.model";
-import {plainToClass} from "class-transformer";
+import {Device} from './device.model';
+import {plainToClass} from 'class-transformer';
 
 export class Plugin {
   constructor(public id?: string,
@@ -11,32 +11,19 @@ export class Plugin {
               public subscriptionId?: string,
               public userId?: number,
               public parameters?: string,
-
               public returnCommands: boolean = false,
               public returnUpdatedCommands: boolean = false,
               public returnNotifications: boolean = false,
               public names: string = '',
-
               public device: Device = new Device(),
               public deviceId?: string,
-
               public networkIds: Array<number> = [],
               public deviceTypeIds: Array<number> = []) {
 
   }
 
-  toObject() {
-    let obj = Object.assign({}, this);
-    if (this.parameters != null && this.parameters.length > 0) {
-      obj.parameters = JSON.parse(this.parameters);
-    } else {
-      obj.parameters = null;
-    }
-    return obj;
-  }
-
   static fromObject(plainObject: Object): Plugin {
-    let plugin = plainToClass<Plugin, Object>(Plugin, plainObject);
+    const plugin = plainToClass<Plugin, Object>(Plugin, plainObject);
     if (plugin.parameters) {
       plugin.parameters = JSON.stringify(plugin.parameters, null, 2);
     } else {
@@ -46,7 +33,7 @@ export class Plugin {
   }
 
   static fromPluginApiResponse(plugin: Plugin) {
-    let pluginCopy = new this(plugin.id, plugin.name, plugin.description, plugin.topicName, plugin.filter, plugin.status,
+    const pluginCopy = new this(plugin.id, plugin.name, plugin.description, plugin.topicName, plugin.filter, plugin.status,
       plugin.subscriptionId, plugin.userId, plugin.parameters);
 
     const filters = plugin.filter.split('/');
@@ -68,14 +55,14 @@ export class Plugin {
     if (networkIds === '*') {
       pluginCopy.networkIds = [];
     } else {
-      pluginCopy.networkIds = networkIds.split(',').map(x => parseInt(x));
+      pluginCopy.networkIds = networkIds.split(',').map(x => parseInt(x, 10));
     }
 
     const deviceTypeIds = filters[2];
     if (deviceTypeIds === '*') {
       pluginCopy.deviceTypeIds = [];
     } else {
-      pluginCopy.deviceTypeIds = deviceTypeIds.split(',').map(x => parseInt(x));
+      pluginCopy.deviceTypeIds = deviceTypeIds.split(',').map(x => parseInt(x, 10));
     }
 
     const deviceId = filters[3];
@@ -93,5 +80,15 @@ export class Plugin {
     }
 
     return pluginCopy;
+  }
+
+  toObject() {
+    const obj = Object.assign({}, this);
+    if (this.parameters != null && this.parameters.length > 0) {
+      obj.parameters = JSON.parse(this.parameters);
+    } else {
+      obj.parameters = null;
+    }
+    return obj;
   }
 }

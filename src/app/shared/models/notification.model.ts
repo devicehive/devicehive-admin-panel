@@ -6,7 +6,7 @@ export class Notification {
   }
 
   toObject() {
-    let obj = Object.assign({}, this);
+    const obj = Object.assign({}, this);
     if (this.parameters != null && this.parameters.length > 0) {
       obj.parameters = JSON.parse(this.parameters);
     } else {

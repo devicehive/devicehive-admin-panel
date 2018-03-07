@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {DevicehiveService} from "./devicehive.service";
-import {Command} from "../shared/models/command.model";
+import {DevicehiveService} from './devicehive.service';
+import {Command} from '../shared/models/command.model';
 
 @Injectable()
 export class CommandService {
@@ -32,10 +32,5 @@ export class CommandService {
   async insertCommand(deviceId: string, command: Command) {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.command.insert(deviceId, command);
-  }
-
-  async getCommand(deviceId: string, commandId: number) {
-    const httpDeviceHive = await this.dh.getHttpDeviceHive();
-    return await httpDeviceHive.command.get(deviceId, commandId);
   }
 }

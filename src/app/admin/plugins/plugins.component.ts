@@ -1,20 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {HelpService} from "../../core/help.service";
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {NotifierService} from "angular-notifier";
-import {Plugin} from "../../shared/models/plugin.model";
-import {UserService} from "../../core/user.service";
-import {PluginService} from "../../core/plugin.service";
-import {User, UserRole} from "../../shared/models/user.model";
-import {plainToClass} from "class-transformer";
-import {DeviceTypeService} from "../../core/device-type.service";
-import {DeviceService} from "../../core/device.service";
-import {NetworkService} from "../../core/network.service";
-import {DeviceType} from "../../shared/models/device-type.model";
-import {Network} from "../../shared/models/network.model";
-import {Device} from "../../shared/models/device.model";
-import {PluginCredentials} from "../../shared/models/plugin-credentials.model";
-import {UtilService} from "../../core/util.service";
+import {HelpService} from '../../core/help.service';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {NotifierService} from 'angular-notifier';
+import {Plugin} from '../../shared/models/plugin.model';
+import {UserService} from '../../core/user.service';
+import {PluginService} from '../../core/plugin.service';
+import {UserRole} from '../../shared/models/user.model';
+import {plainToClass} from 'class-transformer';
+import {DeviceTypeService} from '../../core/device-type.service';
+import {DeviceService} from '../../core/device.service';
+import {NetworkService} from '../../core/network.service';
+import {DeviceType} from '../../shared/models/device-type.model';
+import {Network} from '../../shared/models/network.model';
+import {Device} from '../../shared/models/device.model';
+import {PluginCredentials} from '../../shared/models/plugin-credentials.model';
+import {UtilService} from '../../core/util.service';
 
 @Component({
   selector: 'dh-plugins',
@@ -126,7 +126,7 @@ export class PluginsComponent implements OnInit {
 
   async generateNewTokens() {
     try {
-      let result = await this.pluginService.generateNewTokens(this.selectedPlugin.topicName);
+      const result = await this.pluginService.generateNewTokens(this.selectedPlugin.topicName);
       this.selectedPluginCredentials = new PluginCredentials(result.accessToken, result.refreshToken, this.selectedPlugin.topicName);
 
     } catch (error) {
@@ -136,11 +136,11 @@ export class PluginsComponent implements OnInit {
   }
 
   async deletePlugin(plugin: Plugin) {
-    if (confirm("Are you sure you want to delete this plugin?")) {
+    if (confirm('Are you sure you want to delete this plugin?')) {
       try {
         await this.pluginService.deletePlugin(plugin.topicName);
 
-        let index = this.plugins.indexOf(plugin);
+        const index = this.plugins.indexOf(plugin);
         if (index > -1) {
           this.plugins.splice(index, 1);
         }

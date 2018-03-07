@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {Router} from "@angular/router";
-import {DeviceService} from "../../core/device.service";
-import {Device} from "../../shared/models/device.model";
-import {NetworkService} from "../../core/network.service";
-import {DeviceTypeService} from "../../core/device-type.service";
-import {Network} from "../../shared/models/network.model";
-import {DeviceType} from "../../shared/models/device-type.model";
-import {NotifierService} from "angular-notifier";
-import {UtilService} from "../../core/util.service";
-import {HelpService} from "../../core/help.service";
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
+import {DeviceService} from '../../core/device.service';
+import {Device} from '../../shared/models/device.model';
+import {NetworkService} from '../../core/network.service';
+import {DeviceTypeService} from '../../core/device-type.service';
+import {Network} from '../../shared/models/network.model';
+import {DeviceType} from '../../shared/models/device-type.model';
+import {NotifierService} from 'angular-notifier';
+import {UtilService} from '../../core/util.service';
+import {HelpService} from '../../core/help.service';
 
 @Component({
   selector: 'dh-devices',
@@ -47,7 +47,7 @@ export class DevicesComponent implements OnInit {
     try {
       return this.networks.find(n => n.id === id).name;
     } catch (error) {
-      return '[Error while accessing network]'
+      return '[Error while accessing network]';
     }
   }
 
@@ -55,7 +55,7 @@ export class DevicesComponent implements OnInit {
     try {
       return this.deviceTypes.find(n => n.id === id).name;
     } catch (error) {
-      return '[Error while accessing device type]'
+      return '[Error while accessing device type]';
     }
   }
 
@@ -100,11 +100,11 @@ export class DevicesComponent implements OnInit {
   }
 
   async deleteDevice(device: Device) {
-    if(confirm("Are you sure you want to delete this device?")) {
+    if (confirm('Are you sure you want to delete this device?')) {
       try {
         await this.deviceService.deleteDevice(device.id);
 
-        let index = this.devices.indexOf(device);
+        const index = this.devices.indexOf(device);
         if (index > -1) {
           this.devices.splice(index, 1);
         }
@@ -116,8 +116,8 @@ export class DevicesComponent implements OnInit {
   }
 
   private generateDeviceId(): string {
-    let newId = "";
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let newId = '';
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     for (let i = 0; i < 36; i++) {
       newId += possible.charAt(Math.floor(Math.random() * possible.length));

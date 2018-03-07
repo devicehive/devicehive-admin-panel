@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {DevicehiveService} from "./devicehive.service";
+import {DevicehiveService} from './devicehive.service';
 import * as decode from 'jwt-decode';
-import {TokenRequest} from "../shared/models/token-request.model";
+import {TokenRequest} from '../shared/models/token-request.model';
 
 @Injectable()
 export class JwtService {
