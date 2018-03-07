@@ -40,15 +40,12 @@ export class DevicehiveService {
 
   async getHttpDeviceHive() {
     if (!this.httpDeviceHive) {
-      const dh = JSON.parse(sessionStorage.getItem('dh'));
-      if (dh == null) {
+      const token = sessionStorage.getItem('refresh_token');
+      if (token == null) {
         throw error()
       } else {
         this.httpDeviceHive = new DeviceHive({
-          login: dh.login,
-          password: dh.password,
-          accessToken: dh.accessToken,
-          refreshToken: dh.refreshToken,
+          refreshToken: token,
           mainServiceURL: this.mainServiceURL,
           authServiceURL: this.authServiceURL,
           pluginServiceURL: this.pluginServiceURL,
@@ -73,7 +70,7 @@ export class DevicehiveService {
 
     try {
       await this.httpDeviceHive.connect();
-      sessionStorage.setItem('dh', JSON.stringify(this.httpDeviceHive));
+      sessionStorage.setItem('refresh_token', this.httpDeviceHive.refreshToken);
 
       this.loggedIn = true;
     } catch (error) {
@@ -93,7 +90,7 @@ export class DevicehiveService {
 
     try {
       await this.httpDeviceHive.connect();
-      sessionStorage.setItem('dh', JSON.stringify(this.httpDeviceHive));
+      sessionStorage.setItem('refresh_token', this.httpDeviceHive.refreshToken);
 
       this.loggedIn = true;
     } catch (error) {
@@ -103,7 +100,7 @@ export class DevicehiveService {
   }
 
   logOut() {
-    sessionStorage.removeItem('dh')
+    sessionStorage.removeItem('refresh_token')
   }
 
   isLoggedIn() {
@@ -111,8 +108,8 @@ export class DevicehiveService {
       return true;
     }
 
-    const dh = JSON.parse(sessionStorage.getItem('dh'));
-    return dh != null;
+    const token = sessionStorage.getItem('refresh_token');
+    return token != null;
   }
 
   async getToken() {
