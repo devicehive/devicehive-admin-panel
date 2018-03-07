@@ -50,7 +50,7 @@ export class UserDetailsComponent implements OnInit {
               private notifierService: NotifierService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
       this.initData(id);
@@ -74,7 +74,7 @@ export class UserDetailsComponent implements OnInit {
 
   formatter = (x: { name: string }) => x.name;
 
-  async initData(userId: number) {
+  async initData(userId: number): Promise<void> {
     try {
       const userPlain = await this.userService.getUser(userId);
       this.user = User.fromObject(userPlain);
@@ -87,7 +87,7 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
-  async openEditUserModal(content) {
+  async openEditUserModal(content): Promise<void> {
     this.editUser = User.fromUser(this.user);
 
     try {
@@ -98,7 +98,7 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
-  async updateUser() {
+  async updateUser(): Promise<void> {
     const inputError = UtilService.getUserDetailsInputErrors(this.editUser);
     if (inputError) {
       this.notifierService.notify('error', inputError);
@@ -115,7 +115,7 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
-  async grantAccessToNetwork() {
+  async grantAccessToNetwork(): Promise<void> {
     try {
       await this.userService.grantAccessToNetwork(this.user.id, this.selectedNetwork.id);
 
@@ -128,7 +128,7 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
-  async revokeAccessToNetwork(network: Network) {
+  async revokeAccessToNetwork(network: Network): Promise<void> {
     try {
       await this.userService.revokeAccessToNetwork(this.user.id, network.id);
 
@@ -141,7 +141,7 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
-  async toggleAllowAllDeviceTypes() {
+  async toggleAllowAllDeviceTypes(): Promise<void> {
     try {
       if (this.user.allDeviceTypesAvailable) {
         await this.userService.allowAllDeviceTypesForUser(this.user.id);
@@ -154,7 +154,7 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
-  async grantAccessToDeviceType() {
+  async grantAccessToDeviceType(): Promise<void> {
     try {
       await this.userService.grantAccessToDeviceType(this.user.id, this.selectedDeviceType.id);
 
@@ -171,7 +171,7 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
-  async revokeAccessToDeviceType(deviceType: DeviceType) {
+  async revokeAccessToDeviceType(deviceType: DeviceType): Promise<void> {
     try {
       await this.userService.revokeAccessToDeviceType(this.user.id, deviceType.id);
 
@@ -184,11 +184,11 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
-  clearSelectedNetwork() {
+  clearSelectedNetwork(): void {
     this.selectedNetwork = null;
   }
 
-  clearSelectedDeviceType() {
+  clearSelectedDeviceType(): void {
     this.selectedDeviceType = null;
   }
 }

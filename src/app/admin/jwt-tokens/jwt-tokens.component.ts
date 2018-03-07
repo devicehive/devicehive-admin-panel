@@ -23,10 +23,10 @@ export class JwtTokensComponent implements OnInit {
               private jwtService: JwtService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  async createTokens() {
+  async createTokens(): Promise<void> {
     this.isAccessTokenCopied = false;
     this.isRefreshTokenCopied = false;
     let expiration: Date = null;
@@ -40,7 +40,7 @@ export class JwtTokensComponent implements OnInit {
     this.refreshToken = tokens.refreshToken;
   }
 
-  clearExpirationDate() {
+  clearExpirationDate(): void {
     this.date = null;
     this.time = {hour: 0, minute: 0, second: 0};
   }

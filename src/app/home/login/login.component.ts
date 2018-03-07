@@ -21,10 +21,10 @@ export class LoginComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  async logIn() {
+  async logIn(): Promise<void> {
     this.isSubmitting = true;
     this.hasErrors = false;
 

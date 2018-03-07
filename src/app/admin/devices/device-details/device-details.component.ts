@@ -65,7 +65,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     this.shouldPollNotifications = false;
   }
 
-  async initData(deviceId: string) {
+  async initData(deviceId: string): Promise<void> {
     const devicePlain = await this.deviceService.getDevice(deviceId);
     this.device = Device.fromObject(devicePlain);
 
@@ -80,7 +80,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     this.pollNotifications();
   }
 
-  findNetworkNameById(id: number) {
+  findNetworkNameById(id: number): string {
     try {
       return this.networks.find(n => n.id === id).name;
     } catch (error) {
@@ -88,7 +88,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  findDeviceTypeNameById(id: number) {
+  findDeviceTypeNameById(id: number): string {
     try {
       return this.deviceTypes.find(n => n.id === id).name;
     } catch (error) {
@@ -96,7 +96,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async openEditDeviceModal(content) {
+  async openEditDeviceModal(content): Promise<void> {
     this.editDevice = Device.fromDevice(this.device);
 
     try {
@@ -107,7 +107,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async updateDevice() {
+  async updateDevice(): Promise<void> {
     const inputError = UtilService.getDeviceInputErrors(this.editDevice);
     if (inputError) {
       this.notifierService.notify('error', inputError);
@@ -124,7 +124,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async openNewCommandModal(content) {
+  async openNewCommandModal(content): Promise<void> {
     this.newCommand = new Command();
     this.isSendingRequest = false;
     try {
@@ -135,7 +135,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async openNewNotificationModal(content) {
+  async openNewNotificationModal(content): Promise<void> {
     this.newNotification = new Notification();
     this.isSendingRequest = false;
     try {
@@ -146,7 +146,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async sendNewCommand() {
+  async sendNewCommand(): Promise<void> {
     const inputError = UtilService.getCommandInputErrors(this.newCommand);
     if (inputError) {
       this.notifierService.notify('error', inputError);
@@ -164,7 +164,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async pollCommands() {
+  async pollCommands(): Promise<void> {
     const commands = await this.commandService.pollCommands(this.device.id);
     commands.forEach(c => {
       this.commands.unshift(c);
@@ -175,7 +175,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async pollUpdatedCommands() {
+  async pollUpdatedCommands(): Promise<void> {
     const refreshedCommands = await this.commandService.pollUpdatedCommands(this.device.id);
     for (let i = 0; i < this.commands.length; i++) {
       for (let j = 0; j < refreshedCommands.length; j++) {
@@ -190,7 +190,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async sendNewNotification() {
+  async sendNewNotification(): Promise<void> {
     const inputError = UtilService.getNotificationInputErrors(this.newNotification);
     if (inputError) {
       this.notifierService.notify('error', inputError);
@@ -209,7 +209,7 @@ export class DeviceDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  async pollNotifications() {
+  async pollNotifications(): Promise<void> {
     const notifications = await this.notificationService.pollNotifications(this.device.id);
     notifications.forEach(c => {
       this.notifications.unshift(c);

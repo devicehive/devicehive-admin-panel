@@ -31,7 +31,7 @@ export class DeviceComponent implements OnInit {
   constructor(public helpService: HelpService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.device.networkId) {
       this.tempNetwork = this.networks.find(n => n.id === this.device.networkId);
     }
@@ -50,11 +50,11 @@ export class DeviceComponent implements OnInit {
       .merge(this.networksClick.filter(() => !this.networksTypeahead.isPopupOpen()))
       .map(term => (term === '' ? this.networks : this.networks.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)))
 
-  selectNetwork() {
+  selectNetwork(): void {
     this.device.networkId = this.tempNetwork.id;
   }
 
-  clearSelectedNetwork() {
+  clearSelectedNetwork(): void {
     this.tempNetwork = null;
     this.device.networkId = null;
   }
@@ -66,11 +66,11 @@ export class DeviceComponent implements OnInit {
       .merge(this.deviceTypesClick.filter(() => !this.deviceTypesTypeahead.isPopupOpen()))
       .map(term => (term === '' ? this.deviceTypes : this.deviceTypes.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)))
 
-  selectDeviceType() {
+  selectDeviceType(): void {
     this.device.deviceTypeId = this.tempDeviceType.id;
   }
 
-  clearSelectedDeviceType() {
+  clearSelectedDeviceType(): void {
     this.tempDeviceType = null;
     this.device.deviceTypeId = null;
   }

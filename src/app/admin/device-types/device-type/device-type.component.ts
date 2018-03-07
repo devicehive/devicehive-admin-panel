@@ -14,7 +14,7 @@ export class DeviceTypeComponent implements OnInit {
   constructor(public helpService: HelpService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

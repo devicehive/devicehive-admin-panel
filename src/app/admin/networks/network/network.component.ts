@@ -14,7 +14,7 @@ export class NetworkComponent implements OnInit {
   constructor(public helpService: HelpService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

@@ -31,7 +31,7 @@ export class DeviceTypesComponent implements OnInit {
               private notifierService: NotifierService) {
   }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     const currentUser = await this.userService.getCurrentUser();
     this.isAdmin = currentUser.role === UserRole.ADMIN;
 
@@ -39,7 +39,7 @@ export class DeviceTypesComponent implements OnInit {
     this.deviceTypes = plainToClass(DeviceType, deviceTypesPlain);
   }
 
-  async openDeviceTypeModal(content, selectedDeviceType?: DeviceType) {
+  async openDeviceTypeModal(content, selectedDeviceType?: DeviceType): Promise<void> {
     if (selectedDeviceType) {
       this.selectedDeviceType = new DeviceType(selectedDeviceType.id, selectedDeviceType.name, selectedDeviceType.description);
     }
@@ -54,7 +54,7 @@ export class DeviceTypesComponent implements OnInit {
     }
   }
 
-  async createDeviceType() {
+  async createDeviceType(): Promise<void> {
     const inputError = UtilService.getDeviceTypeInputErrors(this.newDeviceType);
     if (inputError) {
       this.notifierService.notify('error', inputError);
@@ -77,7 +77,7 @@ export class DeviceTypesComponent implements OnInit {
     }
   }
 
-  async deleteDeviceType(deviceType: DeviceType) {
+  async deleteDeviceType(deviceType: DeviceType): Promise<void> {
     if (confirm('Are you sure you want to delete this device type?')) {
       try {
         await this.deviceTypeService.deleteDeviceType(deviceType.id);
@@ -93,7 +93,7 @@ export class DeviceTypesComponent implements OnInit {
     }
   }
 
-  async updateSelectedDeviceType() {
+  async updateSelectedDeviceType(): Promise<void> {
     const inputError = UtilService.getDeviceTypeInputErrors(this.selectedDeviceType);
     if (inputError) {
       this.notifierService.notify('error', inputError);

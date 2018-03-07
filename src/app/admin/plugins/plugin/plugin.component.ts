@@ -47,7 +47,7 @@ export class PluginComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.plugin.networkIds.length > 0) {
       this.plugin.networkIds.map(id => {
         try {
@@ -95,7 +95,7 @@ export class PluginComponent implements OnInit {
       .merge(this.networksClick.filter(() => !this.networksTypeahead.isPopupOpen()))
       .map(term => (term === '' ? this.networks : this.networks.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)))
 
-  addNetwork() {
+  addNetwork(): void {
     if (this.tempNetwork.id) {
       this.selectedNetworks.push(this.tempNetwork);
       this.plugin.networkIds.push(this.tempNetwork.id);
@@ -103,7 +103,7 @@ export class PluginComponent implements OnInit {
     }
   }
 
-  removeNetwork(network: Network) {
+  removeNetwork(network: Network): void {
     const index = this.selectedNetworks.indexOf(network);
     if (index > -1) {
       this.selectedNetworks.splice(index, 1);
@@ -122,7 +122,7 @@ export class PluginComponent implements OnInit {
       .merge(this.deviceTypesClick.filter(() => !this.deviceTypesTypeahead.isPopupOpen()))
       .map(term => (term === '' ? this.deviceTypes : this.deviceTypes.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)))
 
-  addDeviceType() {
+  addDeviceType(): void {
     if (this.tempDeviceType.id) {
       this.selectedDeviceTypes.push(this.tempDeviceType);
       this.plugin.deviceTypeIds.push(this.tempDeviceType.id);
@@ -130,7 +130,7 @@ export class PluginComponent implements OnInit {
     }
   }
 
-  removeDeviceType(deviceType: DeviceType) {
+  removeDeviceType(deviceType: DeviceType): void {
     const index = this.selectedDeviceTypes.indexOf(deviceType);
     if (index > -1) {
       this.selectedDeviceTypes.splice(index, 1);

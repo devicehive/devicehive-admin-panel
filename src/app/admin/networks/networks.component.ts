@@ -31,7 +31,7 @@ export class NetworksComponent implements OnInit {
               private notifierService: NotifierService) {
   }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     const currentUser = await this.userService.getCurrentUser();
     this.isAdmin = currentUser.role === UserRole.ADMIN;
 
@@ -39,7 +39,7 @@ export class NetworksComponent implements OnInit {
     this.networks = plainToClass(Network, networksPlain);
   }
 
-  async openNetworkModal(content, selectedNetwork?: Network) {
+  async openNetworkModal(content, selectedNetwork?: Network): Promise<void> {
     if (selectedNetwork) {
       this.selectedNetwork = new Network(selectedNetwork.id, selectedNetwork.name, selectedNetwork.description);
     }
@@ -54,7 +54,7 @@ export class NetworksComponent implements OnInit {
     }
   }
 
-  async createNetwork() {
+  async createNetwork(): Promise<void> {
     const inputError = UtilService.getNetworkInputErrors(this.newNetwork);
     if (inputError) {
       this.notifierService.notify('error', inputError);
@@ -77,7 +77,7 @@ export class NetworksComponent implements OnInit {
     }
   }
 
-  async deleteNetwork(network: Network) {
+  async deleteNetwork(network: Network): Promise<void> {
     if (confirm('Are you sure you want to delete this network?')) {
       try {
         await this.networkService.deleteNetwork(network.id);
@@ -93,7 +93,7 @@ export class NetworksComponent implements OnInit {
     }
   }
 
-  async updateSelectedNetwork() {
+  async updateSelectedNetwork(): Promise<void> {
     const inputError = UtilService.getNetworkInputErrors(this.selectedNetwork);
     if (inputError) {
       this.notifierService.notify('error', inputError);

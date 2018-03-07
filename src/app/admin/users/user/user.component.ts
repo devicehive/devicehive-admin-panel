@@ -17,6 +17,6 @@ export class UserComponent implements OnInit {
   constructor(public helpService: HelpService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 }

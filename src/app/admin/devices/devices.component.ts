@@ -36,14 +36,14 @@ export class DevicesComponent implements OnInit {
 
   }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.networks = await this.networkService.getAllNetworks();
     this.deviceTypes = await this.deviceTypeService.getAllDeviceTypes();
 
     this.devices = await this.deviceService.getAllDevices();
   }
 
-  findNetworkNameById(id: number) {
+  findNetworkNameById(id: number): string {
     try {
       return this.networks.find(n => n.id === id).name;
     } catch (error) {
@@ -51,7 +51,7 @@ export class DevicesComponent implements OnInit {
     }
   }
 
-  findDeviceTypeNameById(id: number) {
+  findDeviceTypeNameById(id: number): string {
     try {
       return this.deviceTypes.find(n => n.id === id).name;
     } catch (error) {
@@ -59,11 +59,11 @@ export class DevicesComponent implements OnInit {
     }
   }
 
-  openDeviceDetails(device) {
+  openDeviceDetails(device): void {
     this.router.navigate(['/admin/device', device.id]);
   }
 
-  async openNewDeviceModal(content) {
+  async openNewDeviceModal(content): Promise<void> {
     this.newDevice = new Device();
 
     this.isSendingRequest = false;
@@ -75,7 +75,7 @@ export class DevicesComponent implements OnInit {
     }
   }
 
-  async createDevice() {
+  async createDevice(): Promise<void> {
     const inputError = UtilService.getDeviceInputErrors(this.newDevice);
     if (inputError) {
       this.notifierService.notify('error', inputError);
@@ -99,7 +99,7 @@ export class DevicesComponent implements OnInit {
     }
   }
 
-  async deleteDevice(device: Device) {
+  async deleteDevice(device: Device): Promise<void> {
     if (confirm('Are you sure you want to delete this device?')) {
       try {
         await this.deviceService.deleteDevice(device.id);

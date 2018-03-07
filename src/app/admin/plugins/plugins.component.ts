@@ -50,7 +50,7 @@ export class PluginsComponent implements OnInit {
               private notifierService: NotifierService) {
   }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     const currentUser = await this.userService.getCurrentUser();
     this.isAdmin = currentUser.role === UserRole.ADMIN;
 
@@ -62,7 +62,7 @@ export class PluginsComponent implements OnInit {
     this.devices = await this.deviceService.getAllDevices();
   }
 
-  async openPluginModal(content, selectedPlugin?: Plugin) {
+  async openPluginModal(content, selectedPlugin?: Plugin): Promise<void> {
     if (selectedPlugin) {
       this.selectedPluginOriginal = Plugin.fromObject(Plugin.fromPluginApiResponse(selectedPlugin));
       this.selectedPlugin = Plugin.fromObject(Plugin.fromPluginApiResponse(selectedPlugin));
@@ -82,7 +82,7 @@ export class PluginsComponent implements OnInit {
     }
   }
 
-  async createPlugin() {
+  async createPlugin(): Promise<void> {
     const inputError = UtilService.getPluginInputErrors(this.newPlugin);
     if (inputError) {
       this.notifierService.notify('error', inputError);
@@ -105,7 +105,7 @@ export class PluginsComponent implements OnInit {
     }
   }
 
-  async updateSelectedPlugin() {
+  async updateSelectedPlugin(): Promise<void> {
     const inputError = UtilService.getPluginInputErrors(this.selectedPlugin);
     if (inputError) {
       this.notifierService.notify('error', inputError);
@@ -124,18 +124,17 @@ export class PluginsComponent implements OnInit {
     }
   }
 
-  async generateNewTokens() {
+  async generateNewTokens(): Promise<void> {
     try {
       const result = await this.pluginService.generateNewTokens(this.selectedPlugin.topicName);
       this.selectedPluginCredentials = new PluginCredentials(result.accessToken, result.refreshToken, this.selectedPlugin.topicName);
-
     } catch (error) {
       this.isSendingRequest = false;
       this.notifierService.notify('error', error.message);
     }
   }
 
-  async deletePlugin(plugin: Plugin) {
+  async deletePlugin(plugin: Plugin): Promise<void> {
     if (confirm('Are you sure you want to delete this plugin?')) {
       try {
         await this.pluginService.deletePlugin(plugin.topicName);

@@ -30,15 +30,15 @@ export class UsersComponent implements OnInit {
               private notifierService: NotifierService) {
   }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.users = await this.userService.getAllUsers();
   }
 
-  openUserDetails(user: User) {
+  openUserDetails(user: User): void {
     this.router.navigate(['/admin/user', user.id]);
   }
 
-  async openNewUserModal(content) {
+  async openNewUserModal(content): Promise<void> {
     this.newUser = new User();
     this.isSendingRequest = false;
     try {
@@ -49,7 +49,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  async createUser() {
+  async createUser(): Promise<void> {
     const inputError = UtilService.getUserInputErrors(this.newUser);
     if (inputError) {
       this.notifierService.notify('error', inputError);
@@ -73,7 +73,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  async deleteUser(user: User) {
+  async deleteUser(user: User): Promise<void> {
     if (confirm('Are you sure you want to delete this user?')) {
       try {
         await this.userService.deleteUser(user.id);

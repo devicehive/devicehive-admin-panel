@@ -19,14 +19,14 @@ export class AdminComponent implements OnInit {
               public appTourService: AppTourService) {
   }
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     this.currentUser = await this.userService.forceGetCurrentUser();
     if (!this.currentUser.introReviewed) {
       this.appTourService.startTour(this.currentUser.role === UserRole.ADMIN);
     }
   }
 
-  logOut() {
+  logOut(): void {
     this.dh.logOut();
     this.userService.clearCurrentUser();
     window.location.href = document.location.origin;

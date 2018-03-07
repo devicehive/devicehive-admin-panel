@@ -18,14 +18,14 @@ export class JwtLoginComponent implements OnInit {
               private notifierService: NotifierService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.token = params['token'];
       this.logIn();
     });
   }
 
-  async logIn() {
+  async logIn(): Promise<void> {
     try {
       await this.dh.logInWithToken(this.token);
       this.router.navigate(['/admin']);
