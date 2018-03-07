@@ -152,7 +152,7 @@ export class UtilService {
     }
   }
 
-  static isValidJson(str: string) {
+  static isValidJson(str: string): boolean {
     if (isNumeric(str)) {
       return false;
     }

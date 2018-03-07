@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {DevicehiveService} from './devicehive.service';
 import {Plugin} from '../shared/models/plugin.model';
+import {PluginCredentials} from '../shared/models/plugin-credentials.model';
+import {JwtToken} from '../shared/models/jwt-token.model';
 
 @Injectable()
 export class PluginService {
@@ -12,13 +14,13 @@ export class PluginService {
   constructor(private dh: DevicehiveService) {
   }
 
-  async getAllPlugins() {
+  async getAllPlugins(): Promise<Array<Plugin>> {
     const query = new this.PluginListQuery('');
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.plugin.list(query);
   }
 
-  async registerPlugin(plugin: Plugin) {
+  async registerPlugin(plugin: Plugin): Promise<PluginCredentials> {
     const query = new this.PluginRegisterQuery({
       deviceId: plugin.device.id,
       networkIds: plugin.networkIds,
@@ -39,7 +41,7 @@ export class PluginService {
     return await httpDeviceHive.plugin.register(plug, query);
   }
 
-  async updatePlugin(plugin: Plugin, originalPlugin: Plugin) {
+  async updatePlugin(plugin: Plugin, originalPlugin: Plugin): Promise<any> {
     let queryObject: any;
     queryObject = {topicName: plugin.topicName};
 
@@ -93,12 +95,12 @@ export class PluginService {
     return await httpDeviceHive.plugin.update(query);
   }
 
-  async generateNewTokens(topicName: string) {
+  async generateNewTokens(topicName: string): Promise<JwtToken> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.token.createPluginToken(new DeviceHive.models.PluginToken({topicName: topicName}));
   }
 
-  async deletePlugin(topicName: string) {
+  async deletePlugin(topicName: string): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.plugin.delete(topicName);
   }

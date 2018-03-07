@@ -106,7 +106,7 @@ export class AppTourService {
 
   }
 
-  startTour(isAdmin: boolean) {
+  startTour(isAdmin: boolean): void {
     const that = this;
     const tour = {
       id: 'devicehive-tour',
@@ -128,7 +128,7 @@ export class AppTourService {
     hopscotch.startTour(tour);
   }
 
-  async setTourFinished() {
+  async setTourFinished(): Promise<void> {
     await this.userService.finishTourForCurrentUser();
   }
 }

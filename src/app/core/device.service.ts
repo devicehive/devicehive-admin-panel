@@ -5,33 +5,33 @@ import {Device} from '../shared/models/device.model';
 @Injectable()
 export class DeviceService {
 
-  DeviceListQuery = DeviceHive.models.query.DeviceListQuery;
+  private DeviceListQuery = DeviceHive.models.query.DeviceListQuery;
 
   constructor(private dh: DevicehiveService) {
   }
 
-  async getAllDevices() {
+  async getAllDevices(): Promise<Array<Device>> {
     const query = new this.DeviceListQuery('');
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.device.list(query);
   }
 
-  async getDevice(deviceId: string) {
+  async getDevice(deviceId: string): Promise<Device> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.device.get(deviceId);
   }
 
-  async createDevice(device: Device) {
+  async createDevice(device: Device): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.device.add(device);
   }
 
-  async updateDevice(device: Device) {
+  async updateDevice(device: Device): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.device.add(device);
   }
 
-  async deleteDevice(deviceId: string) {
+  async deleteDevice(deviceId: string): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.device.delete(deviceId);
   }

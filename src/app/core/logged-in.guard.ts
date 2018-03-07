@@ -8,7 +8,7 @@ export class LoggedInGuard implements CanActivate {
   constructor(private dh: DevicehiveService) {
   }
 
-  canActivate() {
+  canActivate(): boolean {
     if (this.dh.isLoggedIn()) {
       return true;
     }

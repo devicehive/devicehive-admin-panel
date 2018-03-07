@@ -38,7 +38,7 @@ export class DevicehiveService {
     this.autoUpdateSession = environment.autoUpdateSession;
   }
 
-  async getHttpDeviceHive() {
+  async getHttpDeviceHive(): Promise<any> {
     if (!this.httpDeviceHive) {
       const token = sessionStorage.getItem('refresh_token');
       if (token == null) {
@@ -58,7 +58,7 @@ export class DevicehiveService {
     return this.httpDeviceHive;
   }
 
-  async logIn(login: string, password: string) {
+  async logIn(login: string, password: string): Promise<void> {
     this.httpDeviceHive = new DeviceHive({
       login: login,
       password: password,
@@ -79,7 +79,7 @@ export class DevicehiveService {
     }
   }
 
-  async logInWithToken(token: string) {
+  async logInWithToken(token: string): Promise<void> {
     this.httpDeviceHive = new DeviceHive({
       accessToken: token,
       mainServiceURL: this.mainServiceURL,
@@ -99,11 +99,11 @@ export class DevicehiveService {
     }
   }
 
-  logOut() {
+  logOut(): void {
     sessionStorage.removeItem('refresh_token');
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     if (this.httpDeviceHive && this.loggedIn) {
       return true;
     }
@@ -112,7 +112,7 @@ export class DevicehiveService {
     return token != null;
   }
 
-  async getToken() {
+  async getToken(): Promise<string | string> {
     if (this.refreshToken) {
       return this.refreshToken;
     } else if (this.httpDeviceHive.refreshToken) {

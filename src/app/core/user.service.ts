@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {DevicehiveService} from './devicehive.service';
 import {User} from '../shared/models/user.model';
+import {DeviceType} from '../shared/models/device-type.model';
 
 @Injectable()
 export class UserService {
@@ -11,7 +12,7 @@ export class UserService {
   constructor(private dh: DevicehiveService) {
   }
 
-  async getCurrentUser() {
+  async getCurrentUser(): Promise<User> {
     if (!this.currentUser) {
       const httpDeviceHive = await this.dh.getHttpDeviceHive();
       this.currentUser = await httpDeviceHive.user.getCurrent();
@@ -21,18 +22,18 @@ export class UserService {
     return this.currentUser;
   }
 
-  async forceGetCurrentUser() {
+  async forceGetCurrentUser(): Promise<User> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     this.currentUser = await httpDeviceHive.user.getCurrent();
     this.currentUser = User.fromObject(this.currentUser);
     return this.currentUser;
   }
 
-  clearCurrentUser() {
+  clearCurrentUser(): void {
     this.currentUser = null;
   }
 
-  async finishTourForCurrentUser() {
+  async finishTourForCurrentUser(): Promise<void> {
     const updatedUser = new User(this.currentUser.id);
     updatedUser.role = null;
     updatedUser.status = null;
@@ -41,69 +42,69 @@ export class UserService {
     await this.updateCurrentUser(updatedUser);
   }
 
-  async getAllUsers() {
+  async getAllUsers(): Promise<Array<User>> {
     const query = new this.UserListQuery('');
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.list(query);
   }
 
-  async createUser(user: User) {
+  async createUser(user: User): Promise<User> {
     user.introReviewed = false;
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.insert(user);
   }
 
-  async updateUser(user: User) {
+  async updateUser(user: User): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.update(user);
   }
 
-  async updateCurrentUser(user: User) {
+  async updateCurrentUser(user: User): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.updateCurrent(user);
   }
 
-  async deleteUser(userId: number) {
+  async deleteUser(userId: number): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.delete(userId);
   }
 
-  async getUser(id: number) {
+  async getUser(id: number): Promise<User> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.get(id);
   }
 
-  async grantAccessToNetwork(userId: number, networkId: number) {
+  async grantAccessToNetwork(userId: number, networkId: number): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.assignNetwork(userId, networkId);
   }
 
-  async revokeAccessToNetwork(userId: number, networkId: number) {
+  async revokeAccessToNetwork(userId: number, networkId: number): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.unassignNetwork(userId, networkId);
   }
 
-  async getDeviceTypes(userId: number) {
+  async getDeviceTypes(userId: number): Promise<Array<DeviceType>> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.getDeviceTypes(userId);
   }
 
-  async allowAllDeviceTypesForUser(userId: number) {
+  async allowAllDeviceTypesForUser(userId: number): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.assignAllDeviceTypes(userId);
   }
 
-  async disallowAllDeviceTypesForUser(userId: number) {
+  async disallowAllDeviceTypesForUser(userId: number): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.unassignAllDeviceTypes(userId);
   }
 
-  async grantAccessToDeviceType(userId: number, deviceTypeId: number) {
+  async grantAccessToDeviceType(userId: number, deviceTypeId: number): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.assignDeviceType(userId, deviceTypeId);
   }
 
-  async revokeAccessToDeviceType(userId: number, deviceTypeId: number) {
+  async revokeAccessToDeviceType(userId: number, deviceTypeId: number): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.unassignDeviceType(userId, deviceTypeId);
   }

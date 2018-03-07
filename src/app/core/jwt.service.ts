@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {DevicehiveService} from './devicehive.service';
 import * as decode from 'jwt-decode';
 import {TokenRequest} from '../shared/models/token-request.model';
+import {JwtToken} from '../shared/models/jwt-token.model';
 
 @Injectable()
 export class JwtService {
@@ -9,7 +10,7 @@ export class JwtService {
   constructor(private dh: DevicehiveService) {
   }
 
-  async createTokens(expiration) {
+  async createTokens(expiration): Promise<JwtToken> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     const token = await this.dh.getToken();
     const decoded = decode(token);
