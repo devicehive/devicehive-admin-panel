@@ -20,6 +20,7 @@
       </tr>
       </tbody>
     </table>
+    <p *ngIf="deviceTypes && deviceTypes.length === 0" class="text-center">You do not have access to any device types</p>
   </div>
 
   <button class="btn btn-success float-right btn-add" *ngIf="isAdmin" (click)="openDeviceTypeModal(newDeviceTypeModal)">Add new device type</button>
