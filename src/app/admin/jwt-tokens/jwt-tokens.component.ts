@@ -27,6 +27,10 @@ export class JwtTokensComponent implements OnInit {
   }
 
   async createTokens(): Promise<void> {
+    if (!this.time) {
+      this.time = {hour: 0, minute: 0, second: 0};
+    }
+
     this.isAccessTokenCopied = false;
     this.isRefreshTokenCopied = false;
     let expiration: Date = null;
