@@ -62,6 +62,7 @@
         [(ngModel)]="plugin.device"
         [ngbTypeahead]="searchDevice"
         (focus)="deviceFocus.next($event.target.value)"
+        (focusout)="clearDevice()"
         (click)="deviceClick.next($event.target.value)"
         [inputFormatter]="formatter"
         [resultTemplate]="rt"

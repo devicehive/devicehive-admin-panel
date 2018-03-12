@@ -88,6 +88,10 @@ export class PluginComponent implements OnInit {
       .merge(this.deviceClick.filter(() => !this.deviceTypeahead.isPopupOpen()))
       .map(term => (term === '' ? this.devices : this.devices.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)))
 
+  clearDevice(): void {
+    this.deviceTypeahead.writeValue('');
+  }
+
   searchNetwork = (text$: Observable<string>) =>
     text$
       .debounceTime(200).distinctUntilChanged()
