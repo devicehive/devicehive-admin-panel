@@ -23,6 +23,8 @@
             <textarea readonly class="form-control-plaintext" id="textAreaData" rows="3" [(ngModel)]="device.data"></textarea>
           </div>
 
+          <p>Operation: {{device.isBlocked ? 'Blocked' : 'Normal'}}</p>
+
           <button class="btn btn-primary float-right btn-edit" (click)="openEditDeviceModal(editDeviceModal)">Edit</button>
         </div>
       </div>
