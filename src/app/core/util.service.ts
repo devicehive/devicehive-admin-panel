@@ -139,6 +139,10 @@ export class UtilService {
       return 'Plugin name should be at least 3 characters long';
     }
 
+    if (plugin.name.includes(' ')) {
+      return 'Plugin name cannot contain spaces';
+    }
+
     if (!plugin.description || plugin.description.length < 3) {
       return 'Plugin description should be at least 3 characters long';
     }
