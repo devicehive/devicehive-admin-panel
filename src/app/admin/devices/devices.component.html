@@ -28,7 +28,15 @@
     </table>
   </div>
 
-  <button class="btn btn-success float-right btn-add" (click)="openNewDeviceModal(newDeviceModal)">Add new device</button>
+  <button class="btn btn-success float-right btn-add"
+          *ngIf="!networks || networks.length !== 0"
+          (click)="openNewDeviceModal(newDeviceModal)">Add new device</button>
+
+  <div  class="float-right" *ngIf="networks && networks.length === 0"
+       placement="bottom" data-container="body" [ngbTooltip]="'You should have at least one network available to create a new device. Please contact your administrator.'">
+    <button class="btn btn-success float-right btn-add" (click)="openNewDeviceModal(newDeviceModal)" disabled>Add new device</button>
+  </div>
+
 </div>
 
 <ng-template #newDeviceModal let-c="close" let-d="dismiss">
