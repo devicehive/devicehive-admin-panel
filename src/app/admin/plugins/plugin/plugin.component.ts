@@ -95,11 +95,17 @@ export class PluginComponent implements OnInit {
       .merge(this.networksClick.filter(() => !this.networksTypeahead.isPopupOpen()))
       .map(term => (term === '' ? this.networks : this.networks.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)))
 
+  clearNetwork(): void {
+    this.tempNetwork = null;
+  }
+
   addNetwork(): void {
     if (this.tempNetwork.id) {
       this.selectedNetworks.push(this.tempNetwork);
       this.plugin.networkIds.push(this.tempNetwork.id);
+
       this.tempNetwork = null;
+      this.networksTypeahead.writeValue('');
     }
   }
 
@@ -122,11 +128,17 @@ export class PluginComponent implements OnInit {
       .merge(this.deviceTypesClick.filter(() => !this.deviceTypesTypeahead.isPopupOpen()))
       .map(term => (term === '' ? this.deviceTypes : this.deviceTypes.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)))
 
+  clearDeviceType(): void {
+    this.tempDeviceType = null;
+  }
+
   addDeviceType(): void {
     if (this.tempDeviceType.id) {
       this.selectedDeviceTypes.push(this.tempDeviceType);
       this.plugin.deviceTypeIds.push(this.tempDeviceType.id);
+
       this.tempDeviceType = null;
+      this.deviceTypesTypeahead.writeValue('');
     }
   }
 
