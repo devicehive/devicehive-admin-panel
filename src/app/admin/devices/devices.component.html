@@ -29,11 +29,12 @@
   </div>
 
   <button class="btn btn-success float-right btn-add"
-          *ngIf="!networks || networks.length !== 0"
+          *ngIf="networks?.length !== 0 && deviceTypes?.length !== 0"
           (click)="openNewDeviceModal(newDeviceModal)">Add new device</button>
 
-  <div  class="float-right" *ngIf="networks && networks.length === 0"
-       placement="bottom" data-container="body" [ngbTooltip]="'You should have at least one network available to create a new device. Please contact your administrator.'">
+  <div  class="float-right" *ngIf="(networks && networks.length === 0) || (deviceTypes && deviceTypes.length === 0)"
+       placement="bottom" data-container="body"
+        [ngbTooltip]="'You should have at least one network and one device type available to create a new device. Please contact your administrator.'">
     <button class="btn btn-success float-right btn-add" (click)="openNewDeviceModal(newDeviceModal)" disabled>Add new device</button>
   </div>
 
