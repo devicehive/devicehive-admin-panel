@@ -152,7 +152,7 @@ export class UtilService {
     }
 
     if (!plugin.returnCommands && !plugin.returnUpdatedCommands && !plugin.returnNotifications) {
-      return 'Commands, updated commands and notifications cannnot all be false. Pick at least one.';
+      return 'Commands, updated commands and notifications cannot all be false. Pick at least one.';
     }
   }
 
