@@ -115,7 +115,7 @@ export class HelpService {
   }
 
   getPluginFiltersTip(): string {
-    return 'Select which filters to apply to determine which commands/notifications the plugin will receive. Leaving a field' +
+    return 'Select which filters to apply to determine which commands/notifications the plugin will receive. Leaving a field ' +
       'empty is equivalent to "any".';
   }
 

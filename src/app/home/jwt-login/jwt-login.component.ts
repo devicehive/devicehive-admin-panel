@@ -32,6 +32,8 @@ export class JwtLoginComponent implements OnInit {
     } catch (error) {
       this.notifierService.notify('error', 'Could not log in. Incorrect login or password.');
       console.log(error);
+      this.dh.logOut();
+      window.location.href = document.location.origin;
     }
   }
 }
