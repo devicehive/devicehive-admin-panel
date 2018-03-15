@@ -45,10 +45,10 @@
 
   <div class="modal-body" *ngIf="!newPlugin && newPluginCredentials">
     <h5>Plugin successfully registered</h5>
-    <p>Access Token: {{newPluginCredentials.accessToken}}</p>
-    <p>Refresh Token: {{newPluginCredentials.refreshToken}}</p>
-    <p>Topic Name: {{newPluginCredentials.topicName}}</p>
-    <p>Proxy Endpoint: {{newPluginCredentials.proxyEndpoint}}</p>
+    <p><b>Access Token:</b> {{newPluginCredentials.accessToken}}</p>
+    <p><b>Refresh Token:</b> {{newPluginCredentials.refreshToken}}</p>
+    <p><b>Topic Name:</b> {{newPluginCredentials.topicName}}</p>
+    <p><b>Proxy Endpoint:</b> {{newPluginCredentials.proxyEndpoint}}</p>
   </div>
 
   <div class="modal-footer" *ngIf="!newPluginCredentials">
@@ -92,9 +92,9 @@
 
   <div class="modal-body" *ngIf="selectedPluginCredentials">
     <h5>New plugin credentials</h5>
-    <p>Access Token: {{selectedPluginCredentials.accessToken}}</p>
-    <p>Refresh Token: {{selectedPluginCredentials.refreshToken}}</p>
-    <p>Topic Name: {{selectedPluginCredentials.topicName}}</p>
+    <p><b>Access Token:</b> {{selectedPluginCredentials.accessToken}}</p>
+    <p><b>Refresh Token:</b> {{selectedPluginCredentials.refreshToken}}</p>
+    <p><b>Topic Name:</b> {{selectedPluginCredentials.topicName}}</p>
   </div>
 
   <div class="modal-footer" *ngIf="!selectedPluginCredentials">
