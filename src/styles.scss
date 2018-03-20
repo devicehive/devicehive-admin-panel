@@ -1,0 +1,83 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~angular-notifier/styles.css";
+@import "variables";
+
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+*:focus, *:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.container {
+  padding-top: $padding-base;
+}
+
+table {
+  table-layout: fixed;
+}
+
+.actions-column {
+  width: 165px;
+}
+
+.table-container {
+  max-height: calc(100vh - #{$navbar-height} - #{$padding-base * 2} - #{$bottom-spacing});
+  overflow-y: auto;
+}
+
+.btn-add {
+  margin-top: $margin-base;
+  margin-bottom: $margin-base;
+}
+
+// Dropdown menu styled here instead of in respective components to avoid removing view encapsulation
+.dropdown-menu {
+  max-height: 200px;
+  max-width: 520px;
+  overflow-y: auto;
+}
+
+.jwt-tokens .dropdown-menu {
+  margin-top: 40px;
+  max-height: 270px;
+}
+
+/*
+App tour
+ */
+
+div.hopscotch-bubble .hopscotch-nav-button.next {
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  color: #fff;
+  background: #007bff none;
+  border-color: #007bff;
+
+  &:hover {
+    color: #fff;
+    background: #0069d9 none;
+    border-color: #0062cc;
+  }
+}
+
+div.hopscotch-bubble .hopscotch-bubble-number {
+  background: #28a745;
+  border-radius: 50%;
+  padding: 0;
+}

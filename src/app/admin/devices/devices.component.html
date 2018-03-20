@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="table-container">
+    <table class="table">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">Name
+          <dh-tip [text]="helpService.getDeviceNameTip()"></dh-tip>
+        </th>
+        <th scope="col">Network
+          <dh-tip [text]="helpService.getDeviceNetworkTip()"></dh-tip>
+        </th>
+        <th scope="col">Device Type
+          <dh-tip [text]="helpService.getDeviceDeviceTypeTip()"></dh-tip>
+        </th>
+        <th scope="col">Operation
+          <dh-tip [text]="helpService.getDeviceOperationTip()"></dh-tip>
+        </th>
+        <th scope="col">Data
+          <dh-tip [text]="helpService.getDeviceDataTip()"></dh-tip>
+        </th>
+        <th scope="col" class="actions-column">Actions</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let device of devices">
+        <td class="text-truncate" placement="bottom" data-container="body" [ngbTooltip]="device.name">{{device.name}}
+        </td>
+        <td class="text-truncate" placement="bottom" data-container="body"
+            [ngbTooltip]="findNetworkNameById(device.networkId)">{{findNetworkNameById(device.networkId)}}
+        </td>
+        <td class="text-truncate" placement="bottom" data-container="body"
+            [ngbTooltip]="findDeviceTypeNameById(device.deviceTypeId)">{{findDeviceTypeNameById(device.deviceTypeId)}}
+        </td>
+        <td>{{device.isBlocked ? 'Blocked' : 'Normal'}}</td>
+        <td>{{!!device.data ? (device.data | json) : null}}</td>
+        <td>
+          <button class="btn btn-info btn-sm" (click)="openDeviceDetails(device)">Details</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteDevice(device)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn btn-success float-right btn-add"
+          *ngIf="networks?.length !== 0 && deviceTypes?.length !== 0"
+          (click)="openNewDeviceModal(newDeviceModal)">Add new device
+  </button>
+
+  <div class="float-right" *ngIf="(networks && networks.length === 0) || (deviceTypes && deviceTypes.length === 0)"
+       placement="bottom" data-container="body"
+       [ngbTooltip]="'You should have at least one network and one device type available to create a new device. Please contact your administrator.'">
+    <button class="btn btn-success float-right btn-add" (click)="openNewDeviceModal(newDeviceModal)" disabled>Add new
+      device
+    </button>
+  </div>
+
+</div>
+
+<ng-template #newDeviceModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Create new device</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="newDevice">
+    <dh-device [device]="newDevice" [networks]="networks" [deviceTypes]="deviceTypes"></dh-device>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="createDevice()">Save</button>
+  </div>
+</ng-template>

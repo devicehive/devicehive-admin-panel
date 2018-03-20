@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="table-container">
+    <table class="table">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">Device Type <dh-tip [text]="helpService.getDeviceTypeNameTip()"></dh-tip></th>
+        <th scope="col">Description <dh-tip [text]="helpService.getDeviceTypeDescriptionTip()"></dh-tip></th>
+        <th scope="col" class="actions-column" *ngIf="isAdmin">Actions</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let deviceType of deviceTypes">
+        <td>{{deviceType.name}}</td>
+        <td>{{deviceType.description}}</td>
+        <td *ngIf="isAdmin">
+          <button class="btn btn-primary btn-sm" (click)="openDeviceTypeModal(editDeviceTypeModal, deviceType)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteDeviceType(deviceType)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <p *ngIf="deviceTypes && deviceTypes.length === 0" class="text-center">You do not have access to any device types</p>
+  </div>
+
+  <button class="btn btn-success float-right btn-add" *ngIf="isAdmin" (click)="openDeviceTypeModal(newDeviceTypeModal)">Add new device type</button>
+</div>
+
+<ng-template #newDeviceTypeModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Create new device type</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="newDeviceType">
+    <dh-device-type [deviceType]="newDeviceType"></dh-device-type>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="createDeviceType()">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #editDeviceTypeModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Device type</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="selectedDeviceType">
+    <dh-device-type [deviceType]="selectedDeviceType"></dh-device-type>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="updateSelectedDeviceType()">Save</button>
+  </div>
+</ng-template>

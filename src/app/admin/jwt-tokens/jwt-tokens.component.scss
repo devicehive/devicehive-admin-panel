@@ -1,0 +1,27 @@
+@import "../../../variables";
+
+ngb-timepicker {
+  margin-right: $margin-base;
+}
+
+.btn-create-tokens {
+  margin-left: $margin-base;
+}
+
+.btn-clear-expiration {
+  margin-left: $margin-base;
+}
+
+.list-group {
+  margin-top: $margin-base;
+}
+
+p {
+  word-wrap: break-word;
+}
+
+.btn-clipboard {
+  position: absolute;
+  top:0;
+  right: 0;
+}

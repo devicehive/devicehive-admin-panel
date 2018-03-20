@@ -1,0 +1,20 @@
+@import "../../../../variables";
+
+.btn-edit,
+.form-check {
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.form-inline label {
+  margin-bottom: 1rem;
+}
+
+.card {
+  margin-bottom: $margin-base;
+}
+
+.card-header {
+  cursor: pointer;
+}
+

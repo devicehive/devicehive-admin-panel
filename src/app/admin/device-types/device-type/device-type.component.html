@@ -1,0 +1,9 @@
+<div class="form-group">
+  <label for="inputName">Name <dh-tip [text]="helpService.getDeviceTypeNameTip()"></dh-tip></label>
+  <input type="text" class="form-control" id="inputName" placeholder="Device type name" [(ngModel)]="deviceType.name">
+</div>
+
+<div class="form-group">
+  <label for="textAreaDescription">Description <dh-tip [text]="helpService.getDeviceTypeDescriptionTip()"></dh-tip></label>
+  <textarea class="form-control" id="textAreaDescription" rows="3" [(ngModel)]="deviceType.description"></textarea>
+</div>

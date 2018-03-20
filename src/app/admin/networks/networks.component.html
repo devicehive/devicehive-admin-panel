@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="table-container">
+    <table class="table">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">Network <dh-tip [text]="helpService.getNetworkNameTip()"></dh-tip></th>
+        <th scope="col">Description <dh-tip [text]="helpService.getNetworkDescriptionTip()"></dh-tip></th>
+        <th scope="col" class="actions-column" *ngIf="isAdmin">Actions</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let network of networks">
+        <td >{{network.name}}</td>
+        <td>{{network.description}}</td>
+        <td *ngIf="isAdmin">
+          <button class="btn btn-primary btn-sm" (click)="openNetworkModal(editNetworkModal, network)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteNetwork(network)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <p *ngIf="networks && networks.length === 0" class="text-center">You do not belong to any networks</p>
+  </div>
+
+  <button class="btn btn-success float-right btn-add" *ngIf="isAdmin" (click)="openNetworkModal(newNetworkModal)">Add new network</button>
+</div>
+
+<ng-template #newNetworkModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Create new network</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="newNetwork">
+    <dh-network [network]="newNetwork"></dh-network>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="createNetwork()">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #editNetworkModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Network</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="selectedNetwork">
+    <dh-network [network]="selectedNetwork"></dh-network>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="updateSelectedNetwork()">Save</button>
+  </div>
+</ng-template>

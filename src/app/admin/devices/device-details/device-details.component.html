@@ -1,0 +1,159 @@
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/admin/devices">Devices</a></li>
+    <li class="breadcrumb-item active">{{device?.id}}</li>
+  </ol>
+</nav>
+
+<div class="container" *ngIf="device && networks && deviceTypes">
+  <div>
+    <div class="card">
+      <div class="card-header" (click)="isCollapsed = !isCollapsed">
+        Device
+      </div>
+
+      <div id="collapse" class="collapse show" [ngbCollapse]="isCollapsed">
+        <div class="card-body">
+          <p>Name: {{device.name}}</p>
+          <p>Network: {{findNetworkNameById(device.networkId)}}</p>
+          <p>Device type: {{findDeviceTypeNameById(device.deviceTypeId)}}</p>
+
+          <div class="form-group">
+            <label for="textAreaData">Data (json):</label>
+            <textarea readonly class="form-control-plaintext" id="textAreaData" rows="3" [(ngModel)]="device.data"></textarea>
+          </div>
+
+          <p>Operation: {{device.isBlocked ? 'Blocked' : 'Normal'}}</p>
+
+          <button class="btn btn-primary float-right btn-edit" (click)="openEditDeviceModal(editDeviceModal)">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ngb-tabset>
+    <ngb-tab title="Commands">
+      <ng-template ngbTabContent>
+        <button class="btn btn-secondary" (click)="openNewCommandModal(newCommandModal)">Send new command</button>
+
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Name <dh-tip [text]="helpService.getCommandNameTip()"></dh-tip></th>
+              <th scope="col">Time (UTC) <dh-tip [text]="helpService.getCommandTimeTip()"></dh-tip></th>
+              <th scope="col">Parameters <dh-tip [text]="helpService.getCommandParametersTip()"></dh-tip></th>
+              <th scope="col">Status <dh-tip [text]="helpService.getCommandStatusTip()"></dh-tip></th>
+              <th scope="col">Result <dh-tip [text]="helpService.getCommandResultTip()"></dh-tip></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let command of commands">
+              <td>{{command.command}}</td>
+              <td>{{command.timestamp | date:'medium'}}</td>
+              <td>{{!!command.parameters ? (command.parameters | json) : null}}</td>
+              <td>{{command.status}}</td>
+              <td>{{!!command.result ? (command.result | json) : null}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p *ngIf="commands?.length === 0" class="text-center">This device does not have any commands</p>
+      </ng-template>
+    </ngb-tab>
+
+    <ngb-tab title="Notifications">
+      <ng-template ngbTabContent>
+        <button class="btn btn-secondary" (click)="openNewNotificationModal(newNotificationModal)">Send new notification</button>
+
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Name <dh-tip [text]="helpService.getNotificationNameTip()"></dh-tip></th>
+              <th scope="col">Time (UTC) <dh-tip [text]="helpService.getNotificationTimeTip()"></dh-tip></th>
+              <th scope="col">Parameters <dh-tip [text]="helpService.getNotificationParametersTip()"></dh-tip></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let notification of notifications">
+              <td>{{notification.notification}}</td>
+              <td>{{notification.timestamp | date:'medium'}}</td>
+              <td>{{!!notification.parameters ? (notification.parameters | json) : null}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p *ngIf="notifications?.length === 0" class="text-center">This device does not have any notifications</p>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
+
+<ng-template #newCommandModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Send command</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="newCommand">
+    <div class="form-group">
+      <label for="inputCommandName">Name <dh-tip [text]="helpService.getCommandNameTip()"></dh-tip></label>
+      <input type="text" class="form-control" id="inputCommandName" placeholder="Name" [(ngModel)]="newCommand.command">
+    </div>
+
+    <div class="form-group">
+      <label for="textAreaCommandParameters">Parameters <dh-tip [text]="helpService.getCommandParametersTip()"></dh-tip></label>
+      <textarea class="form-control" id="textAreaCommandParameters" rows="3" [(ngModel)]="newCommand.parameters"></textarea>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="sendNewCommand()">Send</button>
+  </div>
+</ng-template>
+
+<ng-template #newNotificationModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Send notification</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="inputNotificationName">Name <dh-tip [text]="helpService.getNotificationNameTip()"></dh-tip></label>
+      <input type="text" class="form-control" id="inputNotificationName" placeholder="Name" [(ngModel)]="newNotification.notification">
+    </div>
+
+    <div class="form-group">
+      <label for="textAreaNotificationParameters">Parameters <dh-tip [text]="helpService.getNotificationParametersTip()"></dh-tip></label>
+      <textarea class="form-control" id="textAreaNotificationParameters" rows="3" [(ngModel)]="newNotification.parameters"></textarea>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="sendNewNotification()">Send</button>
+  </div>
+</ng-template>
+
+<ng-template #editDeviceModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Edit device</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="editDevice">
+    <dh-device [device]="editDevice" [networks]="networks" [deviceTypes]="deviceTypes"></dh-device>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="updateDevice()">Save</button>
+  </div>
+</ng-template>

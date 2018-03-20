@@ -1,0 +1,105 @@
+<div class="container">
+  <div class="table-container">
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Name <dh-tip [text]="helpService.getPluginNameTip()"></dh-tip></th>
+          <th scope="col">Description <dh-tip [text]="helpService.getPluginDescriptionTip()"></dh-tip></th>
+          <th scope="col">Filter <dh-tip [text]="helpService.getPluginFilterTip()"></dh-tip></th>
+          <th scope="col">Status <dh-tip [text]="helpService.getPluginStatusTip()"></dh-tip></th>
+          <th scope="col">Parameters <dh-tip [text]="helpService.getPluginParametersTip()"></dh-tip></th>
+          <th scope="col" class="actions-column">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let plugin of plugins">
+          <td class="text-truncate" placement="bottom" data-container="body" [ngbTooltip]="plugin.name">{{plugin.name}}</td>
+          <td>{{plugin.description}}</td>
+          <td class="text-truncate" placement="bottom" data-container="body" [ngbTooltip]="plugin.filter">{{plugin.filter}}</td>
+          <td>{{plugin.status}}</td>
+          <td>{{!!plugin.parameters ? (plugin.parameters | json) : null}}</td>
+          <td>
+            <button class="btn btn-info btn-sm" (click)="openPluginModal(editPluginModal, plugin)">Details</button>
+            <button class="btn btn-danger btn-sm" (click)="deletePlugin(plugin)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn btn-success float-right btn-add" (click)="openPluginModal(newPluginModal)">Add new plugin</button>
+</div>
+
+<ng-template #newPluginModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Create new plugin</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="newPlugin && !newPluginCredentials">
+    <dh-plugin [plugin]="newPlugin" [devices]="devices" [deviceTypes]="deviceTypes" [networks]="networks"></dh-plugin>
+  </div>
+
+  <div class="modal-body" *ngIf="!newPlugin && newPluginCredentials">
+    <h5>Plugin successfully registered</h5>
+    <p><b>Access Token:</b> {{newPluginCredentials.accessToken}}</p>
+    <p><b>Refresh Token:</b> {{newPluginCredentials.refreshToken}}</p>
+    <p><b>Topic Name:</b> {{newPluginCredentials.topicName}}</p>
+    <p><b>Proxy Endpoint:</b> {{newPluginCredentials.proxyEndpoint}}</p>
+  </div>
+
+  <div class="modal-footer" *ngIf="!newPluginCredentials">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" [disabled]="isSendingRequest" (click)="createPlugin()">Save</button>
+  </div>
+</ng-template>
+
+
+<ng-template #editPluginModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Edit plugin</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="selectedPlugin && !selectedPluginCredentials">
+    <dh-plugin [plugin]="selectedPlugin" [devices]="devices" [deviceTypes]="deviceTypes" [networks]="networks"></dh-plugin>
+
+    <h5>Plugin Status <dh-tip [text]="helpService.getPluginStatusTip()"></dh-tip></h5>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="exampleRadios" id="radioActive" value="ACTIVE" [(ngModel)]="selectedPlugin.status">
+      <label class="form-check-label" for="radioActive">
+        Active
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="exampleRadios" id="radioInactive" value="INACTIVE" [(ngModel)]="selectedPlugin.status">
+      <label class="form-check-label" for="radioInactive">
+        Inactive
+      </label>
+    </div>
+    <div class="form-check disabled">
+      <input class="form-check-input" type="radio" name="exampleRadios" id="radioCreated" value="CREATED" disabled [(ngModel)]="selectedPlugin.status">
+      <label class="form-check-label" for="radioCreated">
+        Created
+      </label>
+    </div>
+  </div>
+
+  <div class="modal-body" *ngIf="selectedPluginCredentials">
+    <h5>New plugin credentials</h5>
+    <p><b>Access Token:</b> {{selectedPluginCredentials.accessToken}}</p>
+    <p><b>Refresh Token:</b> {{selectedPluginCredentials.refreshToken}}</p>
+    <p><b>Topic Name:</b> {{selectedPluginCredentials.topicName}}</p>
+  </div>
+
+  <div class="modal-footer" *ngIf="!selectedPluginCredentials">
+    <button type="button" class="btn btn-info" [disabled]="isSendingRequest" (click)="generateNewTokens()">Generate new tokens</button>
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-success" [disabled]="isSendingRequest" (click)="updateSelectedPlugin()">Save</button>
+  </div>
+</ng-template>

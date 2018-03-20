@@ -1,0 +1,52 @@
+<div class="container jwt-tokens">
+  <div class="row justify-content-center">
+    <h5>Generate tokens <dh-tip [text]="helpService.getJwtTip()"></dh-tip></h5>
+  </div>
+  <div class="row justify-content-center">
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="input-group">
+          <ngb-timepicker name="tp" [(ngModel)]="time" [spinners]="false" [hidden]="!date"></ngb-timepicker>
+          <input class="form-control" placeholder="yyyy-mm-dd"
+                 name="dp" ngbDatepicker [(ngModel)]="date" #d="ngbDatepicker" [hidden]="!date">
+          <div [ngClass]="{'input-group-append': date}">
+            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+              Set expiration date
+            </button>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-danger btn-clear-expiration" [hidden]="!date" (click)="clearExpirationDate()">Clear expiration date</button>
+      <button class="btn btn-primary btn-create-tokens" (click)="createTokens()">Create tokens</button>
+    </form>
+  </div>
+
+  <div *ngIf="accessToken && refreshToken">
+    <div class="list-group">
+      <a class="list-group-item  flex-column align-items-start">
+
+        <div class="d-flex w-100 justify-content-between">
+          <button class="btn btn-sm btn-clipboard" [class.btn-success]= "isAccessTokenCopied" type="button"
+                  placement="bottom" data-container="body" [ngbTooltip]="'Copy to clipboard'"
+                  ngxClipboard [cbContent]="accessToken" (cbOnSuccess)="isAccessTokenCopied = true; isRefreshTokenCopied = false">
+            <fa name="copy"></fa>
+          </button>
+          <h5>Access Token</h5>
+        </div>
+        <p>{{accessToken}}</p>
+      </a>
+
+      <a class="list-group-item  flex-column align-items-start">
+        <button class="btn btn-sm btn-clipboard" [class.btn-success]= "isRefreshTokenCopied" type="button"
+                placement="bottom" data-container="body" [ngbTooltip]="'Copy to clipboard'"
+                ngxClipboard [cbContent]="refreshToken" (cbOnSuccess)="isRefreshTokenCopied = true; isAccessTokenCopied = false">
+          <fa name="copy"></fa>
+        </button>
+        <div class="d-flex w-100 justify-content-between">
+          <h5>Refresh Token</h5>
+        </div>
+        <p>{{refreshToken}}</p>
+      </a>
+    </div>
+  </div>
+</div>
