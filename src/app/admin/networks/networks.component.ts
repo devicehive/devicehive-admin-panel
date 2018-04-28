@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Network} from '../../shared/models/network.model';
-import {NetworkService} from '../../core/network.service';
-import {plainToClass} from 'class-transformer';
-import {NotifierService} from 'angular-notifier';
-import {UtilService} from '../../core/util.service';
-import {UserService} from '../../core/user.service';
-import {UserRole} from '../../shared/models/user.model';
-import {HelpService} from '../../core/help.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Network } from '../../shared/models/network.model';
+import { NetworkService } from '../../core/network.service';
+import { plainToClass } from 'class-transformer';
+import { NotifierService } from 'angular-notifier';
+import { UtilService } from '../../core/util.service';
+import { UserService } from '../../core/user.service';
+import { UserRole } from '../../shared/models/user.model';
+import { HelpService } from '../../core/help.service';
 
 @Component({
   selector: 'dh-networks',
@@ -23,12 +23,13 @@ export class NetworksComponent implements OnInit {
   selectedNetwork: Network;
   isSendingRequest = false;
   activeModal: NgbModalRef;
+  @ViewChild('deleteNetworkModal') deleteNetworkModal: ElementRef;
 
   constructor(public helpService: HelpService,
-              private networkService: NetworkService,
-              private userService: UserService,
-              private modalService: NgbModal,
-              private notifierService: NotifierService) {
+    private networkService: NetworkService,
+    private userService: UserService,
+    private modalService: NgbModal,
+    private notifierService: NotifierService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -48,6 +49,7 @@ export class NetworksComponent implements OnInit {
     this.isSendingRequest = false;
     try {
       this.activeModal = this.modalService.open(content);
+      console.log(content);
       await this.activeModal.result;
     } catch (dismissReason) {
       // User dismissed modal, no need for any extra action
@@ -78,18 +80,30 @@ export class NetworksComponent implements OnInit {
   }
 
   async deleteNetwork(network: Network): Promise<void> {
-    if (confirm('Are you sure you want to delete this network?')) {
-      try {
-        await this.networkService.deleteNetwork(network.id);
+    try {
+      await this.networkService.deleteNetwork(network.id);
 
-        const index = this.networks.indexOf(network);
-        if (index > -1) {
-          this.networks.splice(index, 1);
-        }
-      } catch (error) {
-        this.isSendingRequest = false;
-        this.notifierService.notify('error', error.message);
+      const index = this.networks.indexOf(network);
+      if (index > -1) {
+        this.networks.splice(index, 1);
       }
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.openNetworkModal(this.deleteNetworkModal, network);
+    }
+  }
+
+  async deleteNetworkForce(network: Network): Promise<void> {
+    try {
+      await this.networkService.deleteNetwork(network.id);
+
+      const index = this.networks.indexOf(network);
+      if (index > -1) {
+        this.networks.splice(index, 1);
+      }
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.openNetworkModal(this.deleteNetworkModal, network);
     }
   }
 

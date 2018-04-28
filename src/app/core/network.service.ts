@@ -30,4 +30,9 @@ export class NetworkService {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.network.delete(networkId);
   }
+
+  async deleteNetworkForce(networkId: number): Promise<any> {
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.network.delete(networkId);
+  }
 }
