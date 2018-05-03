@@ -93,17 +93,19 @@ export class NetworksComponent implements OnInit {
     }
   }
 
-  async deleteNetworkForce(network: Network): Promise<void> {
+  async deleteNetworkForce(): Promise<void> {
     try {
-      await this.networkService.deleteNetwork(network.id);
+      const networkId = this.selectedNetwork.id;
+      await this.networkService.deleteNetwork(networkId, true);
 
-      const index = this.networks.indexOf(network);
+      const index = this.networks.findIndex(network => network.id === networkId);
       if (index > -1) {
         this.networks.splice(index, 1);
       }
+      this.activeModal.close();
     } catch (error) {
       this.isSendingRequest = false;
-      this.openNetworkModal(this.deleteNetworkModal, network);
+      this.notifierService.notify('error', error.message);
     }
   }
 

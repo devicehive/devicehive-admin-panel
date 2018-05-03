@@ -64,18 +64,20 @@
 
 <ng-template #deleteNetworkModal let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Network</h4>
+    <h4 class="modal-title">Delete network</h4>
     <button type="button" class="close" aria-label="Close" (click)="d('Close')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
   <div class="modal-body" *ngIf="selectedNetwork">
-    <dh-network [network]="selectedNetwork"></dh-network>
+    There are devices, connected to this network. <br>
+    After this action they will be removed. <br>
+    Are you sure you want to delete this network?
   </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
-    <button type="button" class="btn btn-success" (click)="updateSelectedNetwork()">Save</button>
+    <button type="button" class="btn btn-danger" (click)="deleteNetworkForce()">Delete</button>
   </div>
 </ng-template>

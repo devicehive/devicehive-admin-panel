@@ -61,3 +61,23 @@
     <button type="button" class="btn btn-success" (click)="updateSelectedDeviceType()">Save</button>
   </div>
 </ng-template>
+
+<ng-template #deleteDeviceTypeModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Delete device type</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="selectedDeviceType">
+    There are devices that belong to this device type. <br>
+    After this action they will be removed. <br>
+    Are you sure you want to delete this device type?
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cancel')">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="deleteDeviceTypeForce()">Delete</button>
+  </div>
+</ng-template>
