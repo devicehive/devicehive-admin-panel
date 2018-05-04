@@ -6,6 +6,7 @@ import {Network} from '../shared/models/network.model';
 export class NetworkService {
 
   private NetworkListQuery = DeviceHive.models.query.NetworkListQuery;
+  private NetworkDeleteQuery = DeviceHive.models.query.NetworkDeleteQuery;
 
   constructor(private dh: DevicehiveService) {
   }
@@ -26,8 +27,12 @@ export class NetworkService {
     return await httpDeviceHive.network.update(network);
   }
 
-  async deleteNetwork(networkId: number): Promise<any> {
+  async deleteNetwork(networkId: number, force: boolean = false): Promise<any> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
-    return await httpDeviceHive.network.delete(networkId);
+    const query = new this.NetworkDeleteQuery({
+      networkId: networkId,
+      force: force
+    });
+    return await httpDeviceHive.network.delete(query);
   }
 }
