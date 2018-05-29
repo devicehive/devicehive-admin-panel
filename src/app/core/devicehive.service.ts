@@ -32,7 +32,7 @@ export class DevicehiveService {
     if (environment.pluginServiceURL.startsWith('http')) {
       this.pluginServiceURL = environment.pluginServiceURL;
     } else {
-      this.pluginServiceURL = environment.pluginServiceURL;
+      this.pluginServiceURL = root + environment.pluginServiceURL;
     }
 
     this.autoUpdateSession = environment.autoUpdateSession;

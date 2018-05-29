@@ -97,7 +97,8 @@ export class PluginService {
 
   async generateNewTokens(topicName: string): Promise<JwtToken> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
-    return await httpDeviceHive.token.createPluginToken(new DeviceHive.models.PluginToken({topicName: topicName}));
+    // Actions - 16 MANAGE_PLUGIN
+    return await httpDeviceHive.token.createPluginToken(new DeviceHive.models.PluginToken({actions: [16], topicName: topicName}));
   }
 
   async deletePlugin(topicName: string): Promise<any> {
