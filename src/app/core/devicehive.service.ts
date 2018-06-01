@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {error} from 'util';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {JwtToken} from '../shared/models/jwt-token.model';
 
 @Injectable()
 export class DevicehiveService {
@@ -15,7 +17,7 @@ export class DevicehiveService {
 
   private refreshToken: string;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     const root = document.location.origin;
     if (environment.mainServiceURL.startsWith('http')) {
       this.mainServiceURL = environment.mainServiceURL;
@@ -97,6 +99,60 @@ export class DevicehiveService {
       this.loggedIn = false;
       throw error;
     }
+  }
+
+  async logInWithGoogle(token: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    try {
+      const response = await this.http.post<JwtToken>(
+        this.authServiceURL + '/token/google',
+        token,
+        {headers}
+      ).toPromise();
+
+      await this.logInWithToken(response.accessToken);
+    } catch (error) {
+      this.loggedIn = false;
+      throw error;
+    }
+    return
+  }
+
+  async logInWithFacebook(token: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    try {
+      const response = await this.http.post<JwtToken>(
+        this.authServiceURL + '/token/facebook',
+        token,
+        {headers}
+      ).toPromise();
+
+      await this.logInWithToken(response.accessToken);
+    } catch (error) {
+      this.loggedIn = false;
+      throw error;
+    }
+    return
+  }
+
+  async logInWithGithub(token: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    try {
+      const response = await this.http.post<JwtToken>(
+        this.authServiceURL + '/token/github',
+        token,
+        {headers}
+      ).toPromise();
+
+      await this.logInWithToken(response.accessToken);
+    } catch (error) {
+      this.loggedIn = false;
+      throw error;
+    }
+    return
   }
 
   logOut(): void {

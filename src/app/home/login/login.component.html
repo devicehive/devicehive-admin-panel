@@ -22,8 +22,21 @@
           Please provide a valid password.
         </div>
       </div>
-      <button class="btn btn-primary" type="submit" [disabled]="isSubmitting">Log in</button>
+      <div class="row align-items-center justify-content-center">
+        <button class="btn btn-primary" type="submit" [disabled]="isSubmitting">Log in</button>
+      </div>
     </form>
+  </div>
+  <div class="row align-items-center justify-content-center">
+    <button class="btn btn-google" id="googleBtn" *ngIf="googleClientId">Log In With Google</button>
+  </div>
+
+  <div class="row align-items-center justify-content-center">
+    <button class="btn btn-facebook" id="facebookBtn" (click)="getFacebookLoginStatus()" *ngIf="facebookAppId">Log In With Facebook</button>
+  </div>
+
+  <div class="row align-items-center justify-content-center">
+    <button class="btn btn-github" id="githubBtn" (click)="githubLogIn()" *ngIf="githubClientId">Log In With Github</button>
   </div>
 </div>
 
