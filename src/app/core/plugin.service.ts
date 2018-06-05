@@ -41,7 +41,7 @@ export class PluginService {
     return await httpDeviceHive.plugin.register(plug, query);
   }
 
-  async updatePlugin(plugin: Plugin, originalPlugin: Plugin): Promise<any> {
+  async updatePlugin(plugin: Plugin): Promise<any> {
 
     const query = new this.PluginUpdateQuery({
       topicName: plugin.topicName,

@@ -113,7 +113,7 @@ export class PluginsComponent implements OnInit {
     }
 
     try {
-      await this.pluginService.updatePlugin(this.selectedPlugin, this.selectedPluginOriginal);
+      await this.pluginService.updatePlugin(this.selectedPlugin);
       const pluginsPlain = await this.pluginService.getAllPlugins();
       this.plugins = plainToClass(Plugin, pluginsPlain);
 
