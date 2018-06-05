@@ -120,7 +120,7 @@ export class PluginsComponent implements OnInit {
       this.notifierService.notify('success', 'Plugin updated');
     } catch (error) {
       this.isSendingRequest = false;
-      this.notifierService.notify('error', error.message);
+      this.notifierService.notify('error', error);
     }
   }
 
