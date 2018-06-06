@@ -116,7 +116,7 @@ export class DevicehiveService {
       this.loggedIn = false;
       throw error;
     }
-    return
+    return;
   }
 
   async logInWithFacebook(token: string) {
@@ -134,7 +134,7 @@ export class DevicehiveService {
       this.loggedIn = false;
       throw error;
     }
-    return
+    return;
   }
 
   async logInWithGithub(token: string) {
@@ -152,7 +152,7 @@ export class DevicehiveService {
       this.loggedIn = false;
       throw error;
     }
-    return
+    return;
   }
 
   logOut(): void {

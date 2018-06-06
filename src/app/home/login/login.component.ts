@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, NgZone, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {DevicehiveService} from '../../core/devicehive.service';
-import {NotifierService} from 'angular-notifier';
-import {environment} from '../../../environments/environment';
+import { AfterViewInit, Component, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DevicehiveService } from '../../core/devicehive.service';
+import { NotifierService } from 'angular-notifier';
+import { environment } from '../../../environments/environment';
 
 declare const gapi: any;
 declare const FB: any;
@@ -26,9 +26,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   password: string;
 
   constructor(private dh: DevicehiveService,
-              private zone: NgZone,
-              private router: Router,
-              private notifierService: NotifierService) {
+    private zone: NgZone,
+    private router: Router,
+    private notifierService: NotifierService) {
     this.googleClientId = environment.googleClientId;
     this.facebookAppId = environment.facebookAppId;
     this.githubClientId = environment.githubClientId;
@@ -66,11 +66,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
       FB.getLoginStatus((response) => {
         if (response.status === 'connected') {
           this.facebookLogIn(response.authResponse.accessToken);
-        }
-        else {
+        } else {
           FB.login((loginResponse) => {
             this.facebookLogIn(loginResponse.authResponse.accessToken);
-          }, {scope: 'email'});
+          }, { scope: 'email' });
         }
       });
     } catch (error) {
@@ -128,7 +127,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   private attachGoogleSignin(element) {
     this.auth2.attachClickHandler(element, {},
       (googleUser) => {
-        let token = googleUser.getAuthResponse().id_token;
+        const token = googleUser.getAuthResponse().id_token;
         this.googleLogIn(token);
       }, (error) => {
         this.notifierService.notify('error', JSON.stringify(error, undefined, 2));
@@ -147,6 +146,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   private githubInit() {
-    this.githubUrl = 'https://github.com/login/oauth/authorize?client_id=' + this.githubClientId + '&scope=user&redirect_uri=' + document.location.origin + '/login/github/callback';
+    this.githubUrl = `https://github.com/login/oauth/authorize?client_id=${this.githubClientId}` +
+      `&scope=user&redirect_uri=${document.location.origin}/login/github/callback`;
   }
 }
