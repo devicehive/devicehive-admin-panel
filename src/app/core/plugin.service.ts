@@ -41,55 +41,22 @@ export class PluginService {
     return await httpDeviceHive.plugin.register(plug, query);
   }
 
-  async updatePlugin(plugin: Plugin, originalPlugin: Plugin): Promise<any> {
-    let queryObject: any;
-    queryObject = {topicName: plugin.topicName};
+  async updatePlugin(plugin: Plugin): Promise<any> {
 
-    if (plugin.device.id !== originalPlugin.device.id) {
-      queryObject.deviceId = plugin.device.id;
-    }
-
-    if (plugin.networkIds !== originalPlugin.networkIds) {
-      queryObject.networkIds = plugin.networkIds;
-    }
-
-    if (plugin.deviceTypeIds !== originalPlugin.deviceTypeIds) {
-      queryObject.deviceTypeIds = plugin.deviceTypeIds;
-    }
-
-    if (plugin.names !== originalPlugin.names) {
-      queryObject.names = plugin.names;
-    }
-
-    if (plugin.returnCommands !== originalPlugin.returnCommands) {
-      queryObject.returnCommands = plugin.returnCommands;
-    }
-
-    if (plugin.returnUpdatedCommands !== originalPlugin.returnUpdatedCommands) {
-      queryObject.returnUpdatedCommands = plugin.returnUpdatedCommands;
-    }
-
-    if (plugin.returnNotifications !== originalPlugin.returnNotifications) {
-      queryObject.returnNotifications = plugin.returnNotifications;
-    }
-
-    if (plugin.name !== originalPlugin.name) {
-      queryObject.name = plugin.name;
-    }
-
-    if (plugin.status !== originalPlugin.status) {
-      queryObject.status = plugin.status;
-    }
-
-    if (plugin.description !== originalPlugin.description) {
-      queryObject.description = plugin.description;
-    }
-
-    if (plugin.parameters !== originalPlugin.parameters) {
-      queryObject.parameters = (!plugin.parameters || plugin.parameters.length === 0) ? '' : plugin.parameters;
-    }
-
-    const query = new this.PluginUpdateQuery(queryObject);
+    const query = new this.PluginUpdateQuery({
+      topicName: plugin.topicName,
+      deviceId: plugin.device.id,
+      networkIds : plugin.networkIds,
+      deviceTypeIds : plugin.deviceTypeIds,
+      names : plugin.names,
+      returnCommands : plugin.returnCommands,
+      returnUpdatedCommands : plugin.returnUpdatedCommands,
+      returnNotifications : plugin.returnNotifications,
+      name : plugin.name,
+      status : plugin.status,
+      description : plugin.description,
+      parameters : (!plugin.parameters || plugin.parameters.length === 0) ? '' : plugin.parameters
+    });
 
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.plugin.update(query);

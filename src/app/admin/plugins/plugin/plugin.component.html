@@ -1,123 +1,127 @@
-<div class="row plugin">
-  <div class="col-sm">
-    <h5>Details</h5>
-
-    <div class="form-group">
-      <label for="inputName">Name
-        <dh-tip [text]="helpService.getPluginNameTip()"></dh-tip>
-      </label>
-      <input type="text" class="form-control" id="inputName" placeholder="Name" [(ngModel)]="plugin.name">
-    </div>
-
-    <div class="form-group">
-      <label for="textAreaDescription">Description
-        <dh-tip [text]="helpService.getPluginDescriptionTip()"></dh-tip>
-      </label>
-      <textarea class="form-control" id="textAreaDescription" rows="3" [(ngModel)]="plugin.description"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="textAreaData">Parameters
-        <dh-tip [text]="helpService.getPluginParametersTip()"></dh-tip>
-      </label>
-      <textarea class="form-control" id="textAreaData" rows="3" [(ngModel)]="plugin.parameters"></textarea>
+<div>
+  <div class="row plugin">
+    <div class="col-sm">
+        <h5>Topic name </h5>
+        <p>{{plugin.topicName}}</p>
     </div>
   </div>
-
-  <div class="col-sm">
-    <h5>Filters <dh-tip [text]="helpService.getPluginFiltersTip()"></dh-tip></h5>
-
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="checkReturnCommands" [(ngModel)]="plugin.returnCommands">
-      <label class="form-check-label" for="checkReturnCommands">Return Commands</label>
+  <div class="row plugin">
+      <div class="col-sm">
+        <h5>Details</h5>
+    
+        <div class="form-group">
+          <label for="inputName">Name
+            <dh-tip [text]="helpService.getPluginNameTip()"></dh-tip>
+          </label>
+          <input type="text" class="form-control" id="inputName" placeholder="Name" [(ngModel)]="plugin.name">
+        </div>
+    
+        <div class="form-group">
+          <label for="textAreaDescription">Description
+            <dh-tip [text]="helpService.getPluginDescriptionTip()"></dh-tip>
+          </label>
+          <textarea class="form-control" id="textAreaDescription" rows="3" [(ngModel)]="plugin.description"></textarea>
+        </div>
+    
+        <div class="form-group">
+          <label for="textAreaData">Parameters
+            <dh-tip [text]="helpService.getPluginParametersTip()"></dh-tip>
+          </label>
+          <textarea class="form-control" id="textAreaData" rows="3" [(ngModel)]="plugin.parameters"></textarea>
+        </div>
+      </div>
+    
+      <div class="col-sm">
+        <h5>Filters <dh-tip [text]="helpService.getPluginFiltersTip()"></dh-tip></h5>
+    
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="checkReturnCommands" [(ngModel)]="plugin.returnCommands">
+          <label class="form-check-label" for="checkReturnCommands">Return Commands</label>
+        </div>
+    
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="checkReturnCommandUpdates"
+                 [(ngModel)]="plugin.returnUpdatedCommands">
+          <label class="form-check-label" for="checkReturnCommandUpdates">Return Updated Commands</label>
+        </div>
+    
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="checkReturnNotifications"
+                 [(ngModel)]="plugin.returnNotifications">
+          <label class="form-check-label" for="checkReturnNotifications">Return Notifications</label>
+        </div>
+    
+        <div class="form-group">
+          <label for="inputName">Command/Notifications Names:
+            <dh-tip [text]="helpService.getPluginNamesTip()"></dh-tip>
+          </label>
+          <input type="text" class="form-control" id="inputNames" placeholder="Names" [(ngModel)]="plugin.names">
+        </div>
+    
+        <ng-template #rt let-r="result" let-t="term">{{r.name}}</ng-template>
+    
+        <div>
+          <label for="typeahead-device">Device:</label>
+          <input
+            id="typeahead-device"
+            type="text"
+            class="form-control"
+            [(ngModel)]="plugin.device"
+            [ngbTypeahead]="searchDevice"
+            (focus)="deviceFocus.next($event.target.value)"
+            (focusout)="clearDevice()"
+            (click)="deviceClick.next($event.target.value)"
+            [inputFormatter]="formatter"
+            [resultTemplate]="rt"
+            #deviceTypeahead="ngbTypeahead"
+          />
+        </div>
+    
+        <div>
+          <label for="typeahead-networks">Networks:</label>
+          <ol>
+            <li *ngFor="let network of selectedNetworks">{{network.name}} <span class="remove-entity"
+                                                                                (click)="removeNetwork(network)">&times;</span>
+            </li>
+          </ol>
+          <input
+            id="typeahead-networks"
+            type="text"
+            class="form-control"
+            [(ngModel)]="tempNetwork"
+            [ngbTypeahead]="searchNetwork"
+            (focus)="networksFocus.next($event.target.value)"
+            (focusout)="clearNetwork()"
+            (click)="networksClick.next($event.target.value)"
+            [inputFormatter]="formatter"
+            [resultTemplate]="rt"
+            (ngModelChange)="addNetwork()"
+            #networksTypeahead="ngbTypeahead"
+          />
+        </div>
+    
+        <div>
+          <label for="typeahead-deviceTypes">Device Types:</label>
+          <ol>
+            <li *ngFor="let deviceType of selectedDeviceTypes">{{deviceType.name}} <span class="remove-entity"
+                                                                                         (click)="removeDeviceType(deviceType)">&times;</span>
+            </li>
+          </ol>
+          <input
+            id="typeahead-deviceTypes"
+            type="text"
+            class="form-control"
+            [(ngModel)]="tempDeviceType"
+            [ngbTypeahead]="searchDeviceType"
+            (focus)="deviceTypesFocus.next($event.target.value)"
+            (focusout)="clearDeviceType()"
+            (click)="deviceTypesClick.next($event.target.value)"
+            [inputFormatter]="formatter"
+            [resultTemplate]="rt"
+            (ngModelChange)="addDeviceType()"
+            #deviceTypesTypeahead="ngbTypeahead"
+          />
+        </div>
+      </div>
     </div>
-
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="checkReturnCommandUpdates"
-             [(ngModel)]="plugin.returnUpdatedCommands">
-      <label class="form-check-label" for="checkReturnCommandUpdates">Return Updated Commands</label>
-    </div>
-
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="checkReturnNotifications"
-             [(ngModel)]="plugin.returnNotifications">
-      <label class="form-check-label" for="checkReturnNotifications">Return Notifications</label>
-    </div>
-
-    <div class="form-group">
-      <label for="inputName">Command/Notifications Names:
-        <dh-tip [text]="helpService.getPluginNamesTip()"></dh-tip>
-      </label>
-      <input type="text" class="form-control" id="inputNames" placeholder="Names" [(ngModel)]="plugin.names">
-    </div>
-
-    <ng-template #rt let-r="result" let-t="term">{{r.name}}</ng-template>
-
-    <div>
-      <label for="typeahead-device">Device:</label>
-      <input
-        id="typeahead-device"
-        type="text"
-        class="form-control"
-        [(ngModel)]="plugin.device"
-        [ngbTypeahead]="searchDevice"
-        (focus)="deviceFocus.next($event.target.value)"
-        (focusout)="clearDevice()"
-        (click)="deviceClick.next($event.target.value)"
-        [inputFormatter]="formatter"
-        [resultTemplate]="rt"
-        #deviceTypeahead="ngbTypeahead"
-      />
-    </div>
-
-    <div>
-      <label for="typeahead-networks">Networks:</label>
-      <ol>
-        <li *ngFor="let network of selectedNetworks">{{network.name}} <span class="remove-entity"
-                                                                            (click)="removeNetwork(network)">&times;</span>
-        </li>
-      </ol>
-      <input
-        id="typeahead-networks"
-        type="text"
-        class="form-control"
-        [(ngModel)]="tempNetwork"
-        [ngbTypeahead]="searchNetwork"
-        (focus)="networksFocus.next($event.target.value)"
-        (focusout)="clearNetwork()"
-        (click)="networksClick.next($event.target.value)"
-        [inputFormatter]="formatter"
-        [resultTemplate]="rt"
-        (ngModelChange)="addNetwork()"
-        #networksTypeahead="ngbTypeahead"
-      />
-    </div>
-
-    <div>
-      <label for="typeahead-deviceTypes">Device Types:</label>
-      <ol>
-        <li *ngFor="let deviceType of selectedDeviceTypes">{{deviceType.name}} <span class="remove-entity"
-                                                                                     (click)="removeDeviceType(deviceType)">&times;</span>
-        </li>
-      </ol>
-      <input
-        id="typeahead-deviceTypes"
-        type="text"
-        class="form-control"
-        [(ngModel)]="tempDeviceType"
-        [ngbTypeahead]="searchDeviceType"
-        (focus)="deviceTypesFocus.next($event.target.value)"
-        (focusout)="clearDeviceType()"
-        (click)="deviceTypesClick.next($event.target.value)"
-        [inputFormatter]="formatter"
-        [resultTemplate]="rt"
-        (ngModelChange)="addDeviceType()"
-        #deviceTypesTypeahead="ngbTypeahead"
-      />
-    </div>
-  </div>
 </div>
-
-
-
-

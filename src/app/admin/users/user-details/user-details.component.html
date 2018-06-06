@@ -79,7 +79,7 @@
             />
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" type="button" (click)="clearSelectedNetwork()">Clear</button>
-              <button class="btn btn-primary" (click)="grantAccessToNetwork()">Grant access</button>
+              <button class="btn btn-primary" (click)="grantAccessToNetwork()" [attr.disabled]="selectedNetwork ? null : true">Grant access</button>
             </div>
           </div>
         </form>
