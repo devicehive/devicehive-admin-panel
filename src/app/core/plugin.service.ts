@@ -53,7 +53,7 @@ export class PluginService {
       returnUpdatedCommands : plugin.returnUpdatedCommands,
       returnNotifications : plugin.returnNotifications,
       name : plugin.name,
-      status : plugin.status,
+      status : plugin.status === Plugin.STATUSES.CREATED ? undefined : plugin.status,
       description : plugin.description,
       parameters : (!plugin.parameters || plugin.parameters.length === 0) ? '' : plugin.parameters
     });

@@ -22,6 +22,12 @@ export class Plugin {
 
   }
 
+  static STATUSES = {
+    INACTIVE: 'INACTIVE',
+    ACTIVE: 'ACTIVE',
+    CREATED: 'CREATED'
+  }
+
   static fromObject(plainObject: Object): Plugin {
     const plugin = plainToClass<Plugin, Object>(Plugin, plainObject);
     if (plugin.parameters) {
