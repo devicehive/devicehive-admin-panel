@@ -1,4 +1,10 @@
 <div class="container">
+  <div class="search-group">
+      <div class="form-group">
+          <label for="inputName">Search by name</label>
+          <input type="text" class="form-control" id="inputName" [(ngModel)]="searchName">
+      </div>
+  </div>
   <div class="table-container">
     <table class="table">
       <thead class="thead-light">
@@ -10,7 +16,7 @@
       </thead>
 
       <tbody>
-      <tr *ngFor="let network of networks">
+      <tr *ngFor="let network of networks | filter : searchName.trim()">
         <td >{{network.name}}</td>
         <td>{{network.description}}</td>
         <td *ngIf="isAdmin">
