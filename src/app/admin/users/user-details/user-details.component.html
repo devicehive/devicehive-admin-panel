@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <ngb-tabset>
+  <ngb-tabset *ngIf='user.role !== userRole.ADMIN'>
     <ngb-tab title="Networks">
       <ng-template ngbTabContent>
         <table class="table">
