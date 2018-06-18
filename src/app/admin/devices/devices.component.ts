@@ -21,7 +21,7 @@ export class DevicesComponent implements OnInit {
   networks: Array<Network>;
   deviceTypes: Array<DeviceType>;
   devices: Array<Device>;
-  searchName: String = '';
+  searchName: string = '';
 
   newDevice: Device;
   isSendingRequest = false;
