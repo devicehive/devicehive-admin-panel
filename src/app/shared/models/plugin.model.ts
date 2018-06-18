@@ -26,7 +26,7 @@ export class Plugin {
     INACTIVE: 'INACTIVE',
     ACTIVE: 'ACTIVE',
     CREATED: 'CREATED'
-  }
+  };
 
   static fromObject(plainObject: Object): Plugin {
     const plugin = plainToClass<Plugin, Object>(Plugin, plainObject);
