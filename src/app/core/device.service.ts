@@ -6,6 +6,7 @@ import {Device} from '../shared/models/device.model';
 export class DeviceService {
 
   private DeviceListQuery = DeviceHive.models.query.DeviceListQuery;
+  private DeviceCountQuery = DeviceHive.models.query.DeviceCountQuery;
 
   constructor(private dh: DevicehiveService) {
   }
@@ -36,4 +37,19 @@ export class DeviceService {
     return await httpDeviceHive.device.delete(deviceId);
   }
 
+  async getDevicesCount(): Promise<number>{
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    const query = new this.DeviceCountQuery();
+    const response = await httpDeviceHive.device.count(query);
+    return response.count;
+  }
+
+  async getSpecificAmountOfDevices(take: number, skip: number){
+    const query = new this.DeviceListQuery({
+      take: take,
+      skip: skip
+    });
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.device.list(query);
+  }
 }

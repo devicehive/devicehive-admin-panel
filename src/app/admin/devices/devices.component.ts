@@ -18,9 +18,15 @@ import {HelpService} from '../../core/help.service';
 })
 export class DevicesComponent implements OnInit {
 
+  itemsPerPage: number = 10;
+  page: any;
+  previousPage: any;
+  pagesCount: number;
+
   networks: Array<Network>;
   deviceTypes: Array<DeviceType>;
   devices: Array<Device>;
+  devicesCount: number;
   searchName: string = '';
 
   newDevice: Device;
@@ -38,10 +44,33 @@ export class DevicesComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    // TODO: get networks by devices, so as for deviceTypes
     this.networks = await this.networkService.getAllNetworks();
     this.deviceTypes = await this.deviceTypeService.getAllDeviceTypes();
 
-    this.devices = await this.deviceService.getAllDevices();
+    this.devices = await this.deviceService.getSpecificAmountOfDevices(this.itemsPerPage, 0);
+    this.devicesCount = await this.deviceService.getDevicesCount();
+    
+    this.pagesCount = Math.ceil(this.devicesCount / this.itemsPerPage);
+
+    this.page = 1;
+  }
+
+  async loadPage(page: number) {
+    if (!page){
+      this.page = 1;
+    }
+    const take = this.itemsPerPage * this.page > this.devicesCount? this.devicesCount - this.itemsPerPage * (this.page - 1) : this.itemsPerPage;
+    const skip = this.itemsPerPage * (this.page - 1);
+
+    console.log(take);
+    console.log(skip);
+
+    this.devices = await this.deviceService.getSpecificAmountOfDevices(take,skip);
+    
+    if (page !== this.previousPage) {
+      this.previousPage = page;
+    }
   }
 
   findNetworkNameById(id: number): string {

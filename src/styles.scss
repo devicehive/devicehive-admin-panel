@@ -26,8 +26,8 @@ table {
 }
 
 .table-container {
-  max-height: calc(100vh - #{$navbar-height} - #{$padding-base * 2} - #{$bottom-spacing});
-  overflow-y: auto;
+  // max-height: calc(100vh - #{$navbar-height} - #{$padding-base * 2} - #{$bottom-spacing});
+  // overflow-y: auto;
 }
 
 .btn-add {

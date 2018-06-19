@@ -5,6 +5,7 @@
         <input type="text" class="form-control" id="inputName" [(ngModel)]="searchName">
     </div>
   </div>
+
   <div class="table-container">
     <table class="table">
       <thead class="thead-light">
@@ -47,6 +48,10 @@
       </tr>
       </tbody>
     </table>
+    <ngb-pagination class="d-flex justify-content-center"
+                    [collectionSize]="devicesCount? devicesCount : 100" [(page)]="page" [maxSize]="5" [rotate]="true" 
+                    [boundaryLinks]="true" (pageChange)="loadPage($event)">
+    </ngb-pagination>
   </div>
 
   <button class="btn btn-success float-right btn-add"
