@@ -42,7 +42,7 @@ export class DevicehiveService {
 
   async getHttpDeviceHive(): Promise<any> {
     if (!this.httpDeviceHive) {
-      const token = sessionStorage.getItem('refresh_token');
+      const token = localStorage.getItem('refresh_token');
       if (token == null) {
         throw error();
       } else {
@@ -72,7 +72,7 @@ export class DevicehiveService {
 
     try {
       await this.httpDeviceHive.connect();
-      sessionStorage.setItem('refresh_token', this.httpDeviceHive.refreshToken);
+      localStorage.setItem('refresh_token', this.httpDeviceHive.refreshToken);
 
       this.loggedIn = true;
     } catch (error) {
@@ -92,7 +92,7 @@ export class DevicehiveService {
 
     try {
       await this.httpDeviceHive.connect();
-      sessionStorage.setItem('refresh_token', this.httpDeviceHive.refreshToken);
+      localStorage.setItem('refresh_token', this.httpDeviceHive.refreshToken);
 
       this.loggedIn = true;
     } catch (error) {
@@ -156,7 +156,7 @@ export class DevicehiveService {
   }
 
   logOut(): void {
-    sessionStorage.removeItem('refresh_token');
+    localStorage.removeItem('refresh_token');
   }
 
   isLoggedIn(): boolean {
@@ -164,7 +164,7 @@ export class DevicehiveService {
       return true;
     }
 
-    const token = sessionStorage.getItem('refresh_token');
+    const token = localStorage.getItem('refresh_token');
     return token != null;
   }
 

@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <ngb-tabset>
+  <ngb-tabset *ngIf='user.role !== userRole.ADMIN'>
     <ngb-tab title="Networks">
       <ng-template ngbTabContent>
         <table class="table">
@@ -89,10 +89,12 @@
 
     <ngb-tab title="Device Types">
       <ng-template ngbTabContent>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="allDeviceTypeCheck"
-                 [(ngModel)]="user.allDeviceTypesAvailable" (ngModelChange)="toggleAllowAllDeviceTypes()">
-          <label class="form-check-label" for="allDeviceTypeCheck">All device types are available to user</label>
+        <div class="form-group form-switch">
+          <span class="switch">
+            <input type="checkbox" class="switch" id="switch-normal"
+                   [(ngModel)]="user.allDeviceTypesAvailable" (ngModelChange)="toggleAllowAllDeviceTypes()">
+            <label for="switch-normal">All device types are available to user</label>
+          </span>
         </div>
 
         <table class="table" *ngIf="!user.allDeviceTypesAvailable">

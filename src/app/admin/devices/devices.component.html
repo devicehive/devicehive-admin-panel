@@ -1,4 +1,10 @@
 <div class="container">
+  <div class="search-group">
+    <div class="form-group">
+        <label for="inputName">Search by name</label>
+        <input type="text" class="form-control" id="inputName" [(ngModel)]="searchName">
+    </div>
+  </div>
   <div class="table-container">
     <table class="table">
       <thead class="thead-light">
@@ -23,7 +29,7 @@
       </thead>
 
       <tbody>
-      <tr *ngFor="let device of devices">
+      <tr *ngFor="let device of devices | filter : searchName.trim()">
         <td class="text-truncate" placement="bottom" data-container="body" [ngbTooltip]="device.name">{{device.name}}
         </td>
         <td class="text-truncate" placement="bottom" data-container="body"
