@@ -1,15 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Router} from '@angular/router';
-import {DeviceService} from '../../core/device.service';
-import {Device} from '../../shared/models/device.model';
-import {NetworkService} from '../../core/network.service';
-import {DeviceTypeService} from '../../core/device-type.service';
-import {Network} from '../../shared/models/network.model';
-import {DeviceType} from '../../shared/models/device-type.model';
-import {NotifierService} from 'angular-notifier';
-import {UtilService} from '../../core/util.service';
-import {HelpService} from '../../core/help.service';
+import { Component, OnInit } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
+import { DeviceService } from '../../core/device.service';
+import { Device } from '../../shared/models/device.model';
+import { NetworkService } from '../../core/network.service';
+import { DeviceTypeService } from '../../core/device-type.service';
+import { DeviceFilter } from '../../shared/models/filters/device-filter.model';
+import { Network } from '../../shared/models/network.model';
+import { DeviceType } from '../../shared/models/device-type.model';
+import { NotifierService } from 'angular-notifier';
+import { UtilService } from '../../core/util.service';
+import { HelpService } from '../../core/help.service';
 
 @Component({
   selector: 'dh-devices',
@@ -18,58 +19,78 @@ import {HelpService} from '../../core/help.service';
 })
 export class DevicesComponent implements OnInit {
 
+  page: number = 1;
   itemsPerPage: number = 10;
-  page: any;
-  previousPage: any;
+  itemsCount: number = 100;
   pagesCount: number;
 
   networks: Array<Network>;
   deviceTypes: Array<DeviceType>;
   devices: Array<Device>;
-  devicesCount: number;
-  searchName: string = '';
+
+  filter: DeviceFilter;
+  filterIsActive: boolean = false;
 
   newDevice: Device;
   isSendingRequest = false;
   activeModal: NgbModalRef;
 
   constructor(public helpService: HelpService,
-              private networkService: NetworkService,
-              private deviceTypeService: DeviceTypeService,
-              private deviceService: DeviceService,
-              private modalService: NgbModal,
-              private router: Router,
-              private notifierService: NotifierService) {
+    private networkService: NetworkService,
+    private deviceTypeService: DeviceTypeService,
+    private deviceService: DeviceService,
+    private modalService: NgbModal,
+    private router: Router,
+    private notifierService: NotifierService) {
 
   }
 
   async ngOnInit(): Promise<void> {
-    // TODO: get networks by devices, so as for deviceTypes
+
+    this.filter = new DeviceFilter();
+
     this.networks = await this.networkService.getAllNetworks();
     this.deviceTypes = await this.deviceTypeService.getAllDeviceTypes();
-
     this.devices = await this.deviceService.getSpecificAmountOfDevices(this.itemsPerPage, 0);
-    this.devicesCount = await this.deviceService.getDevicesCount();
-    
-    this.pagesCount = Math.ceil(this.devicesCount / this.itemsPerPage);
 
-    this.page = 1;
+    this.itemsCount = await this.deviceService.getDevicesCount();
+    this.pagesCount = Math.ceil(this.itemsCount / this.itemsPerPage);
   }
 
-  async loadPage(page: number) {
-    if (!page){
-      this.page = 1;
-    }
-    const take = this.itemsPerPage * this.page > this.devicesCount? this.devicesCount - this.itemsPerPage * (this.page - 1) : this.itemsPerPage;
+  async loadPage() {
+    const take = this.itemsPerPage * this.page > this.itemsCount ? this.itemsCount - this.itemsPerPage * (this.page - 1) : this.itemsPerPage;
     const skip = this.itemsPerPage * (this.page - 1);
 
-    console.log(take);
-    console.log(skip);
+    if (this.filterIsActive){
+      this.devices = await this.deviceService.getSpecificAmountOfDevices(take, skip, this.filter); 
+    } else {
+      this.devices = await this.deviceService.getSpecificAmountOfDevices(take, skip); 
+    }
+  }
 
-    this.devices = await this.deviceService.getSpecificAmountOfDevices(take,skip);
-    
-    if (page !== this.previousPage) {
-      this.previousPage = page;
+  async updatePagination() {
+    if (this.filterIsActive){
+      this.itemsCount = await this.deviceService.getDevicesCount(this.filter);
+    } else {
+      this.itemsCount = await this.deviceService.getDevicesCount();
+    }
+
+    this.pagesCount = Math.ceil(this.itemsCount / this.itemsPerPage);
+    this.loadPage();
+  }
+
+  async applyFilter() {
+    this.filterIsActive = true;
+    this.page = 1;
+    this.updatePagination();
+  }
+
+  async clearFilter() {
+    this.filter.clear();
+    if (this.filterIsActive){
+      this.filterIsActive = false;
+      this.page = 1;
+      this.updatePagination();
     }
   }
 
@@ -118,11 +139,13 @@ export class DevicesComponent implements OnInit {
       this.newDevice.id = this.generateDeviceId();
       await this.deviceService.createDevice(this.newDevice);
 
-      this.devices.push(this.newDevice.toObject());
-
       this.newDevice = null;
       this.activeModal.close();
       this.isSendingRequest = false;
+
+      await this.updatePagination();
+      this.notifierService.notify('success', 'Device has been added successfully');
+
     } catch (error) {
       this.isSendingRequest = false;
       this.notifierService.notify('error', error.message);
@@ -134,10 +157,9 @@ export class DevicesComponent implements OnInit {
       try {
         await this.deviceService.deleteDevice(device.id);
 
-        const index = this.devices.indexOf(device);
-        if (index > -1) {
-          this.devices.splice(index, 1);
-        }
+        await this.updatePagination();
+        this.notifierService.notify('success', 'Device has been deleted successfully');
+
       } catch (error) {
         this.isSendingRequest = false;
         this.notifierService.notify('error', error.message);

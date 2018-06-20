@@ -1,8 +1,18 @@
 <div class="container">
   <div class="search-group">
     <div class="form-group">
-        <label for="inputName">Search by name</label>
-        <input type="text" class="form-control" id="inputName" [(ngModel)]="searchName">
+      <div class="row">
+        <div class="col-6 col-sm-6 col-md-4">
+            <label for="inputName">Search by name</label>
+            <input type="text" class="form-control" id="inputName" [(ngModel)]="filter.name" />
+        </div>
+        <div class="col-3 col-sm-3 col-md-2 col-lg-1">
+            <button class="btn btn-outline-secondary btn-search" type="button" (click)="applyFilter()">Search</button>
+        </div>
+        <div class="col-3 col-sm-3 col-md-1">
+            <button class="btn btn-outline-secondary btn-search" type="button" (click)="clearFilter()">Clear</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -30,7 +40,7 @@
       </thead>
 
       <tbody>
-      <tr *ngFor="let device of devices | filter : searchName.trim()">
+      <tr *ngFor="let device of devices">
         <td class="text-truncate" placement="bottom" data-container="body" [ngbTooltip]="device.name">{{device.name}}
         </td>
         <td class="text-truncate" placement="bottom" data-container="body"
@@ -49,7 +59,7 @@
       </tbody>
     </table>
     <ngb-pagination class="d-flex justify-content-center"
-                    [collectionSize]="devicesCount? devicesCount : 100" [(page)]="page" [maxSize]="5" [rotate]="true" 
+                    [collectionSize]="itemsCount" [(page)]="page" [maxSize]="5" [rotate]="true" 
                     [boundaryLinks]="true" (pageChange)="loadPage($event)">
     </ngb-pagination>
   </div>

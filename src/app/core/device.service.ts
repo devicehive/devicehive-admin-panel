@@ -1,6 +1,7 @@
-import {Injectable} from '@angular/core';
-import {DevicehiveService} from './devicehive.service';
-import {Device} from '../shared/models/device.model';
+import { Injectable } from '@angular/core';
+import { DevicehiveService } from './devicehive.service';
+import { Device } from '../shared/models/device.model';
+import { DeviceFilter } from '../shared/models/filters/device-filter.model';
 
 @Injectable()
 export class DeviceService {
@@ -37,15 +38,18 @@ export class DeviceService {
     return await httpDeviceHive.device.delete(deviceId);
   }
 
-  async getDevicesCount(): Promise<number>{
+  async getDevicesCount(filter?: DeviceFilter): Promise<number> {
+    const query = new this.DeviceCountQuery({
+      namePattern: filter ? `%${filter.name}%` : '%'
+    });
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
-    const query = new this.DeviceCountQuery();
     const response = await httpDeviceHive.device.count(query);
     return response.count;
   }
 
-  async getSpecificAmountOfDevices(take: number, skip: number){
+  async getSpecificAmountOfDevices(take: number, skip: number, filter?: DeviceFilter): Promise<Array<Device>> {
     const query = new this.DeviceListQuery({
+      namePattern: filter ? `%${filter.name}%` : '%',
       take: take,
       skip: skip
     });
