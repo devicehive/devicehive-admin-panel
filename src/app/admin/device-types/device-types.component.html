@@ -20,6 +20,10 @@
       </tr>
       </tbody>
     </table>
+    <ngb-pagination class="d-flex justify-content-center"
+                    [collectionSize]="itemsCount" [(page)]="page" [maxSize]="5" [rotate]="true" 
+                    [boundaryLinks]="true" (pageChange)="loadPage($event)">
+    </ngb-pagination>
     <p *ngIf="deviceTypes && deviceTypes.length === 0" class="text-center">You do not have access to any device types</p>
   </div>
 

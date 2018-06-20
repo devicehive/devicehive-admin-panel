@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {DeviceTypeService} from '../../core/device-type.service';
-import {DeviceType} from '../../shared/models/device-type.model';
-import {plainToClass} from 'class-transformer';
-import {NotifierService} from 'angular-notifier';
-import {UtilService} from '../../core/util.service';
-import {UserService} from '../../core/user.service';
-import {UserRole} from '../../shared/models/user.model';
-import {HelpService} from '../../core/help.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceTypeService } from '../../core/device-type.service';
+import { DeviceType } from '../../shared/models/device-type.model';
+import { plainToClass } from 'class-transformer';
+import { NotifierService } from 'angular-notifier';
+import { UtilService } from '../../core/util.service';
+import { UserService } from '../../core/user.service';
+import { UserRole } from '../../shared/models/user.model';
+import { HelpService } from '../../core/help.service';
 
 @Component({
   selector: 'dh-device-types',
@@ -15,6 +15,11 @@ import {HelpService} from '../../core/help.service';
   styleUrls: ['./device-types.component.scss']
 })
 export class DeviceTypesComponent implements OnInit {
+
+  page: number = 1;
+  itemsPerPage: number = 10;
+  itemsCount: number = 100;
+  pagesCount: number;
 
   isAdmin = false;
   deviceTypes: Array<DeviceType>;
@@ -26,18 +31,35 @@ export class DeviceTypesComponent implements OnInit {
   @ViewChild('deleteDeviceTypeModal') deleteDeviceTypeModal: ElementRef;
 
   constructor(public helpService: HelpService,
-              private deviceTypeService: DeviceTypeService,
-              private userService: UserService,
-              private modalService: NgbModal,
-              private notifierService: NotifierService) {
+    private deviceTypeService: DeviceTypeService,
+    private userService: UserService,
+    private modalService: NgbModal,
+    private notifierService: NotifierService) {
   }
 
   async ngOnInit(): Promise<void> {
     const currentUser = await this.userService.getCurrentUser();
     this.isAdmin = currentUser.role === UserRole.ADMIN;
 
-    const deviceTypesPlain = await this.deviceTypeService.getAllDeviceTypes();
+    this.itemsCount = await this.deviceTypeService.getDeviceTypesCount();
+    this.pagesCount = Math.ceil(this.itemsCount / this.itemsPerPage);
+
+    const deviceTypesPlain = await this.deviceTypeService.getSpecificAmountOfDeviceTypes(this.itemsPerPage, 0);
     this.deviceTypes = plainToClass(DeviceType, deviceTypesPlain);
+  }
+
+  async loadPage() {
+    const take = this.itemsPerPage * this.page > this.itemsCount ? this.itemsCount - this.itemsPerPage * (this.page - 1) : this.itemsPerPage;
+    const skip = this.itemsPerPage * (this.page - 1);
+
+    const deviceTypesPlain = await this.deviceTypeService.getSpecificAmountOfDeviceTypes(take, skip);
+    this.deviceTypes = plainToClass(DeviceType, deviceTypesPlain);
+  }
+
+  async updatePagination() {
+    this.itemsCount = await this.deviceTypeService.getDeviceTypesCount();
+    this.pagesCount = Math.ceil(this.itemsCount / this.itemsPerPage);
+    this.loadPage();
   }
 
   async openDeviceTypeModal(content, selectedDeviceType?: DeviceType): Promise<void> {
@@ -64,14 +86,15 @@ export class DeviceTypesComponent implements OnInit {
 
     this.isSendingRequest = true;
     try {
-      const createdDeviceType = await this.deviceTypeService.createDeviceType(this.newDeviceType);
-
-      this.newDeviceType.id = createdDeviceType.id;
-      this.deviceTypes.push(this.newDeviceType);
+      await this.deviceTypeService.createDeviceType(this.newDeviceType);
 
       this.newDeviceType = null;
       this.activeModal.close();
       this.isSendingRequest = false;
+
+      await this.updatePagination();
+      this.notifierService.notify('success','Device type has been successfully created');
+
     } catch (error) {
       this.isSendingRequest = false;
       this.notifierService.notify('error', error.message);
@@ -82,10 +105,9 @@ export class DeviceTypesComponent implements OnInit {
     try {
       await this.deviceTypeService.deleteDeviceType(deviceType.id);
 
-      const index = this.deviceTypes.indexOf(deviceType);
-      if (index > -1) {
-        this.deviceTypes.splice(index, 1);
-      }
+      await this.updatePagination();
+      this.notifierService.notify('success','Device type has been successfully deleted');
+
     } catch (error) {
       this.isSendingRequest = false;
       this.openDeviceTypeModal(this.deleteDeviceTypeModal, deviceType);
@@ -93,19 +115,17 @@ export class DeviceTypesComponent implements OnInit {
   }
 
   async deleteDeviceTypeForce(): Promise<void> {
-      try {
-        const deviceTypeId = this.selectedDeviceType.id;
-        await this.deviceTypeService.deleteDeviceType(deviceTypeId, true);
+    try {
+      const deviceTypeId = this.selectedDeviceType.id;
+      await this.deviceTypeService.deleteDeviceType(deviceTypeId, true);
 
-        const index = this.deviceTypes.findIndex(deviceType => deviceType.id === deviceTypeId);
-        if (index > -1) {
-          this.deviceTypes.splice(index, 1);
-        }
-        this.activeModal.close();
-      } catch (error) {
-        this.isSendingRequest = false;
-        this.notifierService.notify('error', error.message);
-      }
+      await this.updatePagination();
+      this.notifierService.notify('success','Device type has been successfully deleted');
+      this.activeModal.close();
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.notifierService.notify('error', error.message);
+    }
   }
 
   async updateSelectedDeviceType(): Promise<void> {

@@ -47,9 +47,11 @@ export class DeviceService {
     return response.count;
   }
 
-  async getSpecificAmountOfDevices(take: number, skip: number, filter?: DeviceFilter): Promise<Array<Device>> {
+  async getSpecificAmountOfDevices(take: number, skip: number, filter: DeviceFilter = new DeviceFilter()): Promise<Array<Device>> {
     const query = new this.DeviceListQuery({
-      namePattern: filter ? `%${filter.name}%` : '%',
+      namePattern: `%${filter.name}%`,
+      sortField: filter.sortField,
+      sortOrder: filter.sortOrder,
       take: take,
       skip: skip
     });
