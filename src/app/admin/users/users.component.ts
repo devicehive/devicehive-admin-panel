@@ -14,9 +14,9 @@ import { HelpService } from '../../core/help.service';
 })
 export class UsersComponent implements OnInit {
 
-  page: number = 1;
-  itemsPerPage: number = 10;
-  itemsCount: number = 100;
+  page = 1;
+  itemsPerPage = 10;
+  itemsCount = 100;
   pagesCount: number;
 
   users: Array<User>;
@@ -43,7 +43,10 @@ export class UsersComponent implements OnInit {
   }
 
   async loadPage() {
-    const take = this.itemsPerPage * this.page > this.itemsCount ? this.itemsCount - this.itemsPerPage * (this.page - 1) : this.itemsPerPage;
+    const take = this.itemsPerPage * this.page > this.itemsCount ?
+      this.itemsCount - this.itemsPerPage * (this.page - 1) :
+      this.itemsPerPage;
+
     const skip = this.itemsPerPage * (this.page - 1);
 
     this.users = await this.userService.getSpecificAmountOfUsers(take, skip);
@@ -81,7 +84,7 @@ export class UsersComponent implements OnInit {
     try {
       await this.userService.createUser(this.newUser);
       await this.updatePagination();
-      this.notifierService.notify('success','User has been successfully created');
+      this.notifierService.notify('success', 'User has been successfully created');
 
       this.newUser = null;
       this.activeModal.close();
@@ -98,7 +101,7 @@ export class UsersComponent implements OnInit {
       try {
         await this.userService.deleteUser(user.id);
         await this.updatePagination();
-        this.notifierService.notify('success','User has been successfully deleted');
+        this.notifierService.notify('success', 'User has been successfully deleted');
       } catch (error) {
         this.notifierService.notify('error', error.message);
       }

@@ -16,9 +16,9 @@ import { HelpService } from '../../core/help.service';
 })
 export class DeviceTypesComponent implements OnInit {
 
-  page: number = 1;
-  itemsPerPage: number = 10;
-  itemsCount: number = 100;
+  page = 1;
+  itemsPerPage = 10;
+  itemsCount = 100;
   pagesCount: number;
 
   isAdmin = false;
@@ -49,7 +49,10 @@ export class DeviceTypesComponent implements OnInit {
   }
 
   async loadPage() {
-    const take = this.itemsPerPage * this.page > this.itemsCount ? this.itemsCount - this.itemsPerPage * (this.page - 1) : this.itemsPerPage;
+    const take = this.itemsPerPage * this.page > this.itemsCount ?
+                this.itemsCount - this.itemsPerPage * (this.page - 1) :
+                this.itemsPerPage;
+
     const skip = this.itemsPerPage * (this.page - 1);
 
     const deviceTypesPlain = await this.deviceTypeService.getSpecificAmountOfDeviceTypes(take, skip);
@@ -89,7 +92,7 @@ export class DeviceTypesComponent implements OnInit {
       await this.deviceTypeService.createDeviceType(this.newDeviceType);
 
       await this.updatePagination();
-      this.notifierService.notify('success','Device type has been successfully created');
+      this.notifierService.notify('success', 'Device type has been successfully created');
 
       this.newDeviceType = null;
       this.activeModal.close();
@@ -106,7 +109,7 @@ export class DeviceTypesComponent implements OnInit {
       await this.deviceTypeService.deleteDeviceType(deviceType.id);
 
       await this.updatePagination();
-      this.notifierService.notify('success','Device type has been successfully deleted');
+      this.notifierService.notify('success', 'Device type has been successfully deleted');
 
     } catch (error) {
       this.isSendingRequest = false;
@@ -120,7 +123,7 @@ export class DeviceTypesComponent implements OnInit {
       await this.deviceTypeService.deleteDeviceType(deviceTypeId, true);
 
       await this.updatePagination();
-      this.notifierService.notify('success','Device type has been successfully deleted');
+      this.notifierService.notify('success', 'Device type has been successfully deleted');
       this.activeModal.close();
     } catch (error) {
       this.isSendingRequest = false;

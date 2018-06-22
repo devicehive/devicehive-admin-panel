@@ -18,7 +18,7 @@ export class NetworksComponent implements OnInit {
 
   isAdmin = false;
   networks: Array<Network>;
-  searchName: string = '';
+  searchName = '';
 
   newNetwork: Network;
   selectedNetwork: Network;

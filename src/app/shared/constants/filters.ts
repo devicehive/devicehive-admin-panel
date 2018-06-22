@@ -1,9 +1,10 @@
 export const SORT_DEFAULT = {
-  FIELD:{
+  FIELD: {
     DEVICE_TYPE: 'name',
     DEVICE: 'name',
     USER: 'login',
-    NETWORK: 'name'
+    NETWORK: 'name',
+    PLUGIN: 'name'
   },
   ORDER: 'ASC'
-}
+};

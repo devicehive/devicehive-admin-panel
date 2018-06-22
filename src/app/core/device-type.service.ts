@@ -45,7 +45,8 @@ export class DeviceTypeService {
     return response.count;
   }
 
-  async getSpecificAmountOfDeviceTypes(take: number, skip: number, filter: DeviceTypeFilter = new DeviceTypeFilter()): Promise<Array<DeviceType>> {
+  async getSpecificAmountOfDeviceTypes(take: number, skip: number, filter: DeviceTypeFilter = new DeviceTypeFilter())
+    : Promise<Array<DeviceType>> {
     const query = new this.DeviceTypeListQuery({
       sortField: filter.sortField,
       sortOrder: filter.sortOrder,

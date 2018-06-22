@@ -19,9 +19,9 @@ import { HelpService } from '../../core/help.service';
 })
 export class DevicesComponent implements OnInit {
 
-  page: number = 1;
-  itemsPerPage: number = 10;
-  itemsCount: number = 100;
+  page = 1;
+  itemsPerPage = 10;
+  itemsCount = 100;
   pagesCount: number;
 
   networks: Array<Network>;
@@ -29,7 +29,7 @@ export class DevicesComponent implements OnInit {
   devices: Array<Device>;
 
   filter: DeviceFilter;
-  filterIsActive: boolean = false;
+  filterIsActive = false;
 
   newDevice: Device;
   isSendingRequest = false;
@@ -58,18 +58,21 @@ export class DevicesComponent implements OnInit {
   }
 
   async loadPage() {
-    const take = this.itemsPerPage * this.page > this.itemsCount ? this.itemsCount - this.itemsPerPage * (this.page - 1) : this.itemsPerPage;
+    const take = this.itemsPerPage * this.page > this.itemsCount ?
+      this.itemsCount - this.itemsPerPage * (this.page - 1) :
+      this.itemsPerPage;
+
     const skip = this.itemsPerPage * (this.page - 1);
 
-    if (this.filterIsActive){
-      this.devices = await this.deviceService.getSpecificAmountOfDevices(take, skip, this.filter); 
+    if (this.filterIsActive) {
+      this.devices = await this.deviceService.getSpecificAmountOfDevices(take, skip, this.filter);
     } else {
-      this.devices = await this.deviceService.getSpecificAmountOfDevices(take, skip); 
+      this.devices = await this.deviceService.getSpecificAmountOfDevices(take, skip);
     }
   }
 
   async updatePagination() {
-    if (this.filterIsActive){
+    if (this.filterIsActive) {
       this.itemsCount = await this.deviceService.getDevicesCount(this.filter);
     } else {
       this.itemsCount = await this.deviceService.getDevicesCount();
@@ -87,7 +90,7 @@ export class DevicesComponent implements OnInit {
 
   async clearFilter() {
     this.filter.clear();
-    if (this.filterIsActive){
+    if (this.filterIsActive) {
       this.filterIsActive = false;
       this.page = 1;
       this.updatePagination();
