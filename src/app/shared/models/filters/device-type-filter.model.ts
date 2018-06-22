@@ -1,9 +1,9 @@
-import { DEFAULT_SORT_FIELD, DEFAULT_SORT_ORDER } from '../../constants/filters';
+import { SORT_DEFAULT } from '../../constants/filters';
 
 export class DeviceTypeFilter {
     constructor(
-        public sortField: string = DEFAULT_SORT_FIELD,
-        public sortOrder: string = DEFAULT_SORT_ORDER
+        public sortField: string = SORT_DEFAULT.FIELD.DEVICE_TYPE,
+        public sortOrder: string = SORT_DEFAULT.ORDER
     ) {
     }
 

@@ -88,12 +88,12 @@ export class DeviceTypesComponent implements OnInit {
     try {
       await this.deviceTypeService.createDeviceType(this.newDeviceType);
 
+      await this.updatePagination();
+      this.notifierService.notify('success','Device type has been successfully created');
+
       this.newDeviceType = null;
       this.activeModal.close();
       this.isSendingRequest = false;
-
-      await this.updatePagination();
-      this.notifierService.notify('success','Device type has been successfully created');
 
     } catch (error) {
       this.isSendingRequest = false;

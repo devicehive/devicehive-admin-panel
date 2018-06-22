@@ -1,2 +1,9 @@
-export const DEFAULT_SORT_ORDER = 'ASC';
-export const DEFAULT_SORT_FIELD = 'name';
+export const SORT_DEFAULT = {
+  FIELD:{
+    DEVICE_TYPE: 'name',
+    DEVICE: 'name',
+    USER: 'login',
+    NETWORK: 'name'
+  },
+  ORDER: 'ASC'
+}

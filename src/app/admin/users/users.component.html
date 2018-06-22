@@ -26,6 +26,10 @@
       </tr>
       </tbody>
     </table>
+    <ngb-pagination class="d-flex justify-content-center"
+                    [collectionSize]="itemsCount" [(page)]="page" [maxSize]="5" [rotate]="true"
+                    [boundaryLinks]="true" (pageChange)="loadPage($event)">
+    </ngb-pagination>
   </div>
 
   <button class="btn btn-success float-right btn-add" (click)="openNewUserModal(newUserModal)">Add new user</button>

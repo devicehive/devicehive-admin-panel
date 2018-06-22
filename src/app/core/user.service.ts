@@ -2,11 +2,13 @@ import {Injectable} from '@angular/core';
 import {DevicehiveService} from './devicehive.service';
 import {User} from '../shared/models/user.model';
 import {DeviceType} from '../shared/models/device-type.model';
+import {UserFilter} from '../shared/models/filters/user-filter.model';
 
 @Injectable()
 export class UserService {
 
   private UserListQuery = DeviceHive.models.query.UserListQuery;
+  private UserCountQuery = DeviceHive.models.query.UserCountQuery;
   private currentUser: User;
 
   constructor(private dh: DevicehiveService) {
@@ -72,6 +74,24 @@ export class UserService {
   async getUser(id: number): Promise<User> {
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
     return await httpDeviceHive.user.get(id);
+  }
+
+  async getUsersCount(): Promise<number> {
+    const query = new this.UserCountQuery();
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    const response = await httpDeviceHive.user.count(query);
+    return response.count;
+  }
+
+  async getSpecificAmountOfUsers(take: number, skip: number, filter: UserFilter = new UserFilter()): Promise<Array<User>> {
+    const query = new this.UserListQuery({
+      sortField: filter.sortField,
+      sortOrder: filter.sortOrder,
+      take: take,
+      skip: skip
+    });
+    const httpDeviceHive = await this.dh.getHttpDeviceHive();
+    return await httpDeviceHive.user.list(query);
   }
 
   async grantAccessToNetwork(userId: number, networkId: number): Promise<any> {

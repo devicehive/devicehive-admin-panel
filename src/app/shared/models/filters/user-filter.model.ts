@@ -1,15 +1,10 @@
 import { SORT_DEFAULT } from '../../constants/filters';
 
-export class NetworkFilter {
+export class UserFilter {
     constructor(
-        public name: string = '',
-        public sortField: string = SORT_DEFAULT.FIELD.NETWORK,
+        public sortField: string = SORT_DEFAULT.FIELD.USER,
         public sortOrder: string = SORT_DEFAULT.ORDER
     ) {
-    }
-
-    clear() {
-        this.name = '';
     }
 
     toObject() {

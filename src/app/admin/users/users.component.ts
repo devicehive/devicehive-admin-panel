@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Router} from '@angular/router';
-import {UserService} from '../../core/user.service';
-import {User, UserRole, UserStatus} from '../../shared/models/user.model';
-import {NotifierService} from 'angular-notifier';
-import {UtilService} from '../../core/util.service';
-import {HelpService} from '../../core/help.service';
+import { Component, OnInit } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
+import { UserService } from '../../core/user.service';
+import { User, UserRole, UserStatus } from '../../shared/models/user.model';
+import { NotifierService } from 'angular-notifier';
+import { UtilService } from '../../core/util.service';
+import { HelpService } from '../../core/help.service';
 
 @Component({
   selector: 'dh-users',
@@ -13,6 +13,11 @@ import {HelpService} from '../../core/help.service';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
+
+  page: number = 1;
+  itemsPerPage: number = 10;
+  itemsCount: number = 100;
+  pagesCount: number;
 
   users: Array<User>;
   userRole = UserRole;
@@ -24,14 +29,30 @@ export class UsersComponent implements OnInit {
   activeModal: NgbModalRef;
 
   constructor(public helpService: HelpService,
-              private userService: UserService,
-              private modalService: NgbModal,
-              private router: Router,
-              private notifierService: NotifierService) {
+    private userService: UserService,
+    private modalService: NgbModal,
+    private router: Router,
+    private notifierService: NotifierService) {
   }
 
   async ngOnInit(): Promise<void> {
-    this.users = await this.userService.getAllUsers();
+    this.itemsCount = await this.userService.getUsersCount();
+    this.pagesCount = Math.ceil(this.itemsCount / this.itemsPerPage);
+
+    this.users = await this.userService.getSpecificAmountOfUsers(this.itemsPerPage, 0);
+  }
+
+  async loadPage() {
+    const take = this.itemsPerPage * this.page > this.itemsCount ? this.itemsCount - this.itemsPerPage * (this.page - 1) : this.itemsPerPage;
+    const skip = this.itemsPerPage * (this.page - 1);
+
+    this.users = await this.userService.getSpecificAmountOfUsers(take, skip);
+  }
+
+  async updatePagination() {
+    this.itemsCount = await this.userService.getUsersCount();
+    this.pagesCount = Math.ceil(this.itemsCount / this.itemsPerPage);
+    this.loadPage();
   }
 
   openUserDetails(user: User): void {
@@ -58,15 +79,14 @@ export class UsersComponent implements OnInit {
 
     this.isSendingRequest = true;
     try {
-      const createdUser = await this.userService.createUser(this.newUser);
-
-      this.newUser.id = createdUser.id;
-      this.newUser.allDeviceTypesAvailable = createdUser.allDeviceTypesAvailable;
-      this.users.push(this.newUser.toObject());
+      await this.userService.createUser(this.newUser);
+      await this.updatePagination();
+      this.notifierService.notify('success','User has been successfully created');
 
       this.newUser = null;
       this.activeModal.close();
       this.isSendingRequest = false;
+
     } catch (error) {
       this.isSendingRequest = false;
       this.notifierService.notify('error', error.message);
@@ -77,11 +97,8 @@ export class UsersComponent implements OnInit {
     if (confirm('Are you sure you want to delete this user?')) {
       try {
         await this.userService.deleteUser(user.id);
-
-        const index = this.users.indexOf(user);
-        if (index > -1) {
-          this.users.splice(index, 1);
-        }
+        await this.updatePagination();
+        this.notifierService.notify('success','User has been successfully deleted');
       } catch (error) {
         this.notifierService.notify('error', error.message);
       }
