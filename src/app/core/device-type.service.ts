@@ -6,6 +6,7 @@ import {DeviceType} from '../shared/models/device-type.model';
 export class DeviceTypeService {
 
   private DeviceTypeListQuery = DeviceHive.models.query.DeviceTypeListQuery;
+  private DeviceTypeDeleteQuery = DeviceHive.models.query.DeviceTypeDeleteQuery;
 
   constructor(private dh: DevicehiveService) {
   }
@@ -26,8 +27,12 @@ export class DeviceTypeService {
     return await httpDeviceHive.deviceType.update(deviceType);
   }
 
-  async deleteDeviceType(deviceTypeId: number): Promise<any> {
+  async deleteDeviceType(deviceTypeId: number, force: boolean = false): Promise<any> {
+    const query = new this.DeviceTypeDeleteQuery({
+      deviceTypeId: deviceTypeId,
+      force: force
+    });
     const httpDeviceHive = await this.dh.getHttpDeviceHive();
-    return await httpDeviceHive.deviceType.delete(deviceTypeId);
+    return await httpDeviceHive.deviceType.delete(query);
   }
 }

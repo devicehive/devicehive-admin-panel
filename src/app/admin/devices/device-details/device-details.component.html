@@ -50,7 +50,7 @@
             <tr *ngFor="let command of commands">
               <td>{{command.command}}</td>
               <td>{{command.timestamp | date:'medium'}}</td>
-              <td>{{!!command.parameters ? (command.parameters | json) : null}}</td>
+              <td class="td-json-params">{{!!command.parameters ? (command.parameters | json) : null}}</td>
               <td>{{command.status}}</td>
               <td>{{!!command.result ? (command.result | json) : null}}</td>
             </tr>
@@ -77,7 +77,7 @@
             <tr *ngFor="let notification of notifications">
               <td>{{notification.notification}}</td>
               <td>{{notification.timestamp | date:'medium'}}</td>
-              <td>{{!!notification.parameters ? (notification.parameters | json) : null}}</td>
+              <td class="td-json-params">{{!!notification.parameters ? (notification.parameters | json) : null}}</td>
             </tr>
           </tbody>
         </table>

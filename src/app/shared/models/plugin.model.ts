@@ -1,26 +1,32 @@
-import {Device} from './device.model';
-import {plainToClass} from 'class-transformer';
+import { Device } from './device.model';
+import { plainToClass } from 'class-transformer';
 
 export class Plugin {
   constructor(public id?: string,
-              public name?: string,
-              public description?: string,
-              public topicName?: string,
-              public filter?: string,
-              public status?: string,
-              public subscriptionId?: string,
-              public userId?: number,
-              public parameters?: string,
-              public returnCommands: boolean = false,
-              public returnUpdatedCommands: boolean = false,
-              public returnNotifications: boolean = false,
-              public names: string = '',
-              public device: Device = new Device(),
-              public deviceId?: string,
-              public networkIds: Array<number> = [],
-              public deviceTypeIds: Array<number> = []) {
+    public name?: string,
+    public description?: string,
+    public topicName?: string,
+    public filter?: string,
+    public status?: string,
+    public subscriptionId?: string,
+    public userId?: number,
+    public parameters?: string,
+    public returnCommands: boolean = false,
+    public returnUpdatedCommands: boolean = false,
+    public returnNotifications: boolean = false,
+    public names: string = '',
+    public device: Device = new Device(),
+    public deviceId?: string,
+    public networkIds: Array<number> = [],
+    public deviceTypeIds: Array<number> = []) {
 
   }
+
+  static STATUSES = {
+    INACTIVE: 'INACTIVE',
+    ACTIVE: 'ACTIVE',
+    CREATED: 'CREATED'
+  };
 
   static fromObject(plainObject: Object): Plugin {
     const plugin = plainToClass<Plugin, Object>(Plugin, plainObject);
@@ -39,16 +45,23 @@ export class Plugin {
     const filters = plugin.filter.split('/');
 
     const typesString = filters[0];
-    if (typesString === 'command') {
+    if (typesString === '*') {
       pluginCopy.returnCommands = true;
-    } else if (typesString === 'command_update') {
       pluginCopy.returnUpdatedCommands = true;
-    } else if (typesString === 'notification') {
       pluginCopy.returnNotifications = true;
     } else {
-      pluginCopy.returnCommands = true;
-      pluginCopy.returnUpdatedCommands = true;
-      pluginCopy.returnNotifications = true;
+      const messageTypes = typesString.split(',');
+      if (messageTypes.length !== 0) {
+        if (messageTypes.indexOf('command') !== -1) {
+          pluginCopy.returnCommands = true;
+        }
+        if (messageTypes.indexOf('command_update') !== -1) {
+          pluginCopy.returnUpdatedCommands = true;
+        }
+        if (messageTypes.indexOf('notification') !== -1) {
+          pluginCopy.returnNotifications = true;
+        }
+      }
     }
 
     const networkIds = filters[1];

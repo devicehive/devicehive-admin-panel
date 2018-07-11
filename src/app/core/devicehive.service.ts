@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {error} from 'util';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {JwtToken} from '../shared/models/jwt-token.model';
 
 @Injectable()
 export class DevicehiveService {
@@ -15,7 +17,7 @@ export class DevicehiveService {
 
   private refreshToken: string;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     const root = document.location.origin;
     if (environment.mainServiceURL.startsWith('http')) {
       this.mainServiceURL = environment.mainServiceURL;
@@ -32,7 +34,7 @@ export class DevicehiveService {
     if (environment.pluginServiceURL.startsWith('http')) {
       this.pluginServiceURL = environment.pluginServiceURL;
     } else {
-      this.pluginServiceURL = environment.pluginServiceURL;
+      this.pluginServiceURL = root + environment.pluginServiceURL;
     }
 
     this.autoUpdateSession = environment.autoUpdateSession;
@@ -40,7 +42,7 @@ export class DevicehiveService {
 
   async getHttpDeviceHive(): Promise<any> {
     if (!this.httpDeviceHive) {
-      const token = sessionStorage.getItem('refresh_token');
+      const token = localStorage.getItem('refresh_token');
       if (token == null) {
         throw error();
       } else {
@@ -70,7 +72,7 @@ export class DevicehiveService {
 
     try {
       await this.httpDeviceHive.connect();
-      sessionStorage.setItem('refresh_token', this.httpDeviceHive.refreshToken);
+      localStorage.setItem('refresh_token', this.httpDeviceHive.refreshToken);
 
       this.loggedIn = true;
     } catch (error) {
@@ -90,7 +92,7 @@ export class DevicehiveService {
 
     try {
       await this.httpDeviceHive.connect();
-      sessionStorage.setItem('refresh_token', this.httpDeviceHive.refreshToken);
+      localStorage.setItem('refresh_token', this.httpDeviceHive.refreshToken);
 
       this.loggedIn = true;
     } catch (error) {
@@ -99,8 +101,62 @@ export class DevicehiveService {
     }
   }
 
+  async logInWithGoogle(token: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    try {
+      const response = await this.http.post<JwtToken>(
+        this.authServiceURL + '/token/google',
+        token,
+        {headers}
+      ).toPromise();
+
+      await this.logInWithToken(response.accessToken);
+    } catch (error) {
+      this.loggedIn = false;
+      throw error;
+    }
+    return;
+  }
+
+  async logInWithFacebook(token: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    try {
+      const response = await this.http.post<JwtToken>(
+        this.authServiceURL + '/token/facebook',
+        token,
+        {headers}
+      ).toPromise();
+
+      await this.logInWithToken(response.accessToken);
+    } catch (error) {
+      this.loggedIn = false;
+      throw error;
+    }
+    return;
+  }
+
+  async logInWithGithub(token: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    try {
+      const response = await this.http.post<JwtToken>(
+        this.authServiceURL + '/token/github',
+        token,
+        {headers}
+      ).toPromise();
+
+      await this.logInWithToken(response.accessToken);
+    } catch (error) {
+      this.loggedIn = false;
+      throw error;
+    }
+    return;
+  }
+
   logOut(): void {
-    sessionStorage.removeItem('refresh_token');
+    localStorage.removeItem('refresh_token');
   }
 
   isLoggedIn(): boolean {
@@ -108,7 +164,7 @@ export class DevicehiveService {
       return true;
     }
 
-    const token = sessionStorage.getItem('refresh_token');
+    const token = localStorage.getItem('refresh_token');
     return token != null;
   }
 

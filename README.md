@@ -24,3 +24,9 @@ with '/' and will be considered relative.
 
 * autoUpdateSession - if true, the admin panel will retrieve a new access token when an old one expires. If false,
 user will be logged out once access token expires.
+
+* googleClientId - client id for google oauth. If left empty, the "Login with Google" button will not be displayed.
+
+* facebookAppId - client id for facebook oauth. If left empty, the "Login with Facebook" button will not be displayed.
+
+* githubClientId - client id for github oauth. If left empty, the "Login with Github" button will not be displayed.

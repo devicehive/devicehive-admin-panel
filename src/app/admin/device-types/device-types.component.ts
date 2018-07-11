@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {DeviceTypeService} from '../../core/device-type.service';
 import {DeviceType} from '../../shared/models/device-type.model';
@@ -23,6 +23,7 @@ export class DeviceTypesComponent implements OnInit {
   selectedDeviceType: DeviceType;
   isSendingRequest = false;
   activeModal: NgbModalRef;
+  @ViewChild('deleteDeviceTypeModal') deleteDeviceTypeModal: ElementRef;
 
   constructor(public helpService: HelpService,
               private deviceTypeService: DeviceTypeService,
@@ -78,19 +79,33 @@ export class DeviceTypesComponent implements OnInit {
   }
 
   async deleteDeviceType(deviceType: DeviceType): Promise<void> {
-    if (confirm('Are you sure you want to delete this device type?')) {
-      try {
-        await this.deviceTypeService.deleteDeviceType(deviceType.id);
+    try {
+      await this.deviceTypeService.deleteDeviceType(deviceType.id);
 
-        const index = this.deviceTypes.indexOf(deviceType);
+      const index = this.deviceTypes.indexOf(deviceType);
+      if (index > -1) {
+        this.deviceTypes.splice(index, 1);
+      }
+    } catch (error) {
+      this.isSendingRequest = false;
+      this.openDeviceTypeModal(this.deleteDeviceTypeModal, deviceType);
+    }
+  }
+
+  async deleteDeviceTypeForce(): Promise<void> {
+      try {
+        const deviceTypeId = this.selectedDeviceType.id;
+        await this.deviceTypeService.deleteDeviceType(deviceTypeId, true);
+
+        const index = this.deviceTypes.findIndex(deviceType => deviceType.id === deviceTypeId);
         if (index > -1) {
           this.deviceTypes.splice(index, 1);
         }
+        this.activeModal.close();
       } catch (error) {
         this.isSendingRequest = false;
         this.notifierService.notify('error', error.message);
       }
-    }
   }
 
   async updateSelectedDeviceType(): Promise<void> {

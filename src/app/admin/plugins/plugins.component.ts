@@ -1,20 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import {HelpService} from '../../core/help.service';
-import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {NotifierService} from 'angular-notifier';
-import {Plugin} from '../../shared/models/plugin.model';
-import {UserService} from '../../core/user.service';
-import {PluginService} from '../../core/plugin.service';
-import {UserRole} from '../../shared/models/user.model';
-import {plainToClass} from 'class-transformer';
-import {DeviceTypeService} from '../../core/device-type.service';
-import {DeviceService} from '../../core/device.service';
-import {NetworkService} from '../../core/network.service';
-import {DeviceType} from '../../shared/models/device-type.model';
-import {Network} from '../../shared/models/network.model';
-import {Device} from '../../shared/models/device.model';
-import {PluginCredentials} from '../../shared/models/plugin-credentials.model';
-import {UtilService} from '../../core/util.service';
+import { Component, OnInit } from '@angular/core';
+import { HelpService } from '../../core/help.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NotifierService } from 'angular-notifier';
+import { Plugin } from '../../shared/models/plugin.model';
+import { UserService } from '../../core/user.service';
+import { PluginService } from '../../core/plugin.service';
+import { ErrorHandlerService } from '../../core/error-handler.service';
+import { UserRole } from '../../shared/models/user.model';
+import { plainToClass } from 'class-transformer';
+import { DeviceTypeService } from '../../core/device-type.service';
+import { DeviceService } from '../../core/device.service';
+import { NetworkService } from '../../core/network.service';
+import { DeviceType } from '../../shared/models/device-type.model';
+import { Network } from '../../shared/models/network.model';
+import { Device } from '../../shared/models/device.model';
+import { PluginCredentials } from '../../shared/models/plugin-credentials.model';
+import { UtilService } from '../../core/util.service';
 
 @Component({
   selector: 'dh-plugins',
@@ -41,13 +42,13 @@ export class PluginsComponent implements OnInit {
   activeModal: NgbModalRef;
 
   constructor(public helpService: HelpService,
-              private userService: UserService,
-              private pluginService: PluginService,
-              private networkService: NetworkService,
-              private deviceTypeService: DeviceTypeService,
-              private deviceService: DeviceService,
-              private modalService: NgbModal,
-              private notifierService: NotifierService) {
+    private userService: UserService,
+    private pluginService: PluginService,
+    private networkService: NetworkService,
+    private deviceTypeService: DeviceTypeService,
+    private deviceService: DeviceService,
+    private modalService: NgbModal,
+    private notifierService: NotifierService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -71,7 +72,7 @@ export class PluginsComponent implements OnInit {
     this.newPlugin = new Plugin();
     this.isSendingRequest = false;
     try {
-      this.activeModal = this.modalService.open(content, {size: 'lg'});
+      this.activeModal = this.modalService.open(content, { size: 'lg' });
       await this.activeModal.result;
     } catch (dismissReason) {
       this.newPlugin = null;
@@ -113,14 +114,15 @@ export class PluginsComponent implements OnInit {
     }
 
     try {
-      await this.pluginService.updatePlugin(this.selectedPlugin, this.selectedPluginOriginal);
+      await this.pluginService.updatePlugin(this.selectedPlugin);
       const pluginsPlain = await this.pluginService.getAllPlugins();
       this.plugins = plainToClass(Plugin, pluginsPlain);
 
       this.notifierService.notify('success', 'Plugin updated');
     } catch (error) {
       this.isSendingRequest = false;
-      this.notifierService.notify('error', error.message);
+      const message = error.message ? error.message : ErrorHandlerService.handleErrorFromServer(error);
+      this.notifierService.notify('error', message);
     }
   }
 
@@ -130,7 +132,8 @@ export class PluginsComponent implements OnInit {
       this.selectedPluginCredentials = new PluginCredentials(result.accessToken, result.refreshToken, this.selectedPlugin.topicName);
     } catch (error) {
       this.isSendingRequest = false;
-      this.notifierService.notify('error', error.message);
+      const message = error.message ? error.message : ErrorHandlerService.handleErrorFromServer(error);
+      this.notifierService.notify('error', message);
     }
   }
 
